@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm';
 import {getArticles,sourceMode,type Article} from './api';
 import './styles.css';
 const theme=createTheme({palette:{primary:{main:'#2d5548'},background:{default:'#f7f5ef'}},typography:{fontFamily:'"Avenir Next", "Segoe UI", sans-serif',button:{textTransform:'none',fontWeight:600}},shape:{borderRadius:5}});
-const categories=[{name:'World & laws',icon:Globe2},{name:'The pantheon',icon:Scale},{name:'Characters',icon:Users},{name:'Creatures',icon:Flame}];
+const categories=[{name:'World & laws',icon:Globe2},{name:'The pantheon',icon:Scale},{name:'Characters',icon:Users},{name:'Creatures',icon:Flame},{name:'Timeline',icon:ScrollText}];
 function App(){
  const [articles,setArticles]=useState<Article[]>([]),[error,setError]=useState(''),[slug,setSlug]=useState(decodeURIComponent(location.hash.slice(1))||'ilar-hesabu'),[query,setQuery]=useState(''),[category,setCategory]=useState('All entries'),[mobile,setMobile]=useState(false),[editing,setEditing]=useState(false),[draft,setDraft]=useState(''),[notice,setNotice]=useState(''),[source,setSource]=useState(false),[saved,setSaved]=useState<string[]>(()=>{try{return JSON.parse(localStorage.getItem('quoderat-bookmarks')||'[]')}catch{return []}});
  useEffect(()=>{getArticles().then(setArticles).catch(e=>setError(e.message));const onHash=()=>setSlug(decodeURIComponent(location.hash.slice(1))||'ilar-hesabu');addEventListener('hashchange',onHash);return()=>removeEventListener('hashchange',onHash)},[]);

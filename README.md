@@ -1,6 +1,6 @@
 # Quoderat — The Living Archive
 
-A portable learning project: **React + TypeScript (TSX) + MUI + Vite** in the browser, **Django + SQLite** on your server. The 22 initial entries are taken from Gordon Ji's Quoderat notes; original source files are not modified.
+A portable learning project: **React + TypeScript (TSX) + MUI + Vite** in the browser, **Django + SQLite** on your server. The 27 entries are taken from Gordon Ji's four Quoderat source documents, verified against Google Drive on 19 October 2026; original source files are not modified.
 
 ## Run the frontend
 
@@ -67,3 +67,7 @@ SQLite is a convenient initial database; PostgreSQL is a later migration option.
 ## Content boundaries
 
 The archive reproduces fictional worldbuilding notes, not a mathematics textbook. Claims and unresolved questions are retained as written. Character attributes summarize source notes; there are no invented combat scores. If notes conflict, the wiki does not silently resolve canon.
+
+## Refresh lore
+
+Google Drive is the canon source; see `data/sources/README.md` for links. Refresh the four text snapshots, then run `python3 scripts/import-lore.py` and `npm run build`. The importer restores Markdown structure, keeps existing article URLs, and separates source discrepancies from lore. It does not fetch Drive automatically. Local Django edits are independent; compare them before using `seed_wiki --replace`, which overwrites bundled entries.
