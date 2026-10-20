@@ -1,6 +1,6 @@
 # Quoderat source snapshots
 
-Fetched from Google Drive on 19 October 2026 (Singapore date). These are readable text snapshots of the complete text returned by the connector, not original Google Docs formatting or live-synced files.
+Fetched from Google Drive on 20 October 2026 (Singapore date). These are readable text snapshots of the complete text returned by the connector, not original Google Docs formatting or live-synced files.
 
 Drive folder: https://drive.google.com/drive/folders/1pMzl9GnEbEVEBGy0b5KXJsRHUMx3TFHs
 
@@ -11,3 +11,5 @@ Drive folder: https://drive.google.com/drive/folders/1pMzl9GnEbEVEBGy0b5KXJsRHUM
 
 Google Drive is the upstream source. To refresh, read the folder and fetch the current documents using the Google Drive connector, update these snapshots, and record the new retrieval date. Do not claim these copies are current beyond their retrieval date without checking Drive.
 
+
+- 中文术语表 — https://docs.google.com/document/d/1nH7wuczpn1qI4qS3H5uj5q6gTOfXZmg6ajpsJdJfvuk/edit

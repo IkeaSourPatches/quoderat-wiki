@@ -1,6 +1,6 @@
 # Quoderat — The Living Archive
 
-A portable learning project: **React + TypeScript (TSX) + MUI + Vite** in the browser, **Django + SQLite** on your server. The 27 entries are taken from Gordon Ji's four Quoderat source documents, verified against Google Drive on 19 October 2026; original source files are not modified.
+A portable learning project: **React + TypeScript (TSX) + MUI + Vite** in the browser, **Django + SQLite** on your server. The 27 entries are taken from Gordon Ji's four bilingual Quoderat source documents and the Chinese terminology sheet, verified against Google Drive on 20 October 2026; original source files are not modified.
 
 ## Run the frontend
 
@@ -71,3 +71,11 @@ The archive reproduces fictional worldbuilding notes, not a mathematics textbook
 ## Refresh lore
 
 Google Drive is the canon source; see `data/sources/README.md` for links. Refresh the four text snapshots, then run `python3 scripts/import-lore.py` and `npm run build`. The importer restores Markdown structure, keeps existing article URLs, and separates source discrepancies from lore. It does not fetch Drive automatically. Local Django edits are independent; compare them before using `seed_wiki --replace`, which overwrites bundled entries.
+
+## English / 中文
+
+The top-bar toggle changes the interface, article text, headings and dossiers. Your selection is stored locally; switching languages preserves the article URL, category and bookmarks. Search matches either language. Chinese prose comes directly from the Chinese tabs in the source documents.
+
+Each `Article` keeps English fields and a `translations.zh` object with `title`, `body`, and `stats`. Django returns both together so switching is immediate and works in both API and bundled modes. Category and stat keys remain stable; the interface translates their labels. Edit translations in Django admin, or refresh the bilingual source snapshots and rerun the importer. New articles without Chinese text explicitly fall back to English.
+
+Run `node scripts/check-localization.mjs` (Node 22.18+ with native TypeScript support) and `python backend/manage.py test wiki` to verify the bilingual data contract.

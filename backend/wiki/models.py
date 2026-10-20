@@ -6,6 +6,7 @@ class Article(models.Model):
     body = models.TextField(help_text='Markdown source. Raw HTML is not rendered by the frontend.')
     source = models.CharField(max_length=255, blank=True)
     stats = models.JSONField(default=dict, blank=True, help_text='Character attributes as a JSON object of text values.')
+    translations = models.JSONField(default=dict, blank=True, help_text="Localized content keyed by language, e.g. zh with title, body and stats.")
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
         ordering = ['category','title']

@@ -18,3 +18,11 @@ class ArchiveTests(TestCase):
         self.assertEqual(Article.objects.get(slug='ilar-hesabu').body,'An authored revision')
     def test_admin_requires_login(self):
         self.assertEqual(self.client.get('/admin/wiki/article/').status_code,302)
+    def test_bilingual_seed_and_api_keep_one_identity(self):
+        call_command('seed_wiki')
+        result=self.client.get('/api/articles/timeline/').json()
+        self.assertEqual(result['slug'],'timeline')
+        self.assertIn('Floor 0: Creation',result['body'])
+        self.assertIn('第零层：创世',result['translations']['zh']['body'])
+        self.assertNotIn('第零层',result['body'])
+        self.assertEqual(result['translations']['zh']['title'],'历史之塔')

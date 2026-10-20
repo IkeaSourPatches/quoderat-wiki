@@ -1,0 +1,42 @@
+import type { Article } from './api';
+export type Language = 'en' | 'zh';
+// Keep translation strings separate from the annotated reader component.
+const zh: Record<string, string> = {
+  'QUODERAT':'证毕','THE LIVING ARCHIVE':'世界档案','THE ARCHIVE':'档案馆',
+  'All entries':'全部条目','EXPLORE THE WORLD':'探索世界','World & laws':'世界与法则',
+  'The pantheon':'众神','Characters':'人物','Creatures':'神兽','Timeline':'时间线',
+  'Saved pages':'已收藏','A world built on proof.':'以证明构筑的世界。',
+  'An archive still unfolding.':'仍在续写的档案。','Archive edition':'档案版',
+  'Connected archive':'已连接档案','Archive':'档案','Close navigation':'关闭导航',
+  'Open navigation':'打开导航','Search the archive':'搜索档案','Search the archive…':'搜索档案…',
+  'Clear search':'清除搜索','Opening the archive…':'正在打开档案…','SOURCE NOTES':'设定原文',
+  'From the world of Quoderat':'来自证毕的世界','Worldbuilding archive':'世界观档案',
+  'min read':'分钟阅读','Read':'阅读','Markdown':'Markdown','Unsave page':'取消收藏',
+  'Save page':'收藏条目','Try editing':'试写','His law operates everywhere,':'他的法则无处不在，',
+  'yet no one knows where he is.':'却无人知晓他身在何方。','From':'来源',
+  'Original notes preserved. Unresolved details remain unresolved.':'保留原始设定；未决之处仍保持未决。',
+  'CONTINUE EXPLORING':'继续探索','Search results':'搜索结果','Entries matching':'匹配条目',
+  'Laws, lives, and the world between them.':'法则、众生，以及彼此之间的世界。','entries':'个条目',
+  'No entries found. Try a different search or category.':'未找到条目，请尝试其他关键词或分类。',
+  'CHARACTER DOSSIER':'人物档案','ARCHIVE NOTES':'档案札记','Law holder':'执律者',
+  'Title':'称号','Held law':'执掌法则','Origin':'起源','Affiliation':'所属','Status':'现状',
+  'Elemental power':'元素之力','Lineage':'传承','Ally':'盟友','Rival':'对手',
+  'Source-backed profile':'依据设定原文','Power follows proof.':'力量源于证明。',
+  'Laws are unique. Physical powers are shared. Every claim has a consequence.':'法则独一，物理之力共享。每一项主张，都有其后果。',
+  'ON THIS PAGE':'本页目录','Overview':'概览','Which was to be demonstrated.':'证毕。',
+  '— THE NAME QUODERAT':'——世界之名：证毕','A living world. An unfinished record.':'鲜活的世界，未完的记录。',
+  'Personal worldbuilding wiki · 2026':'个人世界观百科 · 2026','Markdown workspace':'Markdown 写作区',
+  'Experiment here, then download your Markdown. This does not change the source archive.':'在此试写并下载 Markdown 文件；操作不会修改原始档案。',
+  'Markdown editor':'Markdown 编辑器','Live preview':'实时预览','Close':'关闭',
+  'Download Markdown':'下载 Markdown','Markdown downloaded':'Markdown 已下载',
+  'The archive could not be loaded. Check that the Django server is available.':'无法加载档案，请确认 Django 服务器正在运行。',
+  'Chinese translation unavailable; showing English.':'此条目暂无中文译文，显示英文原文。'
+};
+export function translate(language: Language, text: string): string {
+  return language === 'zh' ? zh[text] ?? text : text;
+}
+// Slugs, category keys and stat keys stay stable across languages and API modes.
+export function localizeArticle(article: Article, language: Language): Article {
+  const localized = language === 'zh' ? article.translations?.zh : undefined;
+  return localized ? {...article, ...localized} : article;
+}
