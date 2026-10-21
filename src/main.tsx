@@ -98,6 +98,30 @@ const categories = [
   { name: "Timeline", icon: ScrollText },
 ]; // End of the categories array.
 
+// Decorative law emblems identify characters without inventing canonical appearances.
+const emblems: Record<string, string> = {
+  'ilar-hesabu': 'ℕ', ensa: '∈', tertia: '∨', 'the-spear-and-shield': '¬',
+  'the-open-question': '?', 'voss-halloran': 'Σ', 'rudolf-ludwig': 'Δ',
+  rushd: '→', 'aldous-vane': '⋮', 'lian-xiu': '⇌', 'mattias-krane': '◎',
+};
+
+// Display notation, not additional canon. Social-law formulas are visual summaries.
+// Incompleteness assumes a consistent, effectively axiomatized arithmetic theory T.
+const lawExpressions: Record<string, string> = {
+  'ilar-hesabu': 'S(n) = n + 1',
+  ensa: 'A = B ⇔ ∀x (x ∈ A ⇔ x ∈ B)',
+  tertia: 'p ∨ ¬p',
+  'the-spear-and-shield': '¬(p ∧ ¬p)',
+  'the-open-question': '∃φ : T ⊬ φ ∧ T ⊬ ¬φ',
+  'voss-halloran': 'ΔE = 0',
+  // Rudolf claims strict increase in canon, rather than the usual weak inequality.
+  'rudolf-ludwig': 'ΔS > 0',
+  rushd: 't₁ < t₂ ∧ Q(t₂) := f(P(t₁), U)',
+  'aldous-vane': '∀ O ∈ Organizations, ∃ E ⊂ O : |E| < ½|O| ∧ ◇Rules(E, O)',
+  'lian-xiu': 'Qᴅ(P*) = Qˢ(P*)',
+  'mattias-krane': '□∀X [Target(X) → ¬Reliable(X)]',
+};
+
 // Root component that holds all application state and renders the UI.
 function App() {
   // All articles returned by the API; starts empty until the fetch resolves.
@@ -121,14 +145,14 @@ function App() {
   // Slug of the open article, initialised from the URL hash.
   const [slug, setSlug] = useState(
     // Decode the hash without its leading "#"; fall back to the default article.
-    decodeURIComponent(location.hash.slice(1)) || "ilar-hesabu",
+    decodeURIComponent(location.hash.slice(1)) || "characters",
   ); // End of the slug state declaration.
 
   // Current text typed into the search box.
   const [query, setQuery] = useState("");
 
   // Currently selected sidebar category.
-  const [category, setCategory] = useState("All entries");
+  const [category, setCategory] = useState(location.hash === "#browse" ? "All entries" : "Characters");
 
   // Whether the mobile navigation drawer is open.
   const [mobile, setMobile] = useState(false);
@@ -168,7 +192,10 @@ function App() {
 
     // Read the current hash (minus "#"), falling back to the default article.
     const onHash = () =>
-      setSlug(decodeURIComponent(location.hash.slice(1)) || "ilar-hesabu"); // Store the decoded slug, falling back to the default article.
+      { const next = decodeURIComponent(location.hash.slice(1)) || "characters";
+        setSlug(next);
+        if (next === 'characters') setCategory('Characters');
+      }; // Store the decoded slug, falling back to the default article.
 
     // Listen for back/forward navigation and manual hash edits.
     addEventListener("hashchange", onHash);
@@ -203,7 +230,9 @@ function App() {
     // Clear the slug so the list view renders instead of an article.
     setSlug("");
     // Reflect the list view in the URL hash.
-    location.hash = "browse";
+    location.hash = cat === "Characters" ? "characters" : "browse";
+    setQuery("");
+    window.scrollTo(0, 0);
     // Close the mobile drawer after choosing a category.
     setMobile(false);
   }; // End of the browse helper.
@@ -268,9 +297,9 @@ function App() {
           // Styling hook for the wordmark block.
           className="brand"
           // Native anchor target, useful before React handles the click.
-          href="#ilar-hesabu"
+          href="#characters"
           // Navigate through React instead of reloading the page.
-          onClick={() => navigate("ilar-hesabu")}
+          onClick={() => browse("Characters")}
         >{/* Brand link content starts here. */}
           {/* Decorative Q monogram with a sparkle inside it. */}
           <span className="brand-symbol">
@@ -442,7 +471,7 @@ function App() {
           <p className="loading">{t("Opening the archive…")}</p>
         ) : ( // Articles are loaded: render the page layout.
           // Articles are loaded: render the two-column page.
-          <div className="page">
+          <div className={`page ${!article ? "catalogue-page" : "reading-page"}`}>
             {/* Main column: either an article reader or the entry list. */}
             <main>
               {article ? ( // Article view when a slug matches.
@@ -621,14 +650,20 @@ function App() {
                   <p className="results-count">{filtered.length} {t("entries")}</p>
 
                   {/* One row per matching article. */}
-                  <div className="entry-list">
-                    {filtered.map((a) => ( // Render one list button per filtered article.
+                  <div className={category === "Characters" ? "entry-list character-gallery" : "entry-list"}>
+                    {filtered.map((a, index) => ( // Render one list button per filtered article.
                       <button key={a.slug} onClick={() => navigate(a.slug)}>{/* Entry row content starts here. */}
+                        {category === 'Characters' && <div className={`character-art tone-${index % 4}`} aria-hidden="true">
+                          <span className="folio-number">{String(index + 1).padStart(3, '0')} / QUODERAT</span>
+                          <div className="engraving-orbit" /><div className="engraving-diamond" />
+                          <span className="character-emblem">{emblems[a.slug] || '✧'}</span>
+                          <span className="art-law">{a.stats['Held law']}</span>
+                        </div>}
                         <span>{/* Text column. */}
-                          <small>{t(a.category)}</small>{/* Category label. */}
+                          <small>{category === "Characters" ? `No. ${String(index + 1).padStart(3, "0")} · Folio` : t(a.category)}</small>{/* Category label. */}
                           <h2>{a.title}</h2>{/* Article title. */}
                           <p>{/* Short preview text. */}
-                            {a.body.replace(/[#*]/g, "").slice(0, 125)}…
+                            {category === "Characters" ? (lawExpressions[a.slug] || a.stats["Held law"]) : `${a.body.replace(/[#*]/g, "").slice(0, 125)}…`}
                           </p>{/* End of the preview paragraph. */}
                         </span>{/* End of the text column. */}
                         <ArrowUpRight size={21} />{/* Open-link arrow. */}
@@ -661,11 +696,7 @@ function App() {
                     <div className="sigil-ring" />{/* Outer ring. */}
                     <div className="sigil-ring inner" />{/* Inner ring. */}
                     <span>{/* Center symbol chosen per character. */}
-                      {article.slug === "ilar-hesabu"
-                        ? "ℕ" // Ila-hesabu's symbol.
-                        : article.slug === "ensa"
-                          ? "∈" // Ensa's symbol.
-                          : "∨"}{/* Fallback symbol. */}
+                      {emblems[article.slug] || '✧'}{/* Fallback symbol. */}
                     </span>
                     <i>✧</i>{/* Sparkle ornament. */}
                     <small>{article.stats["Held law"]?.toUpperCase()}</small>{/* Held law, uppercased. */}

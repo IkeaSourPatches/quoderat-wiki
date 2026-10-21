@@ -9,3 +9,43 @@ html[lang="zh-CN"] h1,html[lang="zh-CN"] .dossier-title h2{font-family:'Songti S
 html[lang="zh-CN"] .subtitle{font-style:normal}
 @media(max-width:1150px){.breadcrumb{display:none}.search-wrap{min-width:0}.search-wrap input{min-width:0;width:150px}}
 @media(max-width:600px){.topbar{gap:10px}.search-wrap{flex:1}.search-wrap input{width:100%}.owner-avatar{display:none}.language-toggle button{padding:7px 8px}}
+
+/* Engraved archive: forest-green galleries, brass rules and parchment folios. */
+:root{--forest:#111e19;--gold:#b9a477;--paper:#eee7d3;background:var(--forest);color:var(--paper)}
+body{background:radial-gradient(ellipse at 75% 0,#30433355,transparent 65%),#111e19}
+.navigation{background:#101b17;border-right:1px solid #b9a47730;padding-top:36px}
+.brand{color:#eee6d0}.brand-symbol{color:var(--gold)}.nav-divider{border-color:#b9a47730}
+.nav-item{border-radius:0;padding-block:14px}.nav-item.active{background:#b9a47712;box-shadow:inset 2px 0 var(--gold)}
+.nav-label,.nav-bottom small{color:#b9a477}.nav-bottom p{color:#a5ae9d}.orbit{color:#b9a477}
+.topbar{background:#111e19ed;border-color:#b9a47730;position:sticky;top:0;z-index:20;backdrop-filter:blur(15px)}
+.breadcrumb,.search-wrap,.search-wrap input{color:#b8bfad}.search-wrap input::placeholder{color:#9da894}
+.owner-avatar{color:var(--gold);background:none;border-color:#b9a47760}
+.language-toggle{border-radius:0;border-color:#b9a47760}.language-toggle button{color:#c5bd9f}.language-toggle button[aria-pressed="true"]{background:#d0bc85;color:#17231c}
+.page{max-width:1450px;gap:40px;padding:48px 42px 60px}.page main{min-width:0}
+h1{font-size:clamp(38px,4.6vw,64px);font-weight:400;letter-spacing:-1px;color:#eee7d3}.subtitle{color:#b6b69f}.eyebrow{color:#baa577;font-size:10px;letter-spacing:2.4px}
+.catalogue-page{grid-template-columns:1fr}.catalogue-page>.details{display:none}
+.catalogue-page h1{margin-top:25px}.catalogue-page .subtitle{max-width:600px}.results-count{border-top:1px solid #b9a47745;padding-top:22px;margin-top:32px;letter-spacing:2px;color:#c6b78d}
+.character-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 24px;margin-top:28px}
+.character-gallery button{display:flex;flex-direction:column;align-items:stretch;gap:13px;padding:0;border:0;position:relative;transition:transform .2s ease}
+.character-gallery button:hover{background:none;transform:translateY(-5px)}
+.character-art{height:270px;border:4px double #b8a16a;outline:1px solid #6b613f;outline-offset:4px;margin:5px;position:relative;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at center,#4c6045 0,#182b24 65%,#101b17 100%);color:#d7c58e}
+.character-art:after{content:'';position:absolute;inset:13px;border:1px solid #d1b97860;background:repeating-linear-gradient(0deg,transparent 0 3px,#111a140d 4px);pointer-events:none}
+.tone-1{background:radial-gradient(ellipse at center,#594f41,#272822 65%,#181c17);color:#d7bd8c}.tone-2{background:radial-gradient(ellipse at center,#435758,#192d30 65%,#131e20);color:#bacbc0}.tone-3{background:radial-gradient(ellipse at center,#5e4445,#322628 65%,#211d1c);color:#d3ae94}
+.folio-number{position:absolute;top:28px;font:8px 'Avenir Next',sans-serif;letter-spacing:3px}.art-law{position:absolute;bottom:28px;max-width:85%;text-align:center;font:italic 14px Georgia,'Songti SC',serif;letter-spacing:.5px}
+.character-emblem{font:94px Georgia,serif;text-shadow:0 2px 25px #e9d49b25;z-index:1}
+.engraving-orbit{position:absolute;width:166px;height:166px;border:1px solid currentColor;border-radius:50%;opacity:.4}.engraving-orbit:before{content:'';position:absolute;inset:9px;border:1px dashed currentColor;border-radius:50%}.engraving-orbit:after{content:'';position:absolute;inset:-19px 45px;border:1px solid currentColor;border-radius:50%;transform:rotate(35deg)}
+.engraving-diamond{position:absolute;width:114px;height:114px;border:1px solid currentColor;transform:rotate(45deg);opacity:.3}
+.character-gallery button>span{display:block;background:#e6dfc6;padding:18px 14px 20px;text-align:center;border:4px double #a59a78;min-height:126px;width:100%}
+.character-gallery small{color:#8b674d;font:italic 11px Georgia}.character-gallery h2{color:#26372b;font:24px/1.2 Georgia,'Songti SC',serif;margin:10px 0}.character-gallery p{color:#6d705a;font:italic 13px/1.5 Georgia,'Songti SC',serif}.character-gallery button>svg{display:none}
+.entry-list:not(.character-gallery) button{color:#e3dcc4;border-color:#b9a47735}.entry-list:not(.character-gallery) button:hover{background:#b9a4770c}.entry-list:not(.character-gallery) p{color:#b5bba7}
+.reading-page{grid-template-columns:minmax(0,1fr) 250px}.reading-page>main{background:#f0eadb;padding:36px 38px 40px;border-top:3px double #b6a478;box-shadow:0 12px 45px #0002}.reading-page h1{color:#263b30;font-size:clamp(36px,3.7vw,55px)}.reading-page .subtitle{color:#778068}.reading-page .eyebrow{color:#7b7958}.reading-page .article-meta{flex-wrap:wrap}.prose{font-size:16px;line-height:1.95}.prose h3{line-height:1.4}.article-toolbar{gap:8px}.tab{margin-right:12px}.source-view{max-width:100%;overflow:auto}
+.details-label{color:#b9a477}.dossier{background:#e9e2cd;border:4px double #b5a16f}.sigil{background:radial-gradient(ellipse,#485b42,#182b23);height:240px}.sigil>span{color:#dac78e}.sigil small{color:#d0c294;text-align:center;max-width:90%;line-height:1.5}.sigil-ring{border-color:#b9a477}.sigil-ring:before,.sigil-ring:after{border-color:#b9a47770}.sigil i{color:#b9a477}.dossier-title{border-color:#b9a47760}.dossier dl>div,.dossier-footer{border-color:#b9a47750}.dossier dt{color:#777e68}.dossier dd{color:#374d37}.contents{border-color:#b9a47745}.contents a{color:#bdc4ae}.margin-note{color:#babda6}.note-card{background:#1d3025;border-color:#b9a47750;color:#c8c5a8}.note-card h3{color:#e6dcc0}footer{border-color:#b9a47730;color:#a9b09d}
+@media(min-width:1600px){.character-gallery{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:1150px){.page{padding:32px 26px;gap:24px}.reading-page{grid-template-columns:minmax(0,1fr) 210px}.reading-page>main{padding:27px 24px}.character-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.character-art{height:280px}}
+@media(max-width:900px){.reading-page{grid-template-columns:1fr}.details{align-items:start}.reading-page>main{padding:30px}.character-art{height:250px}.page{padding:30px 23px}}
+@media(max-width:600px){.topbar{height:66px}.navigation{overflow-y:auto}.nav-bottom{padding-top:18px}.page{padding:30px 18px}.character-gallery{gap:23px 14px}.character-art{height:210px}.character-emblem{font-size:70px}.engraving-orbit{width:125px;height:125px}.engraving-diamond{width:90px;height:90px}.folio-number{font-size:6px;letter-spacing:1.5px;top:22px}.art-law{font-size:11px;bottom:22px}.character-gallery button>span{padding:13px 8px;min-height:120px}.character-gallery h2{font-size:21px}.reading-page>main{padding:26px 21px}.article-toolbar{flex-wrap:wrap}.prose{font-size:16px}.reading-page h1{font-size:39px}.intro-callout p{font-size:18px}.catalogue-page .subtitle{font-size:18px}}
+@media(max-width:370px){.character-gallery{grid-template-columns:1fr}.character-art{height:270px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Expressions sit on the catalogue label beneath each character name. */
+.character-gallery button>span p{font-family:Cambria,"STIX Two Math",Georgia,serif;font-style:normal;font-size:13px;line-height:1.5;letter-spacing:0;text-wrap:balance}
