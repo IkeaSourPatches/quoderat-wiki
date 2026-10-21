@@ -142,6 +142,9 @@ function App() {
   // Human-readable error message shown when loading fails.
   const [error, setError] = useState("");
 
+  // "browse" is a sentinel hash meaning "show a category listing", not an article.
+  const BROWSE = "browse";
+
   // Slug of the open article, initialised from the URL hash.
   const [slug, setSlug] = useState(
     // Decode the hash without its leading "#"; fall back to the default article.
@@ -151,8 +154,18 @@ function App() {
   // Current text typed into the search box.
   const [query, setQuery] = useState("");
 
-  // Currently selected sidebar category.
-  const [category, setCategory] = useState(location.hash === "#browse" ? "All entries" : "Characters");
+  // Currently selected sidebar category. A #browse hash restores the listing view;
+  // the category itself is remembered separately so a reload keeps the same list.
+  const [category, setCategory] = useState(() => {
+    // Only reach for storage when the URL actually points at the listing view.
+    if (location.hash !== "#" + BROWSE) return "Characters";
+    // Guard against malformed or missing stored data.
+    try {
+      return localStorage.getItem("quoderat-browse-category") || "All entries";
+    } catch { // Storage may be unavailable in private or restricted contexts.
+      return "All entries";
+    }
+  });
 
   // Whether the mobile navigation drawer is open.
   const [mobile, setMobile] = useState(false);
@@ -194,7 +207,14 @@ function App() {
     const onHash = () =>
       { const next = decodeURIComponent(location.hash.slice(1)) || "characters";
         setSlug(next);
+        // Restore the category for the two hashes that mean "show a listing".
+        // Without this, reloading #browse reopened the Characters gallery.
         if (next === 'characters') setCategory('Characters');
+        else if (next === BROWSE) {
+          try {
+            setCategory(localStorage.getItem('quoderat-browse-category') || 'All entries');
+          } catch { setCategory('All entries'); }
+        }
       }; // Store the decoded slug, falling back to the default article.
 
     // Listen for back/forward navigation and manual hash edits.
@@ -229,8 +249,13 @@ function App() {
     setCategory(cat);
     // Clear the slug so the list view renders instead of an article.
     setSlug("");
-    // Reflect the list view in the URL hash.
-    location.hash = cat === "Characters" ? "characters" : "browse";
+    // Reflect the list view in the URL hash. Remembering the category here is
+    // what lets a reload or a shared #browse link land on the same list.
+    if (cat === "Characters") location.hash = "characters";
+    else {
+      try { localStorage.setItem("quoderat-browse-category", cat); } catch { /* Listing still works for this session. */ }
+      location.hash = BROWSE;
+    }
     setQuery("");
     window.scrollTo(0, 0);
     // Close the mobile drawer after choosing a category.
@@ -495,6 +520,9 @@ function App() {
                     </span>
                     <span>{t("Worldbuilding archive")}</span>{/* Collection label. */}
                     <span>{/* Reading-time container. */}
+                      {/* Reading speed differs by script: Chinese packs whole words into
+                          characters, so 400 characters a minute is roughly the same load
+                          as 200 Latin words a minute. Do not unify these numbers. */}
                       {Math.max(1, Math.ceil(language === 'zh' ? article.body.length / 400 : article.body.split(/\s+/).length / 200))} {t("min read")}
                     </span>{/* End of the author line. */}
                   </div>{/* End of the article metadata row. */}
