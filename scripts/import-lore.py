@@ -1,11 +1,11 @@
 """Convert verified Drive text snapshots to Markdown articles; never edit canon.
 Run after copying refreshed snapshots into data/sources/. No network calls.
 """
-import json,re
+import difflib,json,re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 SOURCE=ROOT/'data/sources'
-old={a['slug']:a for a in json.loads((ROOT/'data/articles.json').read_text())}
+old={a['slug']:a for a in json.loads((ROOT/'data/articles.json').read_text(encoding='utf-8'))}
 world=['Premise','Law Holders','Physical Powers and Dragons','The Test','The Axiom and the Law of All Laws','Ordinary People and the Climb','Open Questions']
 pantheon=['How the Pantheon Is Ranked','Top-Tier Roster','The Law of Non-Contradiction','The Law of the Excluded Middle','Incompleteness','Number and Sets','The Physics Trio','Social Laws']
 creatures=['How Creatures Work','Dragons','Other Creature Families','Hybrids']
@@ -13,12 +13,34 @@ subheads=['The Holder','The Feud','Sets: Ensa, the Restorer','Number: Ilar Hesab
 def slugify(s): return re.sub('[^a-z0-9]+','-',s.lower()).strip('-')
 def load(name, lang='en'):
     # Drive returns document tabs together. Separate them before section parsing.
-    text=(SOURCE/name).read_text().strip()
+    text=(SOURCE/name).read_text(encoding='utf-8').strip()
     en, separator, zh=text.partition('\n中文\n')
     if lang=='zh' and not separator: raise ValueError(f'Missing Chinese tab: {name}')
     lines=(zh if lang=='zh' else en).splitlines()
     while lines and lines[0] in ('Tab 1','English'): lines.pop(0)
-    return lines
+    return Lines(lines, name, lang)
+
+class Lines(list):
+    """Snapshot lines that remember their source file, for clear error messages."""
+    def __init__(self, items, name, lang):
+        super().__init__(items); self.name = name; self.lang = lang
+def norm(s):
+    # Drive edits often swap straight/curly quotes or spacing; ignore those differences.
+    for a, b in (('\u2018', "'"), ('\u2019', "'"), ('\u201c', '"'), ('\u201d', '"')): s = s.replace(a, b)
+    return ' '.join(s.split()).casefold()
+def find(lines, heading):
+    """Index of a heading line, tolerant of quote style, spacing and letter case.
+    A renamed heading stops the import with the closest matches instead of a bare ValueError."""
+    if heading in lines: return lines.index(heading)  # exact match keeps historical behaviour
+    target = norm(heading)
+    for i, line in enumerate(lines):
+        if norm(line) == target: return i
+    tab = 'Chinese' if getattr(lines, 'lang', 'en') == 'zh' else 'English'
+    close = difflib.get_close_matches(heading, [l.strip() for l in lines if l.strip()], n=3, cutoff=0.5)
+    hint = f' Closest lines: {close}.' if close else ''
+    raise SystemExit(f"import-lore: heading {heading!r} not found in the {tab} tab of "
+                     f"{getattr(lines, 'name', 'a snapshot')}.{hint} If it was renamed in Google Drive, "
+                     "update the matching heading list in scripts/import-lore.py.")
 zh_world=['前提','执律者','物理之力与龙族','试炼','公理与万法之法','普通人与攀登','未决问题']
 zh_pantheon=['众神如何排位','顶层名单','不矛盾律','排中律','不完备性','数与集合','物理三巨头','社会法则']
 zh_creatures=['神兽如何运作','龙族','其他神兽族群','混血种']
@@ -53,19 +75,19 @@ def add(title,category,lines,name,slug=None,stats=None):
 for name,category,headings,zh_headings in [('Quoderat Worldbuilding Notes.md','World & laws',world,zh_world),('Quoderat The Pantheon.md','The pantheon',pantheon,zh_pantheon),('Quoderat Creatures.md','Creatures',creatures,zh_creatures)]:
     lines=load(name)
     for i,title in enumerate(headings):
-        start=lines.index(title)+1
-        end=lines.index(headings[i+1]) if i+1<len(headings) else len(lines)
+        start=find(lines,title)+1
+        end=find(lines,headings[i+1]) if i+1<len(headings) else len(lines)
         # Keep the existing bookmark URL when the placeholder app receives its name.
         slug='the-app-and-the-law-of-all-laws' if title=='The Axiom and the Law of All Laws' else None
         add(title,category,lines[start:end],name,slug)
         zlines=load(name,'zh'); ztitle=zh_headings[i]
-        zend=zlines.index(zh_headings[i+1]) if i+1<len(zh_headings) else len(zlines)
-        articles[-1]['translations']={'zh':{'title':ztitle,'body':markdown(zlines[zlines.index(ztitle)+1:zend]),'stats':{}}}
+        zend=find(zlines,zh_headings[i+1]) if i+1<len(zh_headings) else len(zlines)
+        articles[-1]['translations']={'zh':{'title':ztitle,'body':markdown(zlines[find(zlines,ztitle)+1:zend]),'stats':{}}}
 # Existing character cards retain their stable URLs and source-derived fields.
 lines=load('Quoderat The Pantheon.md')
 for slug,heading,end in [('ilar-hesabu','Number: Ilar Hesabu, the Uncounted','The Physics Trio'),('ensa','Sets: Ensa, the Restorer','Number: Ilar Hesabu, the Uncounted'),('tertia','The Law of the Excluded Middle','Incompleteness')]:
     a=old[slug]
-    add(a['title'],'Characters',lines[lines.index(heading)+1:lines.index(end)],'Quoderat The Pantheon.md',slug,a['stats'])
+    add(a['title'],'Characters',lines[find(lines,heading)+1:find(lines,end)],'Quoderat The Pantheon.md',slug,a['stats'])
 # Chinese names and dossiers follow the current translated source, not new names.
 zlines=load('Quoderat The Pantheon.md','zh')
 characters={
@@ -75,7 +97,7 @@ characters={
 for a in articles:
  if a['slug'] in characters:
   title,start,end,stats=characters[a['slug']]
-  a['translations']={'zh':{'title':title,'body':markdown(zlines[zlines.index(start)+1:zlines.index(end)]),'stats':stats}}
+  a['translations']={'zh':{'title':title,'body':markdown(zlines[find(zlines,start)+1:find(zlines,end)]),'stats':stats}}
 # Each named or titled Pantheon character has a stable, bilingual reading page.
 # Boundaries refer to the source headings so imports keep the complete biography.
 character_sections = [
@@ -91,21 +113,21 @@ character_sections = [
 lines = load('Quoderat The Pantheon.md')
 zlines = load('Quoderat The Pantheon.md', 'zh')
 for slug, title, ztitle, start, zstart, end, zend, law, zlaw in character_sections:
-    add(title, 'Characters', [start] + lines[lines.index(start)+1:lines.index(end)],
+    add(title, 'Characters', [start] + lines[find(lines,start)+1:find(lines,end)],
         'Quoderat The Pantheon.md', slug, {'Held law': law})
     articles[-1]['translations'] = {'zh': {
         'title': ztitle,
-        'body': markdown([zstart] + zlines[zlines.index(zstart)+1:zlines.index(zend)]),
+        'body': markdown([zstart] + zlines[find(zlines,zstart)+1:find(zlines,zend)]),
         'stats': {'Held law': zlaw},
     }}
 lines=load('Quoderat Creatures.md')
 families=['Unicorns: Life and Healing','Phoenixes: Renewal','Kitsune: Illusion and Concealment','Trolls: The Body']
 for i,heading in enumerate(families):
     end=families[i+1] if i+1<len(families) else 'Hybrids'
-    add(heading,'Creatures',lines[lines.index(heading)+1:lines.index(end)],'Quoderat Creatures.md')
+    add(heading,'Creatures',lines[find(lines,heading)+1:find(lines,end)],'Quoderat Creatures.md')
     zfamilies=['独角兽：生命与治愈','不死鸟：重生','狐仙：幻术与隐匿','巨魔：躯体']
     zlines=load('Quoderat Creatures.md','zh'); zhead=zfamilies[i]; zend=zfamilies[i+1] if i+1<len(zfamilies) else '混血种'
-    articles[-1]['translations']={'zh':{'title':zhead,'body':markdown(zlines[zlines.index(zhead)+1:zlines.index(zend)]),'stats':{}}}
+    articles[-1]['translations']={'zh':{'title':zhead,'body':markdown(zlines[find(zlines,zhead)+1:find(zlines,zend)]),'stats':{}}}
 add('The Tower of History','Timeline',load('Quoderat Timeline.md')[2:],'Quoderat Timeline.md','timeline')
 articles[-1]['translations']={'zh':{'title':'历史之塔','body':markdown(load('Quoderat Timeline.md','zh')[2:]),'stats':{}}}
 # Explicit editorial metadata keeps source disagreements separate from canon.
@@ -117,5 +139,5 @@ for a in articles:
 assert all(a.get('translations',{}).get('zh',{}).get('body') for a in articles)
 assert len({a['slug'] for a in articles})==len(articles)
 assert set(old)<= {a['slug'] for a in articles},'An existing article URL would be lost'
-(ROOT/'data/articles.json').write_text(json.dumps(articles,ensure_ascii=False,indent=2)+'\n')
+(ROOT/'data/articles.json').write_text(json.dumps(articles,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print(f'Imported {len(articles)} bilingual articles from four verified snapshots; existing URLs preserved.')

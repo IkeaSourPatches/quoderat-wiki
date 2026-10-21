@@ -8,7 +8,7 @@ class Command(BaseCommand):
         parser.add_argument('--replace',action='store_true')
     def handle(self,*args,**options):
         data = Path(__file__).resolve().parents[4]/'data'/'articles.json'
-        for row in json.loads(data.read_text()):
+        for row in json.loads(data.read_text(encoding='utf-8')):
             slug=row.pop('slug')
             method=Article.objects.update_or_create if options['replace'] else Article.objects.get_or_create
             method(slug=slug,defaults=row)
