@@ -50,105 +50,27 @@ h1{font-size:clamp(38px,4.6vw,64px);font-weight:400;letter-spacing:-1px;color:#e
 /* Expressions sit on the catalogue label beneath each character name. */
 .character-gallery button>span p{font-family:Cambria,"STIX Two Math",Georgia,serif;font-style:normal;font-size:13px;line-height:1.5;letter-spacing:0;text-wrap:balance}
 
-/* ------------------------------------------------------------------
-   Polish pass: depth, hover feedback and rhythm on the engraved archive.
-   Everything here is additive; nothing above is removed, so the layout
-   contract between main.tsx and these class names is unchanged.
-   ------------------------------------------------------------------ */
+/* Refined gallery: quieter framing, readable labels, and consistent controls. */
+:root{--gold:#c9b482;--paper:#f1ebd9}
+body{background:radial-gradient(ellipse at 70% 10%,#304a363b,transparent 65%),#111e19}
+.navigation{padding:28px 18px;overflow-y:auto}.brand{font-size:18px}.brand small{font-size:9px;letter-spacing:1.6px}.nav-divider{margin:24px 8px 18px}.nav-label{font-size:10px;letter-spacing:1.6px}.category-label{margin-top:24px}.nav-item{font-size:13px;min-height:46px;padding:12px;border-radius:3px;transition:background .18s,color .18s}.nav-item span{font-size:11px;color:#b5bdab}.nav-item.active{background:#c9b48216;color:#f1e4bd}.nav-item.active svg{color:#d4be86}.nav-bottom{padding-top:24px}.nav-bottom .orbit{font-size:32px}.nav-bottom p{font-size:15px}.edition{margin-top:18px}
+.topbar{height:78px;gap:16px}.breadcrumb{font-size:12px}.search-wrap{padding:0 13px;border:1px solid #c9b48235;background:#ffffff04;border-radius:5px;min-height:40px}.search-wrap input{font-size:12px;width:185px}.search-wrap:focus-within{border-color:#c9b482;box-shadow:0 0 0 3px #c9b48212}.language-toggle{padding:3px;border-color:#c9b48235;border-radius:5px;gap:2px}.language-toggle button{padding:8px 10px;border-radius:2px}.owner-avatar{width:34px;height:34px}
+.catalogue-page{padding-top:40px}.catalogue-page h1{font-size:clamp(38px,4vw,58px);margin-top:16px;margin-bottom:14px;letter-spacing:-1.5px}.catalogue-page .subtitle{font-size:19px;color:#bfc4b1;margin-bottom:24px}.results-count{font-size:11px;letter-spacing:1.4px;margin-top:28px;padding-top:19px;margin-bottom:24px}.character-gallery{gap:30px 24px;margin-top:0}
+.character-gallery button{gap:0;background:#1b2b23;border:1px solid #b9a47755;padding:8px;box-shadow:0 6px 20px #0002;border-radius:3px;transition:transform .2s,border-color .2s,box-shadow .2s;overflow:hidden}.character-gallery button:hover{background:#203227;border-color:#d8c18c;box-shadow:0 14px 30px #0004;transform:translateY(-4px)}.character-gallery button:focus-visible{outline:3px solid #dac58e;outline-offset:5px}
+.character-art{width:100%;height:248px;margin:0;outline:none;border:1px solid #b9a47770;background:radial-gradient(ellipse at 50% 40%,#52624755,transparent 65%),#182920}.character-art:after{inset:10px;border-color:#d1b97830}.tone-1{background:radial-gradient(ellipse at 50% 40%,#8d796244,transparent 65%),#282820}.tone-2{background:radial-gradient(ellipse at 50% 40%,#789c9a33,transparent 65%),#1b2c2d}.tone-3{background:radial-gradient(ellipse at 50% 40%,#b28a8733,transparent 65%),#302525}.character-emblem{font-size:88px}.folio-number{font-size:9px;letter-spacing:2.5px;top:24px;color:#d5c79e}.art-law{bottom:23px;font-size:14px;color:#e1d7bb}.engraving-orbit{opacity:.3}.engraving-diamond{opacity:.2}
+.character-gallery button>span{border:0;border-top:1px solid #cab987;background:linear-gradient(120deg,#f0ead7,#e5dcc1);min-height:156px;padding:20px 16px;flex:1;display:flex;flex-direction:column;align-items:center}.character-gallery small{font:10px 'Avenir Next',sans-serif;letter-spacing:1.6px;color:#756044}.character-gallery h2{font-size:25px;line-height:1.3;margin:10px 0 14px;text-wrap:balance;color:#243b2c}.character-gallery button>span p{color:#46503e;line-height:1.65;font-size:14px;max-width:100%;overflow-wrap:anywhere;margin:auto 0 0;padding-top:12px;border-top:1px solid #8f835b35;width:100%}
+.entry-list:not(.character-gallery){display:grid;gap:12px}.entry-list:not(.character-gallery) button{padding:22px 24px;border:1px solid #b9a47730;background:#ffffff03;border-radius:4px}.entry-list:not(.character-gallery) button:hover{border-color:#b9a47780;background:#ffffff07}.entry-list:not(.character-gallery) small{font-size:10px;color:#c9b482}.entry-list:not(.character-gallery) h2{line-height:1.35}.entry-list:not(.character-gallery) p{font-size:14px;max-width:68ch}
+.reading-page{gap:32px}.reading-page>main{padding:42px 42px 46px;background:#f1ecdd;border:1px solid #c2b68d;border-top:3px solid #baa373;border-radius:2px}.reading-page .subtitle{font-size:19px}.reading-page .article-meta{font-size:11px;color:#727966;gap:12px}.article-toolbar{margin:28px 0}.tab{font-size:12px;min-height:44px}.icon-button{min-height:36px;min-width:36px}.prose{font-size:17px;line-height:1.95;color:#3e483d}.prose h2,.prose h3{scroll-margin-top:100px}.prose h3{font-size:24px;margin-top:32px}.prose strong{color:#253f2a}.source-note{font-size:11px;color:#6e7665}.related-grid small{font-size:10px}.related-grid button{border-color:#b8b89e;border-radius:3px}.details-label{font-size:10px}.dossier{border:1px solid #b9a477;border-radius:2px;overflow:hidden}.dossier dl>div{font-size:12px;grid-template-columns:40% minmax(0,1fr)}.dossier dd{overflow-wrap:anywhere}.dossier-footer{font-size:10px;color:#637057}.dossier-title .MuiChip-root{font-size:10px;height:25px}.contents a{font-size:12px}.contents a:hover{color:#f0d9a1}.margin-note{font-size:19px}footer{font-size:10px;letter-spacing:.6px;padding-block:26px}
+@media(max-width:1150px){.reading-page>main{padding:30px}.character-art{height:260px}}
+@media(max-width:900px){.topbar{padding-inline:23px}.character-gallery{gap:22px 18px}.character-gallery h2{font-size:23px}.character-art{height:230px}.character-gallery button>span{padding:18px 12px}.reading-page>main{padding:32px}.details{gap:24px}.search-wrap{flex:1;max-width:340px}.search-wrap input{width:100%;min-width:0}}
+@media(max-width:600px){.topbar{height:70px;padding-inline:12px;gap:8px}.search-wrap{padding:0 9px;min-width:0}.language-toggle button{padding:8px}.mobile-menu{color:#d4c49b}.page{padding:28px 18px}.catalogue-page h1{font-size:42px}.catalogue-page .subtitle{font-size:18px}.character-gallery{grid-template-columns:1fr;gap:24px;max-width:420px;margin-inline:auto}.character-art{height:252px}.character-emblem{font-size:88px}.engraving-orbit{width:166px;height:166px}.engraving-diamond{width:114px;height:114px}.folio-number{font-size:9px;letter-spacing:2.5px}.art-law{font-size:14px}.character-gallery button>span{min-height:140px;padding:20px}.character-gallery h2{font-size:26px}.character-gallery button>span p{font-size:14px}.reading-page>main{padding:27px 22px}.reading-page h1{font-size:36px}.prose{font-size:16px}.article-meta>span+span:before{display:none}.related-grid{grid-template-columns:1fr}.entry-list:not(.character-gallery) button{padding:20px 17px}footer{font-size:9px}.nav-bottom{padding-top:16px}}
+@media(prefers-reduced-motion:reduce){.character-gallery button:hover{transform:none}}
+.navigation{scrollbar-width:thin;scrollbar-color:#7b886b55 transparent}
+@media(min-width:601px) and (max-width:760px){.navigation{transform:translateX(-100%);width:250px;transition:transform .2s;z-index:30}.navigation.visible{transform:none;box-shadow:10px 0 40px #0003}.workspace{margin-left:0}.mobile-menu,.mobile-close{display:inline-flex}.mobile-close{position:absolute;right:8px;top:8px}.search-wrap{max-width:none}.character-art{height:250px}}
 
-/* Softer, warmer reading surface; the globe gradient stays behind it. */
-body{background-attachment:fixed}
-
-/* Brand mark: gentle sheen and a hover cue on the wordmark. */
-.brand-symbol{text-shadow:0 0 24px #d2bc8655;transition:text-shadow .25s}
-.brand:hover .brand-symbol{text-shadow:0 0 30px #d2bc86aa}
-
-/* Navigation rows get a sliding gold rule instead of a flat block. */
-.nav-item{position:relative;transition:color .18s,background .18s}
-.nav-item:before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:2px;background:var(--gold);transform:scaleY(0);transform-origin:center;transition:transform .2s ease}
-.nav-item:hover:before,.nav-item.active:before{transform:scaleY(1)}
-.nav-item:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
-
-/* Search field grows a real underline and a visible focus ring. */
-.search-wrap{border-bottom:1px solid #b9a47735;padding-bottom:2px;transition:border-color .2s}
-.search-wrap:focus-within{border-bottom-color:var(--gold)}
-.search-wrap:focus-within svg{color:var(--gold)}
-
-/* Language toggle: gold hover so the control reads as interactive. */
-.language-toggle button{transition:background .18s,color .18s}
-.language-toggle button:hover{background:#b9a47720;color:#e6dcc0}
-
-/* Owner initials catch the light on hover. */
-.owner-avatar{transition:border-color .2s,color .2s}
-.owner-avatar:hover{border-color:var(--gold);color:#e6dcc0}
-
-/* Character plates: brass lifts and the folio line warms up on hover. */
-.character-gallery button .character-art{transition:box-shadow .25s ease,border-color .25s ease}
-.character-gallery button:hover .character-art{box-shadow:0 16px 40px #0006,0 0 0 1px #d0bc8560;border-color:#d0bc85}
-.character-gallery button:hover .folio-number{color:#e2d0a0}
-.character-gallery button>span{transition:background .25s ease,box-shadow .25s ease}
-.character-gallery button:hover>span{background:#f0e9d2;box-shadow:inset 0 0 0 1px #b9a47770}
-.character-gallery button:focus-visible{outline:2px solid var(--gold);outline-offset:6px}
-.character-emblem{transition:transform .35s ease,text-shadow .35s ease}
-.character-gallery button:hover .character-emblem{transform:scale(1.06);text-shadow:0 2px 34px #e9d49b55}
-
-/* Plain entry rows: a gold edge slides in on hover. */
-.entry-list:not(.character-gallery) button{position:relative;transition:color .18s,padding-left .18s}
-.entry-list:not(.character-gallery) button:hover{padding-left:10px}
-.entry-list:not(.character-gallery) button svg{color:#b9a477;transition:transform .2s}
-.entry-list:not(.character-gallery) button:hover svg{transform:translate(2px,-2px)}
-
-/* Reading column: brass hairline glow around the parchment sheet. */
-.reading-page>main{box-shadow:0 12px 45px #0003,0 0 0 1px #b6a47835}
-
-/* Typography rhythm inside the prose. */
-.reading-page .prose p{text-wrap:pretty}
-.reading-page .prose h2{line-height:1.3;letter-spacing:-.2px;padding-bottom:8px;border-bottom:1px solid #d8cfb4}
-.reading-page .prose a{color:#3f6047;text-decoration-color:#b9a477;text-underline-offset:3px}
-.reading-page .prose blockquote{background:#e7dfc6;margin-left:0;padding:14px 20px;color:#54604a;font-style:italic}
-.reading-page .prose :not(pre)>code{background:#e4dcc2;padding:1px 5px;font-size:.9em}
-.reading-page .prose pre{background:#26372b;color:#e8dfc4;padding:16px 18px;overflow:auto}
-
-/* Table of contents: the active-ish row gains a gold spine. */
-.contents a{transition:color .18s,padding-left .18s}
-.contents a:hover{color:#e6dcc0;padding-left:6px}
-
-/* Tab strip: clearer selected state. */
-.tab{transition:color .18s,border-color .18s}
-.tab:hover{color:#c6b78d}
-
-/* Icon buttons breathe on hover. */
-.icon-button{border-radius:4px;transition:background .18s,color .18s}
-.icon-button:hover{background:#b9a4771a;color:#e6dcc0}
-
-/* Toolbar action button matches the brass palette. */
-.toolbar-actions .MuiButton-root{color:#c6b78d;border:1px solid #b9a47750;border-radius:0;transition:background .18s,color .18s}
-.toolbar-actions .MuiButton-root:hover{background:#b9a4771a;border-color:var(--gold)}
-
-/* Empty state gets a proper, centred treatment. */
-.catalogue-page>main>.eyebrow+*~p:last-child{color:#b5bba7}
-
-/* Related cards pick up the brass frame on hover. */
-.related-grid button{border-radius:0;transition:background .18s,border-color .18s,transform .18s}
-.related-grid button:hover{border-color:#b9a47780;transform:translateY(-2px)}
-
-/* Footer rule fades toward the right instead of stopping dead. */
-footer{border-image:linear-gradient(90deg,#b9a47740,#b9a47710) 1}
-
-/* Scrollbar matches the archive rather than the OS. */
-*{scrollbar-width:thin;scrollbar-color:#b9a47760 transparent}
-::-webkit-scrollbar{width:10px;height:10px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:#b9a47750;border:3px solid transparent;background-clip:content-box;border-radius:6px}
-::-webkit-scrollbar-thumb:hover{background:#b9a47790;background-clip:content-box}
-
-/* Chinese typesetting: the CJK serif needs slightly tighter heading tracking. */
-html[lang="zh-CN"] .prose h2,html[lang="zh-CN"] .prose h3{letter-spacing:.02em}
-html[lang="zh-CN"] .character-gallery h2{font-size:23px}
-
-/* Honour reduced motion for every transition added above. */
-@media(prefers-reduced-motion:reduce){
-  .character-gallery button:hover{transform:none}
-  .entry-list:not(.character-gallery) button:hover{padding-left:0}
-  .contents a:hover{padding-left:0}
-}
+/* World-facing entrance, with the archive retained as a deeper reading layer. */
+.world-home{overflow:hidden}.world-hero{min-height:550px;display:grid;grid-template-columns:1.3fr .8fr;align-items:center;gap:30px;padding:30px 0 60px;border-bottom:1px solid #c9b48240}.world-hero h1{font-size:clamp(64px,7vw,110px);letter-spacing:-3px;margin:32px 0}.world-hero h1>span{display:block;font:9px 'Avenir Next',sans-serif;letter-spacing:3px;color:#bdaa7b;margin-top:18px}.world-hero h2{font:normal 29px/1.4 Georgia,'Songti SC',serif;color:#e7dfc5;max-width:560px}.world-hero-copy>p:not(.eyebrow){font:17px/1.9 Georgia,'Songti SC',serif;color:#b8c1ac;max-width:540px}.world-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}.world-actions button{padding:15px 20px;border:1px solid #b9a47770;background:#d0bc85;color:#19291f;font:12px 'Avenir Next',sans-serif;display:flex;gap:26px;align-items:center}.world-actions button+button{background:transparent;color:#ded4b5}.world-actions button:hover{filter:brightness(1.1)}.world-seal{height:340px;position:relative;display:grid;place-items:center;color:#c5b17c;background:radial-gradient(ellipse,#8b98631c,transparent 65%)}.seal-circle{position:absolute;width:250px;height:250px;border:1px solid #b9a47766;border-radius:50%}.seal-circle:after{content:'';position:absolute;inset:15px;border:1px dashed #b9a47755;border-radius:50%}.seal-square{position:absolute;width:175px;height:175px;border:1px solid #b9a47766;transform:rotate(45deg)}.world-seal>span{font:130px Georgia}.world-seal small{position:absolute;bottom:8px;font-size:8px;letter-spacing:3px}.world-seal i{position:absolute;top:3px;font:8px sans-serif;letter-spacing:3px}
+.world-premise{display:grid;grid-template-columns:1fr 1fr;gap:10px 60px;padding:75px 0}.world-premise .eyebrow{grid-column:1/-1}.world-home h2{font-weight:400}.world-premise h2{font:34px/1.4 Georgia,'Songti SC',serif;color:#eee6cf;white-space:pre-line;margin:15px 0}.world-premise>p:last-child{font:16px/1.95 Georgia,'Songti SC',serif;color:#b8c1ac}.world-paths{padding:12px 0 72px}.world-path-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:24px}.world-path-grid button{position:relative;padding:29px;text-align:left;background:#ffffff03;border:1px solid #b9a47745;color:#e5dcc2;transition:background .2s,border-color .2s}.world-path-grid button:hover{background:#c9b4820d;border-color:#c9b482}.world-path-grid small{font-size:10px;color:#b9a477;letter-spacing:2px}.path-mark{float:right;font:32px Georgia;color:#b9a477}.world-path-grid h3{font:25px Georgia,'Songti SC',serif;margin:28px 0 12px}.world-path-grid p{font:14px/1.7 Georgia,'Songti SC',serif;color:#b6bfaa;max-width:85%}.path-arrow{position:absolute;right:25px;bottom:25px;color:#c9b482}.world-people{padding:60px 0;border-top:1px solid #b9a47740}.world-people h2{font:39px/1.3 Georgia,'Songti SC',serif;color:#eee6cf;margin:22px 0 15px}.world-people>div>p:not(.eyebrow){font:17px Georgia,'Songti SC',serif;color:#b8c1ac}.world-people-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:35px}.world-people-grid button{text-align:left;background:#e9e2cd;padding:25px;border:0;color:#293e2e;display:flex;flex-direction:column;align-items:start}.people-symbol{font:64px Georgia;margin:3px 0 28px;color:#7c805c}.world-people-grid small{font-size:10px;letter-spacing:1px}.world-people-grid h3{font:25px/1.3 Georgia,'Songti SC',serif;margin:12px 0 28px}.world-people-grid button>span:last-child{font-size:11px;margin-top:auto;border-top:1px solid #7b855a55;padding-top:17px;width:100%}.world-people-grid button:hover{background:#f5efdb}.world-text-link{border:0;border-bottom:1px solid #b9a47766;background:none;color:#d2bf8d;padding:14px 0;margin-top:20px;font-size:12px}.world-closing{text-align:center;padding:40px 0 65px;color:#c5b17c}.world-closing>span{font-size:35px}.world-closing p{font:italic 31px Georgia,'Songti SC',serif;color:#d7ddca}.world-closing small{font-size:12px;color:#aebba2}
+@media(max-width:1100px){.world-hero{grid-template-columns:1fr}.world-seal{display:none}.world-hero{min-height:480px}.world-premise{gap:20px}.world-people-grid{gap:12px}.world-people-grid button{padding:20px}}
+@media(max-width:600px){.world-hero{padding-top:15px;min-height:480px}.world-hero h1{font-size:70px}.world-hero h2{font-size:27px}.world-premise{grid-template-columns:1fr;padding:45px 0;gap:5px}.world-premise h2{font-size:29px}.world-path-grid{grid-template-columns:1fr}.world-paths{padding-bottom:40px}.world-people{padding-top:40px}.world-people-grid{grid-template-columns:1fr}.world-people-grid button{padding:24px}.people-symbol{margin-bottom:15px}.world-people h2{font-size:32px}.world-hero .eyebrow{font-size:9px;line-height:1.8}.world-closing p{font-size:27px}}
+.suggestion-box{border-top:1px solid #b9a47740;padding:50px 0;display:grid;grid-template-columns:1fr 1fr;gap:40px}.suggestion-box h2{font:32px/1.4 Georgia,'Songti SC',serif;color:#eee6cf}.suggestion-box p{font:15px/1.8 Georgia,'Songti SC',serif;color:#b8c1ac}.suggestion-box label{display:block;font-size:12px;color:#d3c6a4;margin-bottom:18px}.suggestion-box input,.suggestion-box textarea{display:block;width:100%;margin-top:9px;padding:12px;border:1px solid #b9a47766;background:#ffffff05;color:#f1ebd9;font:16px/1.6 inherit;border-radius:3px}.suggestion-box textarea{resize:vertical}.suggestion-box button{background:#d0bc85;color:#19291f;border:0;padding:14px 22px;font-size:13px}.suggestion-box button:disabled{opacity:.5;cursor:default}.suggestion-box input:focus,.suggestion-box textarea:focus{outline:2px solid #d0bc85;outline-offset:2px}@media(max-width:760px){.suggestion-box{grid-template-columns:1fr;gap:20px}}
