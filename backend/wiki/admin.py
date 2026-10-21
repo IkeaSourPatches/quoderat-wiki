@@ -6,3 +6,11 @@ class ArticleAdmin(admin.ModelAdmin):
     list_filter = ('category',)
     search_fields = ('title','body')
     prepopulated_fields = {'slug':('title',)}
+
+from .models import Suggestion
+@admin.register(Suggestion)
+class SuggestionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'created_at', 'reviewed', 'message')
+    list_filter = ('reviewed',)
+    search_fields = ('name', 'message')
+    readonly_fields = ('created_at',)
