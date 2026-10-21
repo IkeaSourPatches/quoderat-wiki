@@ -55,6 +55,7 @@ import { getArticles, sourceMode, type Article } from "./api";
 // Import the global stylesheet that defines the wiki layout.
 import "./styles.css";
 import { WorldHome } from "./WorldHome";
+import { SuggestionBox } from "./SuggestionBox";
 import { localizeArticle, translate, type Language } from "./i18n";
 
 // Build the Material UI theme once, at module scope, so it stays stable.
@@ -384,6 +385,8 @@ function App() {
           <span>{saved.length}</span>{/* Number of bookmarked articles. */}
         </button>
 
+        <button className={`nav-item ${slug === "suggestions" ? "active" : ""}`} onClick={() => navigate("suggestions")}><Feather size={18}/>{language === "zh" ? "提问与建议" : "Questions & suggestions"}</button>
+
         {/* Decorative footer block at the bottom of the sidebar. */}
         <div className="nav-bottom">
           <div className="orbit">✧</div>{/* Floating sparkle ornament. */}
@@ -416,7 +419,7 @@ function App() {
           </button>
 
           {/* Breadcrumb showing "Archive" plus the active category. */}
-          <div className="breadcrumb">{t("Archive")} <ChevronRight size={13} /> {(slug === "home" ? (language === "zh" ? "世界首页" : "The world") : t(article?.category || category))}</div>
+          <div className="breadcrumb">{t("Archive")} <ChevronRight size={13} /> {(slug === "home" ? (language === "zh" ? "世界首页" : "The world") : slug === "suggestions" ? (language === "zh" ? "提问与建议" : "Questions & suggestions") : t(article?.category || category))}</div>
 
           {/* Search input wrapped with its icon and clear button. */}
           <div className="search-wrap">
@@ -460,8 +463,6 @@ function App() {
             <button type="button" lang="en" aria-pressed={language === 'en'} onClick={() => setLanguage('en')}>EN</button>
             <button type="button" lang="zh-CN" aria-pressed={language === 'zh'} onClick={() => setLanguage('zh')}>中文</button>
           </div>
-          {/* Owner initials at the far right of the top bar. */}
-          <span className="owner-avatar">GJ</span>
         </header>{/* End of the top bar. */}
 
         {/* Error banner, loading message, or the main page layout. */}
@@ -476,7 +477,7 @@ function App() {
           <div className={`page ${!article ? "catalogue-page" : "reading-page"}`}>
             {/* Main column: either an article reader or the entry list. */}
             <main>
-              {slug === "home" && !query ? <WorldHome language={language} articles={articles} open={navigate} browse={browse}/> : article ? ( // Article view when a slug matches.
+              {slug === "suggestions" && !query ? <SuggestionBox language={language}/> : slug === "home" && !query ? <WorldHome language={language} articles={articles} open={navigate} browse={browse}/> : article ? ( // Article view when a slug matches.
                 <>{/* Fragment for the article view. */}
                   {/* Eyebrow line above the title. */}
                   <div className="eyebrow">
@@ -493,7 +494,7 @@ function App() {
                   {/* Author, collection, and estimated reading time. */}
                   <div className="article-meta">
                     <span>{/* Author line container starts here. */}
-                      <Feather size={14} /> Gordon Ji{/* Quill icon plus the author name. */}
+                      <Feather size={14} /> Axiom{/* Quill icon plus the author name. */}
                     </span>
                     <span>{t("Worldbuilding archive")}</span>{/* Collection label. */}
                     <span>{/* Reading-time container. */}
@@ -773,7 +774,7 @@ function App() {
         {/* Site footer shown below the page content. */}
         <footer>
           {t("QUODERAT")} <span>{t("A living world. An unfinished record.")}</span>{/* Tagline. */}
-          <span>{(language === "zh" ? "Gordon Ji 的原创世界 · 2026" : "An original world by Gordon Ji · 2026")}</span>{/* Copyright line. */}
+          <span>{(language === "zh" ? "Axiom 的原创世界 · 2026" : "An original world by Axiom · 2026")}</span>{/* Copyright line. */}
         </footer>
       </div>{/* End of the workspace. */}
 
