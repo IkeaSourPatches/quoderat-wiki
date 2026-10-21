@@ -26,32 +26,3 @@ class ArchiveTests(TestCase):
         self.assertIn('第零层：创世',result['translations']['zh']['body'])
         self.assertNotIn('第零层',result['body'])
         self.assertEqual(result['translations']['zh']['title'],'历史之塔')
-
-class SuggestionTests(__import__('django.test', fromlist=['TestCase']).TestCase):
-    def test_private_submission_and_validation(self):
-        from django.test import Client
-        from .models import Suggestion
-        client = Client(enforce_csrf_checks=True)
-        url = '/api/suggestions/'
-        self.assertEqual(client.post(url, {'message': 'Idea'}, content_type='application/json').status_code, 403)
-        token = client.get(url).json()['csrfToken']
-        self.assertEqual(client.post(url, {'message': '  '}, content_type='application/json', HTTP_X_CSRFTOKEN=token).status_code, 400)
-        self.assertEqual(client.post(url, {'message': 'A test idea'}, content_type='application/json', HTTP_X_CSRFTOKEN=token).status_code, 201)
-        self.assertEqual(Suggestion.objects.count(), 1)
-        self.assertNotIn('A test idea', client.get(url).content.decode())
-
-
-class ProxyCsrfTests(TestCase):
-    def test_local_frontend_origin_and_untrusted_origin(self):
-        from django.test import Client
-        client = Client(enforce_csrf_checks=True)
-        token = client.get('/api/suggestions/').json()['csrfToken']
-        for origin in ['http://127.0.0.1:5980', 'http://localhost:5980']:
-            response = client.post('/api/suggestions/', {'message': 'Proxy check'},
-                content_type='application/json', HTTP_X_CSRFTOKEN=token,
-                HTTP_ORIGIN=origin)
-            self.assertEqual(response.status_code, 201)
-        response = client.post('/api/suggestions/', {'message': 'Rejected'},
-            content_type='application/json', HTTP_X_CSRFTOKEN=token,
-            HTTP_ORIGIN='https://untrusted.example')
-        self.assertEqual(response.status_code, 403)

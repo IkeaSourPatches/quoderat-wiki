@@ -54,7 +54,6 @@ import { getArticles, sourceMode, type Article } from "./api";
 
 // Import the global stylesheet that defines the wiki layout.
 import "./styles.css";
-import { WorldHome } from "./WorldHome";
 import { localizeArticle, translate, type Language } from "./i18n";
 
 // Build the Material UI theme once, at module scope, so it stays stable.
@@ -136,7 +135,7 @@ function App() {
   const articles = rawArticles.map((entry) => localizeArticle(entry, language));
   useEffect(() => {
     document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
-    document.title = language === 'zh' ? '证毕 — 一个力量源于法则的世界' : 'Quoderat — A World of Living Laws';
+    document.title = language === 'zh' ? '证毕 — 世界档案' : 'Quoderat — The Living Archive';
     try { localStorage.setItem('quoderat-language', language); } catch { /* Preference still works in memory. */ }
   }, [language]);
 
@@ -149,7 +148,7 @@ function App() {
   // Slug of the open article, initialised from the URL hash.
   const [slug, setSlug] = useState(
     // Decode the hash without its leading "#"; fall back to the default article.
-    decodeURIComponent(location.hash.slice(1)) || "home",
+    decodeURIComponent(location.hash.slice(1)) || "characters",
   ); // End of the slug state declaration.
 
   // Current text typed into the search box.
@@ -206,7 +205,7 @@ function App() {
 
     // Read the current hash (minus "#"), falling back to the default article.
     const onHash = () =>
-      { const next = decodeURIComponent(location.hash.slice(1)) || "home";
+      { const next = decodeURIComponent(location.hash.slice(1)) || "characters";
         setSlug(next);
         // Restore the category for the two hashes that mean "show a listing".
         // Without this, reloading #browse reopened the Characters gallery.
@@ -323,9 +322,9 @@ function App() {
           // Styling hook for the wordmark block.
           className="brand"
           // Native anchor target, useful before React handles the click.
-          href="#home"
+          href="#characters"
           // Navigate through React instead of reloading the page.
-          onClick={() => navigate("home")}
+          onClick={() => browse("Characters")}
         >{/* Brand link content starts here. */}
           {/* Decorative Q monogram with a sparkle inside it. */}
           <span className="brand-symbol">
@@ -334,7 +333,7 @@ function App() {
           {/* Wordmark plus the small "THE LIVING ARCHIVE" subtitle. */}
           <span>
             {t("QUODERAT")}{/* Main wordmark text. */}
-            <small>{language === "zh" ? "原创奇幻世界" : "A WORLD OF LIVING LAWS"}</small>{/* Subtitle under the wordmark. */}
+            <small>{t("THE LIVING ARCHIVE")}</small>{/* Subtitle under the wordmark. */}
           </span>
         </a>{/* End of the brand link. */}
 
@@ -354,8 +353,7 @@ function App() {
         <div className="nav-divider" />
 
         {/* Section label above the archive entries. */}
-        <p className="nav-label">{language === "zh" ? "走进证毕" : "ENTER QUODERAT"}</p>
-        <button className={`nav-item ${slug === "home" ? "active" : ""}`} onClick={() => navigate("home")}><Globe2 size={18}/>{language === "zh" ? "世界首页" : "The world"}<span>↗</span></button>
+        <p className="nav-label">{t("THE ARCHIVE")}</p>
 
         {/* "All entries" button, active when no article is open. */}
         <button
@@ -441,7 +439,7 @@ function App() {
           </button>
 
           {/* Breadcrumb showing "Archive" plus the active category. */}
-          <div className="breadcrumb">{t("Archive")} <ChevronRight size={13} /> {(slug === "home" ? (language === "zh" ? "世界首页" : "The world") : t(article?.category || category))}</div>
+          <div className="breadcrumb">{t("Archive")} <ChevronRight size={13} /> {t(article?.category || category)}</div>
 
           {/* Search input wrapped with its icon and clear button. */}
           <div className="search-wrap">
@@ -501,7 +499,7 @@ function App() {
           <div className={`page ${!article ? "catalogue-page" : "reading-page"}`}>
             {/* Main column: either an article reader or the entry list. */}
             <main>
-              {slug === "home" && !query ? <WorldHome language={language} articles={articles} open={navigate} browse={browse}/> : article ? ( // Article view when a slug matches.
+              {article ? ( // Article view when a slug matches.
                 <>{/* Fragment for the article view. */}
                   {/* Eyebrow line above the title. */}
                   <div className="eyebrow">
@@ -801,7 +799,7 @@ function App() {
         {/* Site footer shown below the page content. */}
         <footer>
           {t("QUODERAT")} <span>{t("A living world. An unfinished record.")}</span>{/* Tagline. */}
-          <span>{(language === "zh" ? "Gordon Ji 的原创世界 · 2026" : "An original world by Gordon Ji · 2026")}</span>{/* Copyright line. */}
+          <span>{t("Personal worldbuilding wiki · 2026")}</span>{/* Copyright line. */}
         </footer>
       </div>{/* End of the workspace. */}
 
