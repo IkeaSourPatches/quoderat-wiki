@@ -54,6 +54,8 @@ import { getArticles, sourceMode, type Article } from "./api";
 
 // Import the global stylesheet that defines the wiki layout.
 import "./styles.css";
+import { WorldHome } from "./WorldHome";
+import { SuggestionBox } from "./SuggestionBox";
 import { localizeArticle, translate, type Language } from "./i18n";
 
 // Build the Material UI theme once, at module scope, so it stays stable.
@@ -135,37 +137,24 @@ function App() {
   const articles = rawArticles.map((entry) => localizeArticle(entry, language));
   useEffect(() => {
     document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
-    document.title = language === 'zh' ? '证毕 — 世界档案' : 'Quoderat — The Living Archive';
+    document.title = language === 'zh' ? '证毕 — 一个力量源于法则的世界' : 'Quoderat — A World of Living Laws';
     try { localStorage.setItem('quoderat-language', language); } catch { /* Preference still works in memory. */ }
   }, [language]);
 
   // Human-readable error message shown when loading fails.
   const [error, setError] = useState("");
 
-  // "browse" is a sentinel hash meaning "show a category listing", not an article.
-  const BROWSE = "browse";
-
   // Slug of the open article, initialised from the URL hash.
   const [slug, setSlug] = useState(
     // Decode the hash without its leading "#"; fall back to the default article.
-    decodeURIComponent(location.hash.slice(1)) || "characters",
+    decodeURIComponent(location.hash.slice(1)) || "home",
   ); // End of the slug state declaration.
 
   // Current text typed into the search box.
   const [query, setQuery] = useState("");
 
-  // Currently selected sidebar category. A #browse hash restores the listing view;
-  // the category itself is remembered separately so a reload keeps the same list.
-  const [category, setCategory] = useState(() => {
-    // Only reach for storage when the URL actually points at the listing view.
-    if (location.hash !== "#" + BROWSE) return "Characters";
-    // Guard against malformed or missing stored data.
-    try {
-      return localStorage.getItem("quoderat-browse-category") || "All entries";
-    } catch { // Storage may be unavailable in private or restricted contexts.
-      return "All entries";
-    }
-  });
+  // Currently selected sidebar category.
+  const [category, setCategory] = useState(location.hash === "#browse" ? "All entries" : "Characters");
 
   // Whether the mobile navigation drawer is open.
   const [mobile, setMobile] = useState(false);
@@ -205,16 +194,9 @@ function App() {
 
     // Read the current hash (minus "#"), falling back to the default article.
     const onHash = () =>
-      { const next = decodeURIComponent(location.hash.slice(1)) || "characters";
+      { const next = decodeURIComponent(location.hash.slice(1)) || "home";
         setSlug(next);
-        // Restore the category for the two hashes that mean "show a listing".
-        // Without this, reloading #browse reopened the Characters gallery.
         if (next === 'characters') setCategory('Characters');
-        else if (next === BROWSE) {
-          try {
-            setCategory(localStorage.getItem('quoderat-browse-category') || 'All entries');
-          } catch { setCategory('All entries'); }
-        }
       }; // Store the decoded slug, falling back to the default article.
 
     // Listen for back/forward navigation and manual hash edits.
@@ -249,13 +231,8 @@ function App() {
     setCategory(cat);
     // Clear the slug so the list view renders instead of an article.
     setSlug("");
-    // Reflect the list view in the URL hash. Remembering the category here is
-    // what lets a reload or a shared #browse link land on the same list.
-    if (cat === "Characters") location.hash = "characters";
-    else {
-      try { localStorage.setItem("quoderat-browse-category", cat); } catch { /* Listing still works for this session. */ }
-      location.hash = BROWSE;
-    }
+    // Reflect the list view in the URL hash.
+    location.hash = cat === "Characters" ? "characters" : "browse";
     setQuery("");
     window.scrollTo(0, 0);
     // Close the mobile drawer after choosing a category.
@@ -322,9 +299,9 @@ function App() {
           // Styling hook for the wordmark block.
           className="brand"
           // Native anchor target, useful before React handles the click.
-          href="#characters"
+          href="#home"
           // Navigate through React instead of reloading the page.
-          onClick={() => browse("Characters")}
+          onClick={() => navigate("home")}
         >{/* Brand link content starts here. */}
           {/* Decorative Q monogram with a sparkle inside it. */}
           <span className="brand-symbol">
@@ -333,7 +310,7 @@ function App() {
           {/* Wordmark plus the small "THE LIVING ARCHIVE" subtitle. */}
           <span>
             {t("QUODERAT")}{/* Main wordmark text. */}
-            <small>{t("THE LIVING ARCHIVE")}</small>{/* Subtitle under the wordmark. */}
+            <small>{language === "zh" ? "原创奇幻世界" : "A WORLD OF LIVING LAWS"}</small>{/* Subtitle under the wordmark. */}
           </span>
         </a>{/* End of the brand link. */}
 
@@ -353,7 +330,8 @@ function App() {
         <div className="nav-divider" />
 
         {/* Section label above the archive entries. */}
-        <p className="nav-label">{t("THE ARCHIVE")}</p>
+        <p className="nav-label">{language === "zh" ? "走进证毕" : "ENTER QUODERAT"}</p>
+        <button className={`nav-item ${slug === "home" ? "active" : ""}`} onClick={() => navigate("home")}><Globe2 size={18}/>{language === "zh" ? "世界首页" : "The world"}<span>↗</span></button>
 
         {/* "All entries" button, active when no article is open. */}
         <button
@@ -407,6 +385,8 @@ function App() {
           <span>{saved.length}</span>{/* Number of bookmarked articles. */}
         </button>
 
+        <button className={`nav-item ${slug === "suggestions" ? "active" : ""}`} onClick={() => navigate("suggestions")}><Feather size={18}/>{language === "zh" ? "提问与建议" : "Questions & suggestions"}</button>
+
         {/* Decorative footer block at the bottom of the sidebar. */}
         <div className="nav-bottom">
           <div className="orbit">✧</div>{/* Floating sparkle ornament. */}
@@ -439,7 +419,7 @@ function App() {
           </button>
 
           {/* Breadcrumb showing "Archive" plus the active category. */}
-          <div className="breadcrumb">{t("Archive")} <ChevronRight size={13} /> {t(article?.category || category)}</div>
+          <div className="breadcrumb">{t("Archive")} <ChevronRight size={13} /> {(slug === "home" ? (language === "zh" ? "世界首页" : "The world") : slug === "suggestions" ? (language === "zh" ? "提问与建议" : "Questions & suggestions") : t(article?.category || category))}</div>
 
           {/* Search input wrapped with its icon and clear button. */}
           <div className="search-wrap">
@@ -483,8 +463,6 @@ function App() {
             <button type="button" lang="en" aria-pressed={language === 'en'} onClick={() => setLanguage('en')}>EN</button>
             <button type="button" lang="zh-CN" aria-pressed={language === 'zh'} onClick={() => setLanguage('zh')}>中文</button>
           </div>
-          {/* Owner initials at the far right of the top bar. */}
-          <span className="owner-avatar">GJ</span>
         </header>{/* End of the top bar. */}
 
         {/* Error banner, loading message, or the main page layout. */}
@@ -499,7 +477,7 @@ function App() {
           <div className={`page ${!article ? "catalogue-page" : "reading-page"}`}>
             {/* Main column: either an article reader or the entry list. */}
             <main>
-              {article ? ( // Article view when a slug matches.
+              {slug === "suggestions" && !query ? <SuggestionBox language={language}/> : slug === "home" && !query ? <WorldHome language={language} articles={articles} open={navigate} browse={browse}/> : article ? ( // Article view when a slug matches.
                 <>{/* Fragment for the article view. */}
                   {/* Eyebrow line above the title. */}
                   <div className="eyebrow">
@@ -516,13 +494,10 @@ function App() {
                   {/* Author, collection, and estimated reading time. */}
                   <div className="article-meta">
                     <span>{/* Author line container starts here. */}
-                      <Feather size={14} /> Gordon Ji{/* Quill icon plus the author name. */}
+                      <Feather size={14} /> Axiom{/* Quill icon plus the author name. */}
                     </span>
                     <span>{t("Worldbuilding archive")}</span>{/* Collection label. */}
                     <span>{/* Reading-time container. */}
-                      {/* Reading speed differs by script: Chinese packs whole words into
-                          characters, so 400 characters a minute is roughly the same load
-                          as 200 Latin words a minute. Do not unify these numbers. */}
                       {Math.max(1, Math.ceil(language === 'zh' ? article.body.length / 400 : article.body.split(/\s+/).length / 200))} {t("min read")}
                     </span>{/* End of the author line. */}
                   </div>{/* End of the article metadata row. */}
@@ -799,7 +774,7 @@ function App() {
         {/* Site footer shown below the page content. */}
         <footer>
           {t("QUODERAT")} <span>{t("A living world. An unfinished record.")}</span>{/* Tagline. */}
-          <span>{t("Personal worldbuilding wiki · 2026")}</span>{/* Copyright line. */}
+          <span>{(language === "zh" ? "Axiom 的原创世界 · 2026" : "An original world by Axiom · 2026")}</span>{/* Copyright line. */}
         </footer>
       </div>{/* End of the workspace. */}
 

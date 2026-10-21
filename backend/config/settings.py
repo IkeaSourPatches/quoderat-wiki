@@ -7,6 +7,12 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'development-only-do-not-use-in-prod
 if not DEBUG and SECRET_KEY == 'development-only-do-not-use-in-production':
     raise RuntimeError('Set DJANGO_SECRET_KEY in production')
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+# Vite forwards local forms to Django on a different port. Trust only the
+# explicit development origins; deployments supply their own list.
+CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in os.getenv(
+    'DJANGO_CSRF_TRUSTED_ORIGINS',
+    'http://127.0.0.1:5980,http://localhost:5980' if DEBUG else ''
+).split(',') if origin.strip()]
 INSTALLED_APPS = ['django.contrib.admin','django.contrib.auth','django.contrib.contenttypes','django.contrib.sessions','django.contrib.messages','django.contrib.staticfiles','wiki']
 MIDDLEWARE = ['django.middleware.security.SecurityMiddleware','django.contrib.sessions.middleware.SessionMiddleware','django.middleware.common.CommonMiddleware','django.middleware.csrf.CsrfViewMiddleware','django.contrib.auth.middleware.AuthenticationMiddleware','django.contrib.messages.middleware.MessageMiddleware','django.middleware.clickjacking.XFrameOptionsMiddleware']
 ROOT_URLCONF = 'config.urls'
