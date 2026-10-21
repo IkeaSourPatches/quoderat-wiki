@@ -37,7 +37,7 @@ def markdown(lines):
             result.append('');i+=32;continue
         if line in subheads+zh_subheads or line.startswith('Floor ') or re.match(r'^第[零一二三四五六七八九十]+层：',line): line='### '+line
         elif line.startswith('* ☐ '): line='- [ ] '+line[4:]
-        elif re.match(r'^\s*\* [^:：]{1,35}[:：]',line): line=re.sub(r'^(\s*\* )([^:：]+[:：])',r'\1**\2**',line)
+        elif re.match(r'^\s*\* [^:：]{1,35}[:：]',line): line=re.sub(r'^(\s*\* )([^:：]+[:：])',r'\1**\2** ',line)
         if line.startswith('### '): result.extend(['',line,''])
         else:
             # Separate prose paragraphs from lists while preserving list nesting.
@@ -76,6 +76,28 @@ for a in articles:
  if a['slug'] in characters:
   title,start,end,stats=characters[a['slug']]
   a['translations']={'zh':{'title':title,'body':markdown(zlines[zlines.index(start)+1:zlines.index(end)]),'stats':stats}}
+# Each named or titled Pantheon character has a stable, bilingual reading page.
+# Boundaries refer to the source headings so imports keep the complete biography.
+character_sections = [
+    ('the-spear-and-shield', 'The Spear and Shield', '矛盾', 'The Law of Non-Contradiction', '不矛盾律', 'The Law of the Excluded Middle', '排中律', 'Non-Contradiction', '不矛盾律'),
+    ('the-open-question', 'The Open Question', '未决之问', 'Incompleteness', '不完备性', 'Number and Sets', '数与集合', 'Incompleteness', '不完备性'),
+    ('voss-halloran', 'Voss Halloran', '沃斯·哈洛兰', subheads[5], zh_subheads[5], subheads[6], zh_subheads[6], 'Conservation of Energy', '能量守恒'),
+    ('rudolf-ludwig', 'Rudolf Ludwig', '鲁道夫·路德维希', subheads[6], zh_subheads[6], subheads[7], zh_subheads[7], 'Entropy', '熵'),
+    ('rushd', 'Rushd', '鲁什德', subheads[7], zh_subheads[7], 'Social Laws', '社会法则', 'Causality', '因果律'),
+    ('aldous-vane', 'Aldous Vane', '奥尔德斯·维恩', subheads[8], zh_subheads[8], subheads[9], zh_subheads[9], 'The Iron Law of Oligarchy', '寡头铁律'),
+    ('lian-xiu', 'Lian Xiu', '连秀', subheads[9], zh_subheads[9], subheads[10], zh_subheads[10], 'Supply and Demand', '供求律'),
+    ('mattias-krane', 'Mattias Krane', '马蒂亚斯·克兰', subheads[10], zh_subheads[10], 'To settle', '待定事项', "Goodhart's Law", '古德哈特定律'),
+]
+lines = load('Quoderat The Pantheon.md')
+zlines = load('Quoderat The Pantheon.md', 'zh')
+for slug, title, ztitle, start, zstart, end, zend, law, zlaw in character_sections:
+    add(title, 'Characters', [start] + lines[lines.index(start)+1:lines.index(end)],
+        'Quoderat The Pantheon.md', slug, {'Held law': law})
+    articles[-1]['translations'] = {'zh': {
+        'title': ztitle,
+        'body': markdown([zstart] + zlines[zlines.index(zstart)+1:zlines.index(zend)]),
+        'stats': {'Held law': zlaw},
+    }}
 lines=load('Quoderat Creatures.md')
 families=['Unicorns: Life and Healing','Phoenixes: Renewal','Kitsune: Illusion and Concealment','Trolls: The Body']
 for i,heading in enumerate(families):
