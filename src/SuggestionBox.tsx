@@ -37,7 +37,7 @@ export function SuggestionBox({ language }: { language: Language }) {
     return () => { clearTimeout(timer); motion.removeEventListener('change', restart); };
   }, [language, name, nameFocused]);
   const [message, setMessage] = useState('');
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error' | 'limited'>('idle');
   const base = ((import.meta as unknown as {env: Record<string,string>}).env.VITE_API_BASE || '/api').replace(/\/$/, '');
   async function submit(event: FormEvent) {
     event.preventDefault(); setStatus('sending');
@@ -50,6 +50,7 @@ export function SuggestionBox({ language }: { language: Language }) {
         headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
         body: JSON.stringify({ name, message }),
       });
+      if (response.status === 429) { setStatus('limited'); return; }
       if (!response.ok) throw new Error();
       setStatus('sent'); setMessage('');
     } catch { setStatus('error'); }
@@ -68,7 +69,7 @@ export function SuggestionBox({ language }: { language: Language }) {
         <textarea required maxLength={3000} rows={7} placeholder={zh ? '我在想……' : 'I have been wondering…'} value={message} onChange={e=>{setMessage(e.target.value);if(status!=='sending')setStatus('idle')}} disabled={status==='sending'}/></label>
       <div className="letter-signature"><span>□ Q.E.D.</span><small>{message.length.toLocaleString()} / 3,000</small></div>
       <div className="letter-send"><span className="wax-seal" aria-hidden="true">Q</span><button disabled={status==='sending' || !message.trim()}>{status==='sending' ? (zh?'正在寄出…':'Sending…') : (zh?'封缄并寄出 ↗':'Seal & send ↗')}</button></div>
-      <p className={`letter-status ${status}`} role="status">{status==='sent' ? (zh?'信已送达。谢谢你为这个世界留下的想法。':'Your letter has arrived. Thank you for adding your voice to this world.') : status==='error' ? (zh?'暂时未能寄出。文字已保留，请稍后重试。':'Your letter could not be sent. Your text is still here; please try again.') : ''}</p>
+      <p className={`letter-status ${status}`} role="status">{status==='sent' ? (zh?'信已送达。谢谢你为这个世界留下的想法。':'Your letter has arrived. Thank you for adding your voice to this world.') : status==='limited' ? (zh?'今天的信件已经够多了。文字已保留，请过一会儿再寄。':'The post is full for now. Your text is still here; please try again later.') : status==='error' ? (zh?'暂时未能寄出。文字已保留，请稍后重试。':'Your letter could not be sent. Your text is still here; please try again.') : ''}</p>
     </form>
     <p className="letter-privacy">{zh ? '仅作者可在管理后台阅读。不会公开发布，也不需要提供邮箱。' : 'Read privately by the author in the admin panel. Not published publicly. No email required.'}</p>
   </section>;

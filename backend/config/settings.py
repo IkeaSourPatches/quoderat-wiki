@@ -13,6 +13,18 @@ CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in os.getenv(
     'DJANGO_CSRF_TRUSTED_ORIGINS',
     'http://127.0.0.1:5980,http://localhost:5980' if DEBUG else ''
 ).split(',') if origin.strip()]
+# Suggestion box spam limits. The per-IP window is one hour; the global cap is per day
+# and bounds total spam even if an attacker rotates addresses.
+SUGGESTION_LIMIT_PER_IP_HOUR = int(os.getenv('SUGGESTION_LIMIT_PER_IP_HOUR', '5'))
+SUGGESTION_LIMIT_PER_DAY = int(os.getenv('SUGGESTION_LIMIT_PER_DAY', '200'))
+# Behind Nginx every request arrives from 127.0.0.1. Enable this only when the proxy
+# overwrites X-Real-IP (proxy_set_header X-Real-IP $remote_addr), or clients can forge it.
+TRUST_X_REAL_IP = os.getenv('DJANGO_TRUST_X_REAL_IP', 'false').lower() == 'true'
+# Rate-limit counters live in the cache. Local memory is per process, so production
+# uses a file cache that every gunicorn worker shares.
+CACHES = {'default': {'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'}} if DEBUG else {
+    'default': {'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+                'LOCATION': os.getenv('DJANGO_CACHE_DIR', str(BASE_DIR / '.cache'))}}
 INSTALLED_APPS = ['django.contrib.admin','django.contrib.auth','django.contrib.contenttypes','django.contrib.sessions','django.contrib.messages','django.contrib.staticfiles','wiki']
 MIDDLEWARE = ['django.middleware.security.SecurityMiddleware','django.contrib.sessions.middleware.SessionMiddleware','django.middleware.common.CommonMiddleware','django.middleware.csrf.CsrfViewMiddleware','django.contrib.auth.middleware.AuthenticationMiddleware','django.contrib.messages.middleware.MessageMiddleware','django.middleware.clickjacking.XFrameOptionsMiddleware']
 ROOT_URLCONF = 'config.urls'

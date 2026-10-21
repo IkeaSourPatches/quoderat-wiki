@@ -28,6 +28,8 @@ class ArchiveTests(TestCase):
         self.assertEqual(result['translations']['zh']['title'],'历史之塔')
 
 class SuggestionTests(__import__('django.test', fromlist=['TestCase']).TestCase):
+    def setUp(self):
+        __import__('django.core.cache', fromlist=['cache']).cache.clear()
     def test_private_submission_and_validation(self):
         from django.test import Client
         from .models import Suggestion
@@ -42,6 +44,8 @@ class SuggestionTests(__import__('django.test', fromlist=['TestCase']).TestCase)
 
 
 class ProxyCsrfTests(TestCase):
+    def setUp(self):
+        __import__('django.core.cache', fromlist=['cache']).cache.clear()
     def test_local_frontend_origin_and_untrusted_origin(self):
         from django.test import Client
         client = Client(enforce_csrf_checks=True)
@@ -55,3 +59,53 @@ class ProxyCsrfTests(TestCase):
             content_type='application/json', HTTP_X_CSRFTOKEN=token,
             HTTP_ORIGIN='https://untrusted.example')
         self.assertEqual(response.status_code, 403)
+
+
+from django.core.cache import cache
+from django.test import override_settings
+
+
+@override_settings(SUGGESTION_LIMIT_PER_IP_HOUR=2, SUGGESTION_LIMIT_PER_DAY=3)
+class SuggestionRateLimitTests(TestCase):
+    url = '/api/suggestions/'
+
+    def setUp(self):
+        cache.clear()
+
+    def post(self, ip, **extra):
+        return self.client.post(self.url, {'message': 'Idea'}, content_type='application/json',
+                                REMOTE_ADDR=ip, **extra)
+
+    def test_per_ip_limit_returns_429_with_retry_after(self):
+        from .models import Suggestion
+        self.assertEqual(self.post('1.1.1.1').status_code, 201)
+        self.assertEqual(self.post('1.1.1.1').status_code, 201)
+        response = self.post('1.1.1.1')
+        self.assertEqual(response.status_code, 429)
+        self.assertTrue(response.has_header('Retry-After'))
+        self.assertEqual(Suggestion.objects.count(), 2)
+        # A different visitor is unaffected by the first visitor's limit.
+        self.assertEqual(self.post('2.2.2.2').status_code, 201)
+
+    def test_invalid_floods_count_toward_the_limit(self):
+        for _ in range(2):
+            self.client.post(self.url, {'message': ' '}, content_type='application/json', REMOTE_ADDR='1.1.1.1')
+        self.assertEqual(self.post('1.1.1.1').status_code, 429)
+
+    def test_global_daily_cap_survives_rotating_addresses(self):
+        for ip in ('1.0.0.1', '1.0.0.2', '1.0.0.3'):
+            self.assertEqual(self.post(ip).status_code, 201)
+        self.assertEqual(self.post('1.0.0.4').status_code, 429)
+
+    def test_x_real_ip_is_ignored_unless_trusted(self):
+        # Untrusted: a forged header cannot dodge the limit for the real address.
+        for _ in range(2):
+            self.post('127.0.0.1', HTTP_X_REAL_IP='9.9.9.9')
+        self.assertEqual(self.post('127.0.0.1', HTTP_X_REAL_IP='8.8.8.8').status_code, 429)
+
+    @override_settings(TRUST_X_REAL_IP=True)
+    def test_trusted_proxy_limits_each_visitor_separately(self):
+        for _ in range(2):
+            self.post('127.0.0.1', HTTP_X_REAL_IP='9.9.9.9')
+        self.assertEqual(self.post('127.0.0.1', HTTP_X_REAL_IP='9.9.9.9').status_code, 429)
+        self.assertEqual(self.post('127.0.0.1', HTTP_X_REAL_IP='8.8.8.8').status_code, 201)
