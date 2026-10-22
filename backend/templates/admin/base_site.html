@@ -1,0 +1,34 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+
+{% comment %}
+  The admin's chrome, restyled to belong to the same site as the public archive.
+  Only presentation changes: the branding block gets a wordmark, and one extra
+  stylesheet is appended after Django's own so it can safely override tokens.
+{% endcomment %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Quoderat') }}{% endblock %}
+
+{% block responsive %}
+  {{ block.super }}
+  {# Load last, after Django's page-specific and responsive styles. #}
+  <link rel="stylesheet" href="{% static 'wiki/admin-theme.css' %}">
+{% endblock %}
+
+{% block extrahead %}
+  <meta charset="utf-8">
+  {{ block.super }}
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23111e19'/><text x='16' y='23' text-anchor='middle' font-family='Georgia,serif' font-size='20' font-style='italic' fill='%23cbb888'>Q</text></svg>">
+{% endblock %}
+
+{% block branding %}
+  <div id="quoderat-brand">
+    <a href="{% url 'admin:index' %}">
+      <span class="mark" aria-hidden="true">Q<span>✦</span></span>
+      <span class="name">
+        Quoderat
+        <small>{% translate "The Living Archive" %}</small>
+      </span>
+    </a>
+  </div>
+{% endblock %}

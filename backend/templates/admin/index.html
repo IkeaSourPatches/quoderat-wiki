@@ -1,0 +1,28 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+{% block content %}
+<div id="content-main">
+  <section class="q-welcome">
+    <p class="q-eyebrow">QUODERAT / WORKSPACE</p>
+    <h2>{% translate "Keep the world in order." %}</h2>
+    <p>{% translate "Edit the archive, read visitors’ letters, and manage access." %}</p>
+  </section>
+  {% for app in app_list reversed %}
+  <section class="q-app" aria-labelledby="q-app-{{ app.app_label }}">
+    <h2 id="q-app-{{ app.app_label }}">{{ app.name }}</h2>
+    <div class="q-model-grid">
+    {% for model in app.models %}
+      <article class="q-model-card">
+        <h3>{% if model.admin_url %}<a href="{{ model.admin_url }}">{{ model.name }}</a>{% else %}{{ model.name }}{% endif %}</h3>
+        <p>{% if model.object_name == 'Article' %}{% translate "Browse and edit the world’s bilingual entries and character profiles." %}{% elif model.object_name == 'Suggestion' %}{% translate "Read questions and ideas from visitors. Mark letters as reviewed." %}{% elif model.object_name == 'User' %}{% translate "Manage staff accounts and individual access." %}{% elif model.object_name == 'Group' %}{% translate "Organize permissions for the people maintaining this world." %}{% endif %}</p>
+        <div class="q-card-actions">
+          {% if model.admin_url %}<a href="{{ model.admin_url }}">{% translate "Open" %} →</a>{% endif %}
+          {% if model.add_url %}<a href="{{ model.add_url }}">+ {% translate "Add" %}</a>{% endif %}
+        </div>
+      </article>
+    {% endfor %}
+    </div>
+  </section>
+  {% empty %}<p>{% translate "You don’t have permission to view or edit anything." %}</p>{% endfor %}
+</div>
+{% endblock %}
