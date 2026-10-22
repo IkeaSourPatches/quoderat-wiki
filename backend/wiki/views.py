@@ -18,12 +18,37 @@ def article_detail(request,slug):
 from django.views.decorators.http import require_http_methods
 from django.middleware.csrf import get_token
 import json
+import time
+from django.conf import settings
+from django.core.cache import cache
 from .models import Suggestion
+
+def client_ip(request):
+    # Only trust X-Real-IP when settings say the reverse proxy overwrites it.
+    if settings.TRUST_X_REAL_IP and request.META.get('HTTP_X_REAL_IP'):
+        return request.META['HTTP_X_REAL_IP']
+    return request.META.get('REMOTE_ADDR', 'unknown')
+
+def over_limit(key, limit, window):
+    """Fixed-window counter in the cache; True once this window exceeds the limit."""
+    cache.add(key, 0, window)
+    try:
+        count = cache.incr(key)
+    except ValueError:  # The entry expired between add() and incr().
+        cache.set(key, 1, window)
+        count = 1
+    return count > limit
 
 @require_http_methods(['GET', 'POST'])
 def suggestions(request):
     if request.method == 'GET':
         return JsonResponse({'csrfToken': get_token(request)})
+    now = int(time.time())
+    if (over_limit(f'suggest:ip:{client_ip(request)}:{now // 3600}', settings.SUGGESTION_LIMIT_PER_IP_HOUR, 3600)
+            or over_limit(f'suggest:all:{now // 86400}', settings.SUGGESTION_LIMIT_PER_DAY, 86400)):
+        response = JsonResponse({'error': 'Too many letters. Please try again later.'}, status=429)
+        response['Retry-After'] = str(3600 - now % 3600)
+        return response
     if len(request.body) > 20000:
         return JsonResponse({'error': 'Message too large.'}, status=400)
     try:
