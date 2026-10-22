@@ -21,8 +21,10 @@ Shared rules for every AI agent working in this repo (Codex reads this file; Cla
 
 ```sh
 npm run build
+node scripts/check-localization.mjs   # bilingual data contract (Node 22.18+, native TypeScript)
+node scripts/check-game.mjs           # puzzle solvability and adjacency
 python backend/manage.py check
 python backend/manage.py test wiki
 ```
 
-Target Python 3.12 or 3.13 for deployment (Django 5.2).
+Run the Python commands from the activated `.venv/`; the system `python3` may not have Django installed. Target Python 3.12 or 3.13 for deployment (Django 5.2).

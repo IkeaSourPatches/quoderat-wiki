@@ -1,6 +1,6 @@
 # Quoderat — The Living Archive
 
-A portable learning project: **React + TypeScript (TSX) + MUI + Vite** in the browser, **Django + SQLite** on your server. The 27 entries are taken from Gordon Ji's four bilingual Quoderat source documents and the Chinese terminology sheet, verified against Google Drive on 20 October 2026; original source files are not modified.
+A portable learning project: **React + TypeScript (TSX) + MUI + Vite** in the browser, **Django + SQLite** on your server. The 46 entries — 20 characters, 9 pantheon, 9 creatures, 7 world and laws, 1 timeline — are taken from Gordon Ji's four bilingual Quoderat source documents and the Chinese terminology sheet. Pantheon and Creatures were verified against Google Drive on 22 October 2026 and the other snapshots on 20 October 2026; original source files are not modified.
 
 ## Run the frontend
 
@@ -33,25 +33,60 @@ VITE_API_BASE=/api npm run dev
 
 Open the URL printed by Vite. Visit `http://127.0.0.1:8000/admin/` to sign in and create/edit persistent articles and character attributes. Reload the frontend after admin edits. `seed_wiki` imports missing entries without overwriting your edits; `seed_wiki --replace` intentionally restores the bundled content.
 
+## Pages and routes
+
+The frontend is one page with hash routing; there is no router library. Every view is a shareable URL and survives a reload.
+
+| Hash | View | Component |
+| --- | --- | --- |
+| `#home` | World entrance: premise, featured people, invitation to the library | `src/WorldHome.tsx` |
+| `#lore` | Library index of the four setting sections | `src/LoreHome.tsx` |
+| `#lore/<category>` | Catalogue for one section: `World & laws`, `The pantheon`, `Creatures`, `Timeline` | `src/main.tsx` |
+| `#characters` | Character gallery with emblems and held laws | `src/main.tsx` |
+| `#browse` | Every entry, characters included | `src/main.tsx` |
+| `#saved` | Bookmarks held in the browser | `src/main.tsx` |
+| `#suggestions` | Letter to the author | `src/SuggestionBox.tsx` |
+| `#play` | Map-colouring puzzle book | `src/game/SaiGame.tsx` |
+| `#<slug>` | One article, for example `#ilar-hesabu` | `src/main.tsx` |
+
+Client state stays deliberately plain: language in `quoderat-language`, bookmarks in `quoderat-bookmarks`, puzzle progress in `quoderat-sai-v1`. Nothing else is persisted, and no account is involved.
+
 ## How the pieces connect
 
 ```text
-React UI → src/api.ts → GET /api/articles/ → Django view → Article model → SQLite
-                      ↘ bundled JSON (Sites edition)
-Django admin → authenticated/CSRF-protected edit → Article model
+React views   → src/api.ts → GET /api/articles/ → views.py → Article → SQLite
+                           ↘ data/articles.json (Archive/Sites edition)
+SuggestionBox → GET + POST /api/suggestions/ → view + CSRF token → Suggestion → SQLite
+SaiGame       → GET /api/game/puzzles|daily/ · POST /api/game/validate/ → data/sai-puzzles.json
+Django admin  → authenticated, CSRF-protected edit → Article
 ```
 
-`src/main.tsx` contains the three-column reading layout, category navigation, search, bookmarks and editor dialog. `src/styles.css` handles responsive layout and the visual design; MUI supplies accessible dialogs, fields, buttons and notices. `src/api.ts` is the data boundary: the UI receives the same Article shape in either mode. `backend/wiki/models.py` defines persistence, `views.py` exposes read-only JSON, and `admin.py` supplies authenticated authoring. Markdown is rendered by react-markdown with GitHub-style tables; raw HTML is not executed.
+`src/main.tsx` holds the reading layout, article catalogue, search, bookmarks, Markdown workspace and the shared breadcrumb/search/language top bar. `WorldHome.tsx`, `LoreHome.tsx`, `SuggestionBox.tsx` and `game/SaiGame.tsx` are the destination views it swaps in. `src/i18n.ts` owns the interface dictionary and merges `translations.zh` into an article; `src/styles.css` carries the responsive design, and MUI supplies accessible dialogs, fields, buttons and notices. `src/api.ts` is the data boundary: the UI receives the same Article shape in either mode. Markdown is rendered by react-markdown with GitHub-style tables; raw HTML is not executed.
+
+On the server, `backend/wiki/models.py` defines persistence, `views.py` exposes read-only article JSON and the rate-limited suggestion endpoint, `game.py` serves puzzle data and validates colourings, and `admin.py` supplies authenticated authoring. The article API is read-only by design: a `POST` to `/api/articles/` answers `405`.
+
+| Method | Path | Behaviour |
+| --- | --- | --- |
+| `GET` | `/api/articles/` | Every article; optional `?category=` filter |
+| `GET` | `/api/articles/<slug>/` | One article, or `404` |
+| `GET`, `POST` | `/api/suggestions/` | `GET` issues a CSRF token; `POST` stores one private letter |
+| `GET` | `/api/game/puzzles/` | The nine puzzle definitions |
+| `GET` | `/api/game/daily/` | Today's UTC puzzle id |
+| `GET`, `POST` | `/api/game/validate/` | `GET` issues a CSRF token; `POST` checks a completed colouring |
 
 We use separate React and Django applications rather than Django HTML templates so you can learn each layer independently. Vite proxies `/api` locally, avoiding unnecessary cross-origin configuration. Django's built-in admin provides real persistent editing while you learn; the next useful exercise is replacing it with an authenticated React editor using sessions and CSRF protection.
 
 ## Checks
 
 ```sh
-npm run build
+npm run build                          # tsc --noEmit, then the Vite production build
+node scripts/check-localization.mjs    # bilingual data contract, Node 22.18+
+node scripts/check-game.mjs            # puzzle solvability and adjacency
 python backend/manage.py check
 python backend/manage.py test wiki
 ```
+
+Run the Python commands from the activated `.venv`; several systems ship a `python3` without Django installed.
 
 ## Move to your own server
 
@@ -82,7 +117,7 @@ Run `node scripts/check-localization.mjs` (Node 22.18+ with native TypeScript su
 
 The local development server opens at http://127.0.0.1:5980/ (`npm run dev`). Port 5980 is fixed; stop the process using it if Vite reports it is occupied.
 
-The Characters category contains all 11 named or titled Pantheon figures, with individual English and Chinese pages generated by `scripts/import-lore.py` from the source snapshots.
+The Characters category contains 20 named or titled figures (16 Pantheon figures and four dragon elders), with individual English and Chinese pages generated by `scripts/import-lore.py` from the source snapshots.
 
 ## Suggestion box limits
 
@@ -109,3 +144,10 @@ location /api/suggestions/ {
 
 In development (`DJANGO_DEBUG=true`) the counters live in process memory and reset when `runserver` restarts.
 
+## Sai’s Impossible Advertisement
+
+Open `#play` for nine bilingual SVG map-colouring puzzles. Each region is a graph vertex; only shared edges create adjacency. Puzzle geometry and borders live in `data/sai-puzzles.json`, shared by React and Django. Progress is stored on the visitor’s device; no account or leaderboard is required. Game dialogue and maps are adaptations, not additions to canon.
+
+Django serves `GET /api/game/puzzles/`, `GET /api/game/daily/` (UTC, rotating through the nine maps), and `GET/POST /api/game/validate/`. GET validation issues a CSRF token; POST checks the complete colouring against the server’s puzzle data. The frontend validates locally too, so puzzles remain playable when the backend is unavailable. The Vite `/api` proxy reaches Django during local development; production should route `/api` to Django on the same origin. A separate backend origin needs the same CORS and CSRF configuration as the rest of the app.
+
+Run `node scripts/check-game.mjs` for map solvability, adjacency and save-data checks. Django game tests are included in `python backend/manage.py test wiki`.
