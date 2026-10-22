@@ -88,3 +88,64 @@ body{background:radial-gradient(ellipse at 70% 10%,#304a363b,transparent 65%),#1
 .character-pager{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;margin:38px 0 26px;border-top:1px solid #7c805c55;padding-top:24px}.character-pager button{display:flex;flex-direction:column;gap:9px;align-items:flex-start;text-align:left;border:1px solid #7c805c55;background:transparent;color:inherit;padding:16px;min-width:0}.character-pager button:last-child{align-items:flex-end;text-align:right}.character-pager small{font-size:11px;letter-spacing:.5px}.character-pager strong{font:18px Georgia,'Songti SC',serif}.character-pager .pager-index{align-items:center;justify-content:center;text-align:center;font-size:11px}.character-pager button:disabled{opacity:.35;cursor:default}.character-pager button:not(:disabled):hover{background:#9c9a6b18}
 @media(max-width:650px){.lore-section-grid{grid-template-columns:1fr}.lore-seal{display:none}.home-lore-invitation{align-items:flex-start;flex-direction:column}.character-pager{grid-template-columns:1fr 1fr}.character-pager .pager-index{grid-column:1/-1;grid-row:2}.character-pager strong{font-size:16px}}
 @media(prefers-reduced-motion:reduce){.lore-section-grid>button{transition:none}}
+
+/* Homepage atmosphere: broad colour fields and quiet geometric engraving. */
+.page:has(.world-home) {
+  background:
+    radial-gradient(ellipse at 92% 8%, #846b3936, transparent 28%),
+    radial-gradient(ellipse at 10% 38%, #3c746342, transparent 34%),
+    radial-gradient(ellipse at 85% 68%, #3b516138, transparent 33%),
+    linear-gradient(170deg, #172a25 0%, #142621 42%, #19282b 75%, #111e19 100%);
+}
+.world-home { position:relative; isolation:isolate; }
+.world-home::before {
+  content:''; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cpath d='M90 86v8m-4-4h8' stroke='%23d8c593' stroke-opacity='.10' stroke-width='.7'/%3E%3C/svg%3E");
+  mask-image:linear-gradient(to bottom,transparent,#000 25%,#000 80%,transparent);
+}
+.world-hero { position:relative; isolation:isolate; }
+.world-hero::before {
+  content:'';position:absolute;z-index:-1;pointer-events:none;
+  width:650px;height:650px;right:-200px;top:-90px;border-radius:50%;
+  background:
+    repeating-radial-gradient(circle at center,transparent 0 73px,#c8b1781c 74px,transparent 75px 106px),
+    conic-gradient(from 25deg,transparent,#a2b78909,transparent 35%,#c8a6660d,transparent 80%);
+  mask-image:linear-gradient(90deg,transparent,#000 45%);
+}
+.world-hero-copy { position:relative; }
+.world-hero h1 { text-shadow:0 4px 40px #0003; }
+.world-premise {
+  background:linear-gradient(110deg,#8eaa7f0b,transparent 65%);
+}
+.world-people {
+  background:radial-gradient(ellipse at 50% 25%,#bca36512,transparent 70%);
+}
+.world-home .home-lore-invitation {
+  background:linear-gradient(110deg,#a78b4d0c,transparent 70%);
+}
+.world-closing {
+  background:radial-gradient(ellipse at 50% 90%,#789d7617,transparent 68%);
+}
+@media(max-width:600px) {
+  .world-hero::before {right:-380px;top:-45px;opacity:.7;}
+}
+
+/* Full-width homepage bands, with a shared inset for headings and body copy. */
+.page:has(.world-home) {
+  max-width: none;
+  padding-inline: 0;
+}
+.world-home {
+  --home-inset: max(clamp(28px, 5vw, 72px), calc((100% - 1200px) / 2));
+}
+.world-home > section,
+.world-home > .letter-invitation {
+  padding-inline: var(--home-inset);
+}
+.world-home .world-premise,
+.world-home .world-people {
+  column-gap: clamp(28px, 4vw, 60px);
+}
+@media(max-width:700px) {
+  .world-home .world-premise { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,812 @@
+/* =============================================================================
+   Quoderat — admin theme
+   Appearance only: palette, type, spacing and a few affordances. No markup
+   moves, so every Django admin feature keeps working exactly as before.
+   Colours are borrowed from the public site: forest green, brass, parchment.
+   ============================================================================= */
+
+/* --- Palette --------------------------------------------------------------
+   Light is the default. The dark palette mirrors every token so the admin's
+   own theme toggle still does something honest. `auto` follows the OS.       */
+
+:root,
+html[data-theme="light"] {
+  color-scheme: light;
+
+  --q-forest: #16241d;
+  --q-green: #2d5548;
+  --q-green-deep: #1f4034;
+  --q-brass: #a98f57;
+  --q-brass-light: #cbb888;
+  --q-field-bg: #fffdf6;
+  --q-paper-deep: #efe8d6;
+
+  --primary: var(--q-green);
+  --secondary: #24463a;
+  --accent: var(--q-brass-light);
+  --primary-fg: #f8f4e6;
+
+  --body-fg: #2c3a31;
+  --body-bg: #f6f2e6;
+  --body-quiet-color: #5d6857;
+  --body-medium-color: #46544a;
+  --body-loud-color: #1c2a22;
+
+  --header-color: #efe7d0;
+  --header-branding-color: #f0e5c6;
+  --header-bg: var(--q-forest);
+  --header-link-color: #e8dfc6;
+
+  --breadcrumbs-fg: #b9c2ac;
+  --breadcrumbs-link-fg: #f0e8d2;
+  --breadcrumbs-bg: #21382d;
+
+  --link-fg: #2e6853;
+  --link-hover-color: #1d4535;
+  --link-selected-fg: #8a6f3c;
+
+  --hairline-color: #e4dcc5;
+  --border-color: #cfc5a9;
+  --error-fg: #a5331f;
+
+  --message-success-bg: #e2ead4;
+  --message-warning-bg: #f6ecca;
+  --message-error-bg: #f7e1da;
+
+  --darkened-bg: var(--q-paper-deep);
+  --selected-bg: #e6dfc6;
+  --selected-row: #f2e7bc;
+
+  --button-fg: #f8f4e6;
+  --button-bg: #3a6151;
+  --button-hover-bg: #2c4f41;
+  --default-button-bg: var(--q-green);
+  --default-button-hover-bg: var(--q-green-deep);
+  --close-button-bg: #6f7a66;
+  --close-button-hover-bg: #55604d;
+  --delete-button-bg: #9c3b28;
+  --delete-button-hover-bg: #83301f;
+
+  --object-tools-fg: #f8f4e6;
+  --object-tools-bg: var(--q-green);
+  --object-tools-hover-bg: var(--q-green-deep);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --q-field-bg: #16241d;
+  --q-paper-deep: #182a21;
+
+  --primary: #3f6b56;
+  --secondary: #2a4a3c;
+  --accent: #d6c08a;
+  --primary-fg: #f6f0dc;
+
+  --body-fg: #e4dcc6;
+  --body-bg: #121d18;
+  --body-quiet-color: #a9b49e;
+  --body-medium-color: #cfc9b2;
+  --body-loud-color: #f7f0dc;
+
+  --header-color: #efe7d0;
+  --header-branding-color: #ecd9a6;
+  --header-bg: #0c1511;
+  --header-link-color: #e4dcc6;
+
+  --breadcrumbs-fg: #aab79c;
+  --breadcrumbs-link-fg: #f0e8d2;
+  --breadcrumbs-bg: #1a2b22;
+
+  --link-fg: #d6c08a;
+  --link-hover-color: #f0ddab;
+  --link-selected-fg: #b79c63;
+
+  --hairline-color: #24342a;
+  --border-color: #35483b;
+  --error-fg: #e07a63;
+
+  --message-success-bg: #1e3a29;
+  --message-warning-bg: #4a3a18;
+  --message-error-bg: #4a201a;
+
+  --darkened-bg: var(--q-paper-deep);
+  --selected-bg: #21352a;
+  --selected-row: #2a3f2e;
+
+  --button-fg: #f6f0dc;
+  --button-bg: #35604f;
+  --button-hover-bg: #2a4e40;
+  --default-button-bg: #3f7159;
+  --default-button-hover-bg: #35604f;
+  --close-button-bg: #4a5747;
+  --close-button-hover-bg: #5d6b58;
+  --delete-button-bg: #8f3323;
+  --delete-button-hover-bg: #7a2a1c;
+
+  --object-tools-fg: #f6f0dc;
+  --object-tools-bg: #35604f;
+  --object-tools-hover-bg: #2a4e40;
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="auto"] {
+    color-scheme: dark;
+
+    --q-field-bg: #16241d;
+    --q-paper-deep: #182a21;
+
+    --primary: #3f6b56;
+    --secondary: #2a4a3c;
+    --accent: #d6c08a;
+    --primary-fg: #f6f0dc;
+
+    --body-fg: #e4dcc6;
+    --body-bg: #121d18;
+    --body-quiet-color: #a9b49e;
+    --body-medium-color: #cfc9b2;
+    --body-loud-color: #f7f0dc;
+
+    --header-color: #efe7d0;
+    --header-branding-color: #ecd9a6;
+    --header-bg: #0c1511;
+    --header-link-color: #e4dcc6;
+
+    --breadcrumbs-fg: #aab79c;
+    --breadcrumbs-link-fg: #f0e8d2;
+    --breadcrumbs-bg: #1a2b22;
+
+    --link-fg: #d6c08a;
+    --link-hover-color: #f0ddab;
+    --link-selected-fg: #b79c63;
+
+    --hairline-color: #24342a;
+    --border-color: #35483b;
+    --error-fg: #e07a63;
+
+    --message-success-bg: #1e3a29;
+    --message-warning-bg: #4a3a18;
+    --message-error-bg: #4a201a;
+
+    --darkened-bg: var(--q-paper-deep);
+    --selected-bg: #21352a;
+    --selected-row: #2a3f2e;
+
+    --button-fg: #f6f0dc;
+    --button-bg: #35604f;
+    --button-hover-bg: #2a4e40;
+    --default-button-bg: #3f7159;
+    --default-button-hover-bg: #35604f;
+    --close-button-bg: #4a5747;
+    --close-button-hover-bg: #5d6b58;
+    --delete-button-bg: #8f3323;
+    --delete-button-hover-bg: #7a2a1c;
+
+    --object-tools-fg: #f6f0dc;
+    --object-tools-bg: #35604f;
+    --object-tools-hover-bg: #2a4e40;
+  }
+}
+
+/* --- Type ---------------------------------------------------------------- */
+
+html {
+  --font-family-primary: "Avenir Next", "Segoe UI", system-ui, -apple-system,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+#content h1,
+#content h2,
+.module h2,
+.module caption,
+.inline-group h2,
+.dashboard .module th a {
+  font-family: Georgia, "Songti SC", "Times New Roman", serif;
+  font-weight: 400;
+}
+
+#content h1 {
+  font-size: 26px;
+  letter-spacing: -0.3px;
+  color: var(--body-loud-color);
+  margin: 0 0 18px;
+}
+
+/* --- Header -------------------------------------------------------------- */
+
+#header {
+  padding: 13px 24px;
+  align-items: center;
+  border-bottom: 2px solid #a98f57;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.18);
+}
+
+#branding {
+  display: flex;
+  align-items: center;
+}
+
+/* Brand mark injected by templates/admin/base_site.html. */
+#quoderat-brand a {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+  color: inherit;
+}
+
+#quoderat-brand .mark {
+  position: relative;
+  font: italic 27px/1 Georgia, serif;
+  color: #cbb888;
+}
+
+#quoderat-brand .mark span {
+  position: absolute;
+  top: -3px;
+  right: -9px;
+  font-size: 10px;
+  font-style: normal;
+}
+
+#quoderat-brand .name {
+  display: flex;
+  flex-direction: column;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 16px;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  color: #f0e7cf;
+}
+
+#quoderat-brand .name small {
+  margin-top: 3px;
+  font-family: var(--font-family-primary);
+  font-size: 8.5px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #cbb888;
+}
+
+#user-tools {
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  color: var(--header-link-color);
+}
+
+#user-tools a {
+  border-bottom: 1px solid rgba(203, 184, 136, 0.45);
+  padding-bottom: 1px;
+}
+
+#user-tools a:focus,
+#user-tools a:hover {
+  border-bottom-color: #cbb888;
+}
+
+#logout-form button {
+  font-size: 11px;
+  letter-spacing: 0.4px;
+}
+
+.theme-toggle {
+  margin-inline-start: 8px;
+}
+
+/* --- Breadcrumbs --------------------------------------------------------- */
+
+div.breadcrumbs {
+  padding: 9px 24px;
+  font-size: 11px;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--hairline-color);
+}
+
+div.breadcrumbs a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* --- Content shell ------------------------------------------------------- */
+
+#content {
+  padding: 26px 24px 34px;
+}
+
+#content-related {
+  padding: 0 18px;
+}
+
+/* --- Modules and tables -------------------------------------------------- */
+
+.module {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+  padding: 9px 12px;
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--body-medium-color);
+  background: var(--darkened-bg);
+  border-bottom: 1px solid var(--hairline-color);
+}
+
+.module h2 a,
+.module caption a {
+  color: inherit;
+}
+
+/* A brass rule above every card caption, like the site's section rules. */
+.dashboard .module h2::before,
+.dashboard .module caption::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-bottom: 7px;
+  background: var(--q-brass);
+}
+
+#changelist table thead th {
+  padding: 9px 10px;
+  background: var(--darkened-bg);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 10.5px;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: var(--body-quiet-color);
+}
+
+#changelist table thead th a,
+#changelist table thead th a:link {
+  color: inherit;
+}
+
+#changelist table tbody td,
+#changelist table tbody th {
+  padding: 10px;
+  border-bottom: 1px solid var(--hairline-color);
+  vertical-align: middle;
+}
+
+#changelist table tbody tr:hover {
+  background: var(--selected-row);
+}
+
+#changelist table tbody tr.selected {
+  background: var(--selected-row);
+  color: var(--body-loud-color);
+  box-shadow: inset 3px 0 var(--q-brass);
+}
+
+#changelist .results {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* --- Buttons and object tools -------------------------------------------- */
+
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+a.button {
+  padding: 9px 16px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  line-height: 1.4;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.button.default,
+input[type="submit"].default,
+.submit-row input.default {
+  border-color: var(--q-brass);
+  font-weight: 600;
+}
+
+.button:hover,
+input[type="submit"]:hover,
+a.button:hover {
+  filter: brightness(1.06);
+}
+
+.button:focus-visible,
+input[type="submit"]:focus-visible,
+input[type="button"]:focus-visible,
+a.button:focus-visible,
+.object-tools a:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--q-brass);
+  outline-offset: 2px;
+}
+
+.object-tools {
+  margin-top: -48px;
+}
+
+.object-tools a,
+.object-tools a:link,
+.object-tools a:visited {
+  border-radius: 3px;
+  padding: 7px 13px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+}
+
+.object-tools a.addlink {
+  background: var(--object-tools-bg);
+}
+
+.object-tools a.addlink:hover {
+  background: var(--object-tools-hover-bg);
+}
+
+/* Destructive actions stay red in both themes, without shouting. */
+.submit-row a.deletelink {
+  border-radius: 3px;
+  border-color: var(--q-brass);
+}
+
+/* --- Forms --------------------------------------------------------------- */
+
+.form-row {
+  padding: 13px 12px;
+  border-bottom: 1px solid var(--hairline-color);
+}
+
+.form-row:last-child {
+  border-bottom: 0;
+}
+
+.aligned label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: var(--body-medium-color);
+}
+
+.aligned label .required {
+  color: var(--error-fg);
+}
+
+.help,
+.helptext {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--body-quiet-color);
+  line-height: 1.6;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="url"],
+textarea,
+select,
+.vTextField {
+  padding: 7px 9px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  background: var(--q-field-bg);
+  color: var(--body-fg);
+  font-family: var(--font-family-primary);
+  font-size: 13px;
+}
+
+textarea {
+  line-height: 1.6;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--q-brass);
+}
+
+fieldset.module {
+  margin-bottom: 18px;
+}
+
+fieldset.module h2 {
+  font-family: Georgia, "Songti SC", serif;
+}
+
+textarea[name="body"] {
+  font-family: var(--font-family-monospace);
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+
+.readonly {
+  color: var(--body-medium-color);
+}
+
+/* --- Changelist toolbar, filters, actions, pagination -------------------- */
+
+#toolbar {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--darkened-bg);
+  padding: 8px !important;
+  margin-bottom: 14px;
+}
+
+#searchbar {
+  border-radius: 3px !important;
+  border: 1px solid var(--border-color) !important;
+  background: var(--q-field-bg) !important;
+  padding: 8px 10px !important;
+  font-size: 13px !important;
+}
+
+#toolbar form input[type="submit"] {
+  padding: 8px 14px;
+}
+
+#changelist .actions {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--darkened-bg);
+  padding: 7px 10px;
+}
+
+#changelist .actions select {
+  background: var(--q-field-bg);
+}
+
+#changelist-filter {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--darkened-bg);
+  overflow: hidden;
+}
+
+#changelist-filter h2 {
+  padding: 9px 12px;
+  margin: 0;
+  font-family: var(--font-family-primary);
+  font-size: 10.5px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--hairline-color);
+}
+
+#changelist-filter h3 {
+  font-size: 11px;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  color: var(--body-quiet-color);
+  padding-left: 12px;
+}
+
+#changelist-filter ul {
+  padding: 0 12px 10px;
+}
+
+#changelist-filter li.selected a {
+  color: var(--body-loud-color);
+  font-weight: 600;
+  box-shadow: inset 2px 0 var(--q-brass);
+  padding-left: 6px;
+}
+
+.paginator {
+  font-size: 12px;
+  color: var(--body-quiet-color);
+  border-top: 1px solid var(--hairline-color);
+  padding-top: 12px;
+}
+
+.paginator a,
+.paginator .this-page {
+  border-radius: 3px;
+  padding: 2px 7px;
+}
+
+.paginator .this-page {
+  background: var(--q-green);
+  color: var(--primary-fg);
+}
+
+/* --- Messages ------------------------------------------------------------ */
+
+ul.messagelist li {
+  border-radius: 3px;
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--q-brass);
+  padding: 11px 13px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+ul.messagelist li.success {
+  border-left-color: #4c7a53;
+}
+
+ul.messagelist li.error {
+  border-left-color: var(--error-fg);
+}
+
+ul.messagelist li.warning {
+  border-left-color: #a8791f;
+}
+
+/* --- Sidebar ------------------------------------------------------------- */
+
+#nav-sidebar {
+  background: var(--darkened-bg);
+  border-right: 1px solid var(--border-color);
+}
+
+#nav-sidebar .current-app .section:link,
+#nav-sidebar .current-app .section:visited {
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+#nav-sidebar .current-model {
+  background: var(--selected-bg);
+}
+
+#nav-sidebar .current-model a {
+  border-inline-start: 2px solid var(--q-brass);
+}
+
+#nav-filter {
+  border-radius: 3px;
+  border: 1px solid var(--border-color);
+  background: var(--q-field-bg);
+  color: var(--body-fg);
+  padding: 6px 8px;
+}
+
+/* --- Login --------------------------------------------------------------- */
+
+body.login {
+  background: radial-gradient(ellipse at 50% 0, #24392e 0%, #0f1a15 72%);
+}
+
+body.login #container {
+  width: 390px;
+  border: 1px solid var(--q-brass);
+  border-top: 3px solid var(--q-brass);
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.45);
+  background: var(--body-bg);
+}
+
+body.login #header {
+  justify-content: center;
+  padding: 22px 20px;
+  border-bottom: 1px solid var(--hairline-color);
+  background: var(--body-bg);
+  box-shadow: none;
+}
+
+body.login #quoderat-brand .name {
+  color: var(--body-loud-color);
+}
+
+body.login #quoderat-brand .mark {
+  color: var(--q-brass);
+}
+
+body.login #content {
+  padding: 22px 26px 26px;
+}
+
+body.login .form-row {
+  padding: 0 0 16px;
+}
+
+body.login .form-row label {
+  color: var(--body-medium-color);
+  font-size: 12px;
+  letter-spacing: 0.4px;
+}
+
+body.login .submit-row {
+  padding: 4px 0 0;
+  background: transparent;
+  border: 0;
+}
+
+body.login .submit-row input {
+  width: 100%;
+  padding: 11px 16px;
+}
+
+/* --- Small screens and motion ------------------------------------------- */
+
+@media (max-width: 767px) {
+  #header {
+    padding: 11px 16px;
+  }
+
+  #quoderat-brand .name {
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+
+  div.breadcrumbs,
+  #content {
+    padding-inline: 16px;
+  }
+
+  #content h1 {
+    font-size: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  input[type="submit"],
+  a.button {
+    transition: none;
+  }
+}
+
+/* Finish the layout without changing Django's forms or permission controls. */
+#changelist .results { overflow-x: auto; }
+fieldset.module { overflow: visible; }
+.aligned .form-row > div { min-width: 0; }
+textarea { box-sizing: border-box; max-width: 100%; width: min(100%, 850px); }
+.vTextField { box-sizing: border-box; max-width: 100%; }
+.readonly { overflow-wrap: anywhere; }
+.field-message .readonly { white-space: pre-wrap; line-height: 1.8; }
+.aligned label.required { color: var(--body-loud-color); }
+body.login #container { width: min(420px, calc(100% - 32px)); box-sizing: border-box; margin: 10vh auto 32px; }
+body.login .form-row input { box-sizing: border-box; width: 100%; min-height: 42px; }
+body.login #quoderat-brand .name small { color: var(--body-quiet-color); }
+.dashboard #content { max-width: 1480px; box-sizing: border-box; margin: auto; width: 100%; }
+.dashboard #content.colMS { display: grid; grid-template-columns: minmax(0,1fr) 260px; gap: 24px; }
+.dashboard #content > h1 { grid-column: 1 / -1; margin-bottom: 0; }
+.dashboard #content-main { width: auto; float: none; min-width: 0; }
+.dashboard #content-related { width: auto; float: none; margin: 0; padding: 0; background: transparent; }
+.q-welcome { padding: 26px 28px; border: 1px solid var(--border-color); border-left: 3px solid var(--q-brass); background: var(--darkened-bg); border-radius: 5px; margin-bottom: 28px; }
+.q-eyebrow { font-size: 10px; letter-spacing: 2px; color: var(--body-quiet-color); }
+.q-welcome h2 { font-size: 28px; color: var(--body-loud-color); margin: 10px 0; }
+.q-welcome > p:last-child { color: var(--body-quiet-color); margin-bottom: 0; }
+.q-app { margin-bottom: 28px; }
+.q-app > h2 { font: 11px var(--font-family-primary); text-transform: uppercase; letter-spacing: 1.7px; color: var(--body-quiet-color); }
+.q-model-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+.q-model-card { border: 1px solid var(--border-color); border-radius: 5px; padding: 22px; background: var(--q-field-bg); display: flex; flex-direction: column; }
+.q-model-card h3 { font: 23px Georgia,serif; margin: 0 0 12px; }
+.q-model-card p { margin: 0 0 24px; color: var(--body-quiet-color); line-height: 1.7; }
+.q-card-actions { margin-top: auto; display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid var(--hairline-color); padding-top: 14px; font-size: 12px; }
+#recent-actions-module { padding-bottom: 14px; }
+#recent-actions-module h3, #recent-actions-module p, #recent-actions-module ul { margin-inline: 16px; }
+@media(max-width:1100px) { .dashboard #content.colMS { grid-template-columns: 1fr; } }
+@media(max-width:600px) { .q-model-grid { grid-template-columns: 1fr; } .q-welcome { padding: 20px; } .q-welcome h2 { font-size: 24px; } #user-tools { line-height: 2; } }
+
+@media(max-width:767px) { .object-tools { margin-top: 0; } }
+/* Django's .section link uses header text colours; sidebar captions use paper. */
+#nav-sidebar .module caption a.section:link,
+#nav-sidebar .module caption a.section:visited { color: var(--body-medium-color); }
