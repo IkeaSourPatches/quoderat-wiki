@@ -11,7 +11,7 @@ export function LoreHome({ language, articles, browse }: {
     ['World & laws', Globe2, 'The foundations of reality', '现实的根基', 'Laws, inheritance, disproof, and the Axiom.', '法则、继承、证伪与公理。'],
     ['The pantheon', Scale, 'The order of the divine', '众神的秩序', 'The hierarchy of laws, their reach, and their limits.', '法则的层级、范围与边界。'],
     ['Creatures', Flame, 'Power before the gods', '神明之前的力量', 'Dragons, mythical families, totems, and the legacy of the hunt.', '龙族、神兽族群、图腾与狩猎的遗产。'],
-    ['Timeline', ScrollText, 'The world that came before', '世界的来路', 'Descend through the floors of the Tower of History.', '沿着历史之塔的楼层，回望过去。'],
+    ['Timeline', ScrollText, 'The world that came before', '世界的来路', 'Rewind the world and watch history change it.', '倒转时间，看历史如何改变世界。'],
   ];
   return <div className="lore-home">
     <header className="lore-intro"><h1>{text('The workings of a world.', '一个世界的运行之理。')}</h1><p>{text('Every law has a history. Every power has its limits. Explore the setting, one section at a time.', '每条法则都有历史，每种力量都有边界。从一个分区开始，深入世界的设定。')}</p></header>

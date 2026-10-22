@@ -21,3 +21,20 @@ assert.equal(translate('zh','Creatures'),'神兽');
 const custom={slug:'custom',title:'English only',body:'New article',category:'Characters',stats:{},source:''};
 assert.equal(localizeArticle(custom,'zh').body,'New article');
 console.log(`Verified ${articles.length} bilingual entries, stable identities, seven timeline floors, and fallback.`);
+// The rewound timeline reads its text out of the article, so check that it still can.
+const world = await import('../src/timeline/world.ts');
+for (const [lang, body] of [['en', timeline.body], ['zh', timeline.translations.zh.body]]) {
+  const {floors} = world.parseTimeline(body);
+  assert.equal(floors.length, 7, `${lang}: seven floors`);
+  assert.equal(world.splitActs(floors[world.FEUD].body).acts.length, 4, `${lang}: the Feud has four acts`);
+  for (const kind of ['dragon', 'unicorn', 'phoenix', 'kitsune', 'troll']) {
+    const name = world.KIND_NAMES[kind][lang];
+    assert.ok(world.myth(floors, name), `${lang}: ${kind} creation myth`);
+    assert.ok(world.fate(floors, name), `${lang}: ${kind} fate in the Hunt`);
+  }
+  assert.ok(world.myth(floors, world.KIND_NAMES.mortal[lang]), `${lang}: mortal creation myth`);
+  assert.ok(world.present(floors, world.KIND_NAMES.kitsune[lang]), `${lang}: kitsune in the Present`);
+}
+for (const text of [world.T, world.TIP, world.LAW, world.REGION, world.KIND_NAMES].flatMap(Object.values)) assert.ok(text.en?.trim() && text.zh?.trim(), JSON.stringify(text));
+assert.equal(world.STOPS.length, world.CAMERA.length, 'one camera per stop');
+console.log('Verified the rewound timeline: seven floors, four Feud acts, every creature in both languages.');

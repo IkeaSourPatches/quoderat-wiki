@@ -1,0 +1,231 @@
+/* ===== Timeline: the world, rewound (wr-*) ===== */
+.page:has(.wr){background:radial-gradient(ellipse at 50% 0%,#846b3922,transparent 45%),linear-gradient(180deg,#111e19 0%,#152821 60%,#0f1a16 100%)}
+.wr{--wr-gold:#c9b482;--wr-paper:#f1ebd9;--wr-line:#c9b48240;--wr-serif:'STIX Two Text',Cambria,Georgia,serif;--wr-sans:'Avenir Next','Segoe UI',sans-serif;--era:#2f7a6e;color:var(--wr-paper);font-family:var(--wr-serif);padding:clamp(8px,2vw,24px) 0 32px}
+html[lang="zh-CN"] .wr{--wr-serif:'Songti SC','Noto Serif CJK SC','STIX Two Text',serif}
+.wr button{font-family:var(--wr-sans);cursor:pointer}
+.wr :focus-visible{outline:2px solid var(--wr-gold);outline-offset:3px}
+
+.wr-head{max-width:780px;margin:0 0 24px}
+.wr-head small{font:600 11px/1 var(--wr-sans);letter-spacing:3px;text-transform:uppercase;color:var(--wr-gold)}
+.wr .wr-head h1{font-family:var(--wr-serif);font-weight:400;font-size:clamp(38px,4.4vw,62px);line-height:1.05;letter-spacing:-.5px;color:var(--wr-paper);margin:12px 0}
+.wr-head p{font-size:18px;line-height:1.6;color:#c2c8b6;margin:0}
+
+.wr-stage{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(300px,1fr);gap:24px;align-items:start}
+.wr-main{min-width:0}
+.wr-view{position:relative;aspect-ratio:1000/640;border:1px solid var(--wr-line);border-radius:4px;overflow:hidden;background:#06100c;box-shadow:0 28px 70px #0007;user-select:none;-webkit-user-select:none}
+.wr-view svg,.wr-view canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.wr-view canvas{pointer-events:none}
+.wr-caption{display:flex;justify-content:space-between;gap:6px 16px;flex-wrap:wrap;margin:10px 2px 0;font:12px/1.5 var(--wr-sans);color:#93a598}
+
+/* Time */
+.wr-time{display:flex;align-items:center;gap:16px;margin-top:14px;padding:10px 18px 14px 12px;border:1px solid var(--wr-line);border-radius:4px;background:#0f1b16}
+.wr-play{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid #c9b48280;background:#c9b48214;color:var(--wr-gold);display:grid;place-items:center;transition:background .2s,transform .2s}
+.wr-play:hover{background:#c9b48230;transform:scale(1.05)}
+.wr-track{position:relative;flex:1;height:44px;margin:0 8px;cursor:pointer;touch-action:none;border-radius:4px}
+.wr-rail{position:absolute;left:0;right:0;top:15px;height:2px;border-radius:2px;background:#c9b48230}
+.wr-rail i{position:absolute;inset:0 auto 0 0;border-radius:2px;background:linear-gradient(90deg,#c9b48266,var(--wr-gold));transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.wr-tick{position:absolute;top:16px;width:0;height:0;pointer-events:none}
+.wr-tick::before{content:'';position:absolute;left:-4.5px;top:-4.5px;width:9px;height:9px;border-radius:50%;box-sizing:border-box;background:#0f1b16;border:1.5px solid #c9b48270;transition:background .4s,border-color .4s}
+.wr-tick.minor::before{left:-2.5px;top:-2.5px;width:5px;height:5px;border-width:1px}
+.wr-tick.past::before{background:var(--tick);border-color:#e3d3a3}
+.wr-tick b{position:absolute;top:13px;left:0;transform:translateX(-50%);font:600 11px var(--wr-sans);letter-spacing:.5px;color:#8fa497;transition:color .3s}
+.wr-tick.on b{color:var(--wr-gold)}
+.wr-thumb{position:absolute;top:16px;width:18px;height:18px;border-radius:50%;transform:translate(-50%,-50%);background:var(--wr-gold);box-shadow:0 0 0 4px #c9b48230,0 0 18px #e9cf86aa;transition:left .5s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.wr-track.dragging .wr-thumb,.wr-track.dragging .wr-rail i{transition:none}
+
+/* The text of one moment */
+.wr-card{position:sticky;top:24px;display:flex;flex-direction:column;max-height:calc(100vh - 48px);padding:22px 24px 16px;border:1px solid var(--wr-line);border-top:3px solid var(--era);border-radius:4px;background:linear-gradient(180deg,#15251ef2,#0f1a15f2);transition:border-color 1s}
+.wr-card header{display:flex;align-items:baseline;gap:12px}
+.wr-numeral{font:400 40px/1 var(--wr-serif);color:color-mix(in srgb,var(--era) 55%,#f1ebd9);transition:color 1s}
+.wr-card header small{font:600 11px var(--wr-sans);letter-spacing:2px;text-transform:uppercase;color:#a9b8ab}
+.wr .wr-card h2{font:400 clamp(24px,2.2vw,30px)/1.2 var(--wr-serif);color:var(--wr-paper);margin:8px 0 14px}
+.wr-card-body{flex:1;min-height:0;overflow:auto;padding-right:6px;animation:wr-in .5s ease both}
+.wr-card footer{display:flex;justify-content:space-between;gap:12px;margin-top:14px;padding-top:12px;border-top:1px solid #c9b48222}
+.wr-step{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border:1px solid #c9b48250;border-radius:999px;background:none;color:var(--wr-paper);font-size:13px}
+.wr-step:hover:not(:disabled){background:#c9b4821c}
+.wr-step:disabled{opacity:.35;cursor:default}
+.wr-body{font-size:16.5px;line-height:1.75;color:#dcd8c7}
+.wr-body p{margin:0 0 14px}
+.wr-body ul,.wr-body ol{padding-left:20px;margin:12px 0}
+.wr-body li{margin:8px 0}
+.wr-body li::marker{color:var(--wr-gold)}
+.wr-voices{display:grid;gap:10px;margin:14px 0}
+.wr-voices blockquote{margin:0;padding:10px 14px;border-left:2px solid #c9b48266;background:#ffffff06}
+.wr-voices cite{display:block;margin-bottom:4px;font:600 11px var(--wr-sans);letter-spacing:2px;text-transform:uppercase;font-style:normal;color:var(--wr-gold)}
+.wr-voices p{margin:0;font-size:15.5px;font-style:italic;line-height:1.6}
+.wr-body .wr-acts{list-style:none;padding:0;margin:14px 0 0;counter-reset:act}
+.wr-acts li{counter-increment:act;position:relative;margin:0;padding:9px 0 9px 34px;border-top:1px solid #c9b4821c;color:#8c9a90;transition:color .4s}
+.wr-acts li::before{content:counter(act);position:absolute;left:0;top:9px;width:22px;height:22px;box-sizing:border-box;border:1px solid currentColor;border-radius:50%;display:grid;place-items:center;font:600 11px/1 var(--wr-sans)}
+.wr-acts li.on{color:#ebe6d4}
+.wr-acts li.on::before{background:var(--era);border-color:var(--era);color:#fff}
+.wr-acts li p{margin:0}
+
+.wr-full{margin-top:30px;padding-top:12px;border-top:1px solid var(--wr-line)}
+.wr-full summary{padding:8px 0;cursor:pointer;font:600 13px var(--wr-sans);letter-spacing:1px;color:var(--wr-gold)}
+.wr-full section{max-width:760px;margin:18px 0 28px}
+.wr-full h3{display:flex;align-items:baseline;gap:12px;margin:0 0 10px;font:400 24px var(--wr-serif);color:var(--wr-paper)}
+.wr-full h3 span{font-size:18px;color:var(--wr-gold)}
+.wr-note{max-width:760px;margin-top:22px;font:13px/1.7 var(--wr-sans);color:#a7b4a9}
+.wr-note blockquote{margin:0;padding:12px 16px;border-left:2px solid #b06a5a;background:#ffffff06}
+.wr-note p{margin:0}
+.wr-note strong{color:#e0b9a8}
+
+/* Pointing at the scene */
+.wr-tip{position:absolute;z-index:3;width:max-content;max-width:250px;padding:9px 12px;transform:translate(-50%,calc(-100% - 10px));border:1px solid #c9b48266;border-radius:4px;background:#0b1511f2;box-shadow:0 10px 30px #0008;pointer-events:none;font:12.5px/1.5 var(--wr-sans);color:#ddd8c6;animation:wr-in .18s ease both}
+.wr-tip.below{transform:translate(-50%,10px)}
+.wr-tip strong{display:block;margin-bottom:3px;font:600 11px var(--wr-sans);letter-spacing:1.5px;text-transform:uppercase;color:var(--wr-gold)}
+.wr-tip small{display:block;margin-bottom:2px;font-size:10.5px;font-style:italic;color:#93a598}
+.wr-tip span{display:block}
+.wr-chip{position:absolute;z-index:2;top:12px;left:12px;display:flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid #9fc2ff55;border-radius:999px;background:#0b1511d0;color:#cfe0ff;font:600 11px var(--wr-sans);letter-spacing:1.5px;text-transform:uppercase;animation:wr-blink 1s steps(2) infinite}
+.wr.rewinding .wr-view::after{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,#9fc2ff10 0 2px,transparent 2px 5px);mix-blend-mode:screen;animation:wr-scan .4s linear infinite}
+
+/* ----- The scene ----- */
+.wr-tint{opacity:0;transition:opacity 1.6s ease}
+.wr-tint.on{opacity:1}
+.wr-dust circle{fill:#e9e4cf;opacity:.5;animation:wr-twinkle 4s ease-in-out infinite alternate}
+.wr-view .hit{fill:transparent}
+.wr-view [data-tip]{cursor:help}
+.wr-line{fill:none;stroke:#c9b482;stroke-width:1.2;opacity:.55;transition:opacity 1s}
+.wr-line.ghost{stroke-dasharray:2 6;opacity:.22}
+.wr-line.broken{stroke-dasharray:6 10;opacity:.3}
+.wr-line.off{opacity:0}
+.wr-thread{stroke:#c9b482;stroke-width:.9;stroke-dasharray:1 5;opacity:0;transition:opacity 1.2s}
+.wr-thread.on{opacity:.45}
+.wr-thread.dynasty.on{opacity:.28}
+
+/* Laws: ghosts until discovered, lit while held, hollow while vacant */
+.wr-law{color:#f3dc98}
+.wr-law.law-all{color:#fff1c8}
+.wr-law.law-sets{color:#d7e5ff}
+.wr-law.law-nc{color:#f3a47e}
+.wr-law .halo{opacity:0;transition:opacity 1.2s}
+.wr-law .ring{fill:none;stroke:currentColor;stroke-width:1.3;stroke-dasharray:2.4 3;opacity:.45;transition:opacity 1s}
+.wr-law .core{fill:currentColor;opacity:0;transition:opacity 1s}
+.wr-lawname,.wr-score{font:600 12px var(--wr-sans);letter-spacing:1.2px;text-transform:uppercase;fill:currentColor;text-anchor:middle;opacity:0;transition:opacity 1s;pointer-events:none}
+.wr-score{fill:#f1ebd9;text-anchor:start;letter-spacing:.5px}
+.wr-law.lit .halo{opacity:.95}
+.wr-law.lit .core{opacity:1}
+.wr-law:is(.lit,.vacant,.dying) .ring{stroke-dasharray:none;opacity:.8}
+.wr-law:is(.lit,.vacant,.dying) .wr-lawname{opacity:.85}
+.wr-law.vacant .halo{opacity:.22}
+.wr-law.scored.vacant .wr-score{opacity:.9}
+.wr-law.dying .halo{animation:wr-die-halo 4.2s ease both}
+.wr-law.dying .core{animation:wr-die-core 4.2s ease both}
+.wr-law.scored.dying .wr-score{animation:wr-show 1s 3.4s both}
+.wr-law .crack{fill:none;stroke:#eef4ff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .9s ease}
+.wr-law.cracked .crack{stroke-dashoffset:0}
+.wr-minor .ring{fill:none;stroke:#efe8d2;stroke-width:.9;stroke-dasharray:1.5 2.5;opacity:.25;transition:opacity 1s}
+.wr-minor .core{fill:#efe8d2;opacity:0;transition:opacity 1.2s}
+.wr-minor.lit .core{opacity:.85}
+.wr-minor.lit .ring{opacity:0}
+.wr-minor.lit{animation:wr-twinkle 3.5s ease-in-out infinite alternate}
+
+/* Land */
+.wr-land .llama{fill:url(#wr-llama);stroke:#c9b48238;stroke-width:1.2}
+.wr-land .origo{fill:url(#wr-origo);stroke:#8fb6c938;stroke-width:1.2}
+.wr-land .range{fill:url(#wr-range);stroke:#c9b48233;stroke-width:1}
+.wr-land .snow{fill:#e8e4d6;opacity:.75}
+.wr-land .contour{fill:none;stroke:#c9b48216;stroke-width:1;stroke-dasharray:2 7}
+.wr-labels text{font:600 11px var(--wr-sans);letter-spacing:3.5px;text-transform:uppercase;fill:#c9b482;opacity:.55;text-anchor:middle}
+.wr-labels .peak{font-size:10px;font-style:italic;letter-spacing:1px;text-transform:none;opacity:.65}
+
+/* Realms */
+.wr-realms :is(.kingdom,.empire){opacity:0;transition:opacity 1.4s;pointer-events:none}
+.wr-realms .kingdom ellipse{fill:#c9b48210;stroke:#c9b482;stroke-width:1;stroke-dasharray:3 4}
+.wr-realms .kingdom .crown{fill:#c9b48244;stroke:#e9cf86;stroke-width:1}
+.wr-realms.kingdoms .kingdom{opacity:1;pointer-events:auto}
+.wr-realms .empire{fill:#c9b4820c;stroke:#c9b482;stroke-width:1.1;stroke-dasharray:6 5}
+.wr-realms .empire.east{fill:#6fa9de0c;stroke:#8fb6c9}
+.wr-realms.empires .empire{opacity:.85;pointer-events:auto}
+
+/* Mortals */
+.wr-mortal rect{fill:#cfd8d2;transition:fill 1s}
+.wr-mortal .glow{fill:var(--c,#fff);opacity:0;transition:opacity 1.2s}
+.wr-mortal .ring{fill:none;stroke:#e9cf86;stroke-width:.8;opacity:0;transition:opacity .8s}
+.wr-towns.axiom .wr-mortal .ring{opacity:.75}
+.wr-towns.totems .wr-mortal.tint rect{fill:var(--c)}
+.wr-towns.totems .wr-mortal.tint .glow{opacity:.35}
+.wr-towns.generations .wr-town:not(.origo){animation:wr-gen 2.6s var(--g) ease-in-out infinite}
+.wr-town.origo{opacity:0;transition:opacity 1.4s;pointer-events:none}
+.wr-towns.present .wr-town.origo{opacity:1;pointer-events:auto}
+.wr-elite{opacity:0;transition:opacity 1.2s;pointer-events:none}
+.wr-towns.totems .wr-elite{opacity:1;pointer-events:auto}
+.wr-elite .glow{fill:var(--c);opacity:.35}
+.wr-elite .core{fill:var(--c)}
+.wr-elite .ring{fill:none;stroke:var(--c);stroke-width:1}
+.wr-dynasty{opacity:0;transition:opacity 1.2s;pointer-events:none}
+.wr-dynasty.on{opacity:1;pointer-events:auto}
+.wr-dynasty path{fill:#f3a47e22;stroke:#f3a47e;stroke-width:1.1}
+
+/* Creatures */
+.wr-creature{transition:transform 1.6s cubic-bezier(.4,0,.2,1),opacity 1.2s}
+.wr-creature .halo{opacity:.85;transition:opacity 1.4s}
+.wr-creature .glyph{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transform-box:fill-box;transform-origin:center;transition:opacity 1.2s,transform 1.2s,stroke 1.2s;animation:wr-breathe 5s ease-in-out infinite}
+.wr-creature .eye{fill:currentColor;stroke:none}
+.wr-creature :is(.horn,.face,.cloak){transition:opacity 1s,stroke 1s}
+.wr-creature .cloak{opacity:0;fill:#f2a25033}
+.wr-creature.hunted .halo{opacity:.1}
+.wr-creature.hunted .glyph{opacity:.32}
+.wr-creature.hunted .horn{opacity:0}
+.wr-creature.stone .glyph{stroke:#8d948f;animation:none}
+.wr-creature.stone .halo{opacity:.12}
+.wr-creature.stone .face{opacity:.35}
+.wr-creature.reborn .glyph{animation:wr-rebirth 7s ease-in-out infinite}
+.wr-creature.diminished .halo{opacity:.45}
+.wr-creature.hidden .halo{opacity:0}
+.wr-creature.hidden .glyph{transform:scale(.42);opacity:.8;animation:none}
+.wr-creature.trader .cloak{opacity:1}
+.wr-ilar{opacity:0;transition:opacity 1.2s;pointer-events:none}
+.wr-ilar.on{opacity:1;pointer-events:auto}
+.wr-ilar .gem{fill:#f6d77e;animation:wr-pulse 3s ease-in-out infinite}
+.wr-ilar .tunnel{fill:none;stroke:#f6d77e44;stroke-width:1;stroke-dasharray:2 4}
+
+/* Stepping forward, each moment unfolds in order. Rewinding skips the waits. */
+.wr-fwd[data-stop="0"] .wr-creature .glyph{animation:wr-born 1.6s 1.7s both,wr-breathe 5s 3.3s ease-in-out infinite}
+.wr-fwd[data-stop="0"] .wr-creature .halo{animation:wr-show 1.4s 1.7s both}
+.wr-fwd[data-stop="1"] .wr-towns .ring{transition-delay:calc(var(--d) + 1.1s)}
+.wr-fwd[data-stop="2"] :is(.law-number,.law-nc) :is(.core,.halo,.ring,.wr-lawname){transition-delay:.2s}
+.wr-fwd[data-stop="2"] :is(.wr-realms,.wr-threads,.wr-dynasty) *{transition-delay:.9s}
+.wr-fwd[data-stop="3"] .k-unicorn :is(.halo,.glyph,.horn){transition-delay:2.6s}
+.wr-fwd[data-stop="3"] .k-troll :is(.glyph,.halo,.face){transition-delay:3s}
+.wr-fwd[data-stop="3"] .k-kitsune{transition-delay:1.2s}
+.wr-fwd[data-stop="4"] .wr-mortal :is(rect,.glow){transition-delay:2.1s}
+.wr-fwd[data-stop="4"] .wr-elite,.wr-fwd[data-stop="4"] .wr-realms .empire{transition-delay:2.4s}
+.wr-fwd[data-stop="5"] .law-number :is(.core,.halo){transition-delay:2s}
+.wr-fwd[data-stop="6"] .law-number :is(.core,.halo){transition-delay:.3s}
+.wr-fwd[data-stop="6"] .law-sets .crack{transition-delay:1.8s}
+.wr-fwd[data-stop="6"] .law-sets :is(.core,.halo,.wr-score){transition-delay:2s}
+.wr-fwd[data-stop="6"] .wr-ilar{transition-delay:5s}
+.wr-fwd[data-stop="8"] .law-sets :is(.core,.halo,.crack,.wr-score){transition-delay:1.2s}
+.wr-fwd[data-stop="9"] .wr-town.origo{transition-delay:1.6s}
+.wr-fwd[data-stop="9"] .k-kitsune,.wr-fwd[data-stop="9"] .k-dragon{transition-delay:.8s}
+
+@keyframes wr-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes wr-show{from{opacity:0}}
+@keyframes wr-born{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+@keyframes wr-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+@keyframes wr-rebirth{0%,70%{transform:scale(.72);opacity:1}80%{transform:scale(1.2);opacity:0}86%{transform:scale(.3);opacity:0}100%{transform:scale(.72);opacity:1}}
+@keyframes wr-twinkle{from{opacity:.25}to{opacity:.85}}
+@keyframes wr-die-core{0%,55%{opacity:1}100%{opacity:0}}
+@keyframes wr-die-halo{0%,55%{opacity:.95}100%{opacity:.22}}
+@keyframes wr-gen{0%,100%{opacity:1}50%{opacity:.15}}
+@keyframes wr-pulse{0%,100%{opacity:.55}50%{opacity:1}}
+@keyframes wr-blink{50%{opacity:.55}}
+@keyframes wr-scan{to{background-position:0 5px}}
+
+@media(max-width:1180px){.wr-stage{grid-template-columns:1fr}.wr-card{position:static;max-height:none}.wr-card-body{overflow:visible}}
+@media(max-width:600px){
+.wr-head p{font-size:16px}
+.wr-time{gap:10px;padding:8px 14px 12px 8px}
+.wr-play{width:40px;height:40px}
+.wr-tick b{font-size:10px}
+.wr-card{padding:18px 16px 14px}
+.wr-body{font-size:16px}
+.wr-labels text{font-size:22px;letter-spacing:2px}
+.wr-labels .peak{font-size:18px}
+.wr-lawname,.wr-score{font-size:19px;letter-spacing:.5px}
+.wr-tip{max-width:210px}
+}
+@media(prefers-reduced-motion:reduce){
+.wr *,.wr *::before,.wr *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important}
+}
