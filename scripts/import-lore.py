@@ -10,6 +10,9 @@ world=['Premise','Law Holders','Physical Powers and Dragons','The Test','The Axi
 pantheon=['How the Pantheon Is Ranked','Top-Tier Roster','The Law of Non-Contradiction','The Law of the Excluded Middle','Incompleteness','Number and Sets','The Physics Trio','Social Laws','Minor Laws']
 creatures=['How Creatures Work','Dragons','Other Creature Families','Hybrids']
 subheads=['The Holder','The Feud','Sets: Ensa, the Restorer','Number: Ilar Hesabu, the Uncounted','Relationships','Conservation of Energy: Voss Halloran, the Ledger-Keeper','Entropy: Rudolf Ludwig, the Chancellor of Thermal Decay','Causality: Rushd, the Uncertain Cause','The Iron Law of Oligarchy: Aldous Vane, the Iron Clerk','Supply and Demand: Lian Xiu, the Equilibrium Sovereign',"Goodhart's Law: Mattias Krane, the Moving Target",'To settle','Society','Unicorns: Life and Healing','Phoenixes: Renewal','Kitsune: Illusion and Concealment','Trolls: The Body','How to Read the Tower','The Floors']
+# Section headings that only bound other articles. Minor Laws duplicated the five
+# character pages it contains, so it no longer gets its own article.
+RETIRED={'minor-laws'}
 def slugify(s): return re.sub('[^a-z0-9]+','-',s.lower()).strip('-')
 def load(name, lang='en'):
     # Drive returns document tabs together. Separate them before section parsing.
@@ -81,6 +84,7 @@ for name,category,headings,zh_headings in [('Quoderat Worldbuilding Notes.md','W
         end=find(lines,headings[i+1]) if i+1<len(headings) else len(lines)
         # Keep the existing bookmark URL when the placeholder app receives its name.
         slug='the-app-and-the-law-of-all-laws' if title=='The Axiom and the Law of All Laws' else None
+        if (slug or slugify(title)) in RETIRED: continue
         add(title,category,lines[start:end],name,slug)
         zlines=load(name,'zh'); ztitle=zh_headings[i]
         zend=find(zlines,zh_headings[i+1]) if i+1<len(zh_headings) else len(zlines)
@@ -164,6 +168,6 @@ for a in articles:
         a['translations']['zh']['body']='> **来源矛盾，尚未解决：**《世界观笔记》称狩猎中“目前无一逃脱”，但《神兽》与《时间线》记载了幸存族群。此处保留两种记载，等待作者修订。\n\n'+a['translations']['zh']['body']
 assert all(a.get('translations',{}).get('zh',{}).get('body') for a in articles)
 assert len({a['slug'] for a in articles})==len(articles)
-assert set(old)<= {a['slug'] for a in articles},'An existing article URL would be lost'
+assert set(old)-RETIRED <= {a['slug'] for a in articles},'An existing article URL would be lost'
 (ROOT/'data/articles.json').write_text(json.dumps(articles,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print(f'Imported {len(articles)} bilingual articles from four verified snapshots; existing URLs preserved.')
