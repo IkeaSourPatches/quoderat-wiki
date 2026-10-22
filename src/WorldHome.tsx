@@ -97,7 +97,7 @@ export function WorldHome({ language, articles, open, browse, emblems, lawExpres
         </svg>
         <h2>{text('Surely you can do better.', '你肯定能做得更好。')}</h2>
         <p>{text('Sai has painted two neighbouring regions the same colour, on purpose. Take the brush and prove him wrong.', '彩故意把两块相邻的区域涂成了同一种颜色。接过画笔，证明他错了。')}</p>
-        <button className="qd-primary" onClick={() => open('play')}>{text('Fix Sai’s map', '修好彩的地图')}</button>
+        <button className="qd-primary" onClick={() => open('play/sai')}>{text('Fix Sai’s map', '修好彩的地图')}</button>
       </div>
     </section>
 
