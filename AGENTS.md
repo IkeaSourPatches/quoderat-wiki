@@ -22,7 +22,7 @@ Shared rules for every AI agent working in this repo (Codex reads this file; Cla
 ```sh
 npm run build
 node scripts/check-localization.mjs   # bilingual data contract (Node 22.18+, native TypeScript)
-node scripts/check-game.mjs           # puzzle solvability and adjacency
+node scripts/check-game.mjs           # Sai's puzzles, the court cases, Keep it flat
 python backend/manage.py check
 python backend/manage.py test wiki
 ```
