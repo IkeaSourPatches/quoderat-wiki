@@ -3,6 +3,7 @@ import '@fontsource/stix-two-text/400-italic.css';
 import '@fontsource/stix-two-text/600.css';
 import { SaiGame } from './game/SaiGame';
 import { LoreHome } from './LoreHome';
+import { TimelineTower } from './TimelineTower';
 // =============================================================================
 // QUODERAT WIKI — root entry file.
 // This module builds the MUI theme, defines the <App /> component, and mounts
@@ -467,10 +468,10 @@ function App() {
           <p className="loading">{t("Opening the archive…")}</p>
         ) : ( // Articles are loaded: render the page layout.
           // Articles are loaded: render the two-column page.
-          <div className={`page ${!article ? "catalogue-page" : "reading-page"}`}>
+          <div className={`page ${!article || (slug === "timeline" && !query) ? "catalogue-page" : "reading-page"}`}>
             {/* Main column: either an article reader or the entry list. */}
             <main>
-              {slug === "play" && !query ? <SaiGame language={language} open={navigate}/> : slug === "suggestions" && !query ? <SuggestionBox language={language}/> : slug === "home" && !query ? <WorldHome language={language} articles={articles} open={navigate} browse={browse} emblems={emblems} lawExpressions={lawExpressions}/> : slug === "lore" && !query ? <LoreHome language={language} articles={articles} browse={browse}/> : article ? ( // Article view when a slug matches.
+              {slug === "play" && !query ? <SaiGame language={language} open={navigate}/> : slug === "suggestions" && !query ? <SuggestionBox language={language}/> : slug === "home" && !query ? <WorldHome language={language} articles={articles} open={navigate} browse={browse} emblems={emblems} lawExpressions={lawExpressions}/> : slug === "lore" && !query ? <LoreHome language={language} articles={articles} browse={browse}/> : slug === "timeline" && !query && article ? <TimelineTower language={language} article={article}/> : article ? ( // Article view when a slug matches.
                 <>{/* Fragment for the article view. */}
                   {/* Eyebrow line above the title. */}
                   <div className="eyebrow">

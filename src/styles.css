@@ -222,3 +222,60 @@ html[lang="zh-CN"] .qd-theorem h1{letter-spacing:.04em}
 .lore-card-top small{text-transform:none;letter-spacing:.3px;font-size:13px;font-weight:600;color:#6d6748}
 .lore-card-top svg{color:#7c805c;flex:none}
 html[lang="zh-CN"] .lore-intro h1,html[lang="zh-CN"] .lore-section-grid h2{font-family:'Songti SC','Noto Serif CJK SC',serif}
+
+/* ===== Timeline: the Tower of History, read from the entrance upward (tt-*) ===== */
+.page:has(.tt){max-width:none;padding:0;background:radial-gradient(ellipse at 50% 0%,#846b3926,transparent 45%),linear-gradient(180deg,#111e19 0%,#152821 60%,#0f1a16 100%)}
+.tt{--tt-brass:#c9b482;--tt-paper:#f1ebd9;--tt-sage:#a3b5a8;--tt-serif:'STIX Two Text',Cambria,Georgia,serif;color:var(--tt-paper);font-family:var(--tt-serif);padding:clamp(48px,7vw,96px) clamp(16px,5vw,64px) 40px;position:relative}
+html[lang="zh-CN"] .tt{--tt-serif:'Songti SC','Noto Serif CJK SC','STIX Two Text',serif}
+.tt :where(h1,h2){font-family:var(--tt-serif);font-weight:400;letter-spacing:0;color:var(--tt-paper);margin:0}
+.tt button{font-family:'Avenir Next','Segoe UI',sans-serif;cursor:pointer}
+.tt button:focus-visible{outline:2px solid var(--tt-brass);outline-offset:3px}
+.tt-head{text-align:center;max-width:640px;margin:0 auto 56px}
+.tt-head h1{font-size:clamp(40px,5.5vw,72px);line-height:1.05}
+.tt-head p{margin:16px auto 0;font-size:18px;font-style:italic;line-height:1.6;color:var(--tt-sage)}
+.tt-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.tt-tower{display:flex;flex-direction:column;align-items:center;max-width:940px;margin:0 auto}
+.tt-roof{width:100%;text-align:center;padding:14px 0 18px;font-style:italic;font-size:15px;color:var(--tt-sage);border-top:1px dashed #c9b48266;background:repeating-linear-gradient(90deg,transparent 0 46px,#c9b4821f 46px 47px) bottom/100% 18px no-repeat}
+.tt-floor{width:var(--w);display:grid;grid-template-columns:clamp(64px,9vw,104px) minmax(0,1fr);gap:0 clamp(16px,3vw,36px);padding:clamp(28px,4vw,44px) clamp(20px,3.5vw,40px);background:linear-gradient(180deg,#1a2d26,#15251f);border:1px solid #c9b48233;border-top:3px solid #c9b48247;border-bottom:0;scroll-margin:30vh}
+.tt-floor.top{border-top-style:dashed}
+.tt-numeral{font-size:clamp(44px,6vw,72px);line-height:.9;color:#c9b48247;text-align:right;transition:color .4s,text-shadow .4s;font-variant-numeric:lining-nums}
+.tt-floor.on .tt-numeral{color:var(--tt-brass);text-shadow:0 0 28px #e2c98a55}
+.tt-floor.on{background:linear-gradient(180deg,#1e342b,#18291f)}
+.tt-content h2{font-size:clamp(24px,2.6vw,31px);line-height:1.2;margin-bottom:14px}
+.tt-body{font-size:17px;line-height:1.7;color:#cdd5c9;max-width:38em}
+.tt-body p{margin:0 0 14px}
+.tt-body ul{list-style:none;margin:6px 0 14px;padding:0}
+.tt-body ul li{position:relative;padding-left:22px;margin:6px 0}
+.tt-body ul li::before{content:'';position:absolute;left:2px;top:.78em;width:10px;height:1px;background:var(--tt-brass)}
+.tt-body ol{list-style:none;margin:10px 0 14px;padding:0;counter-reset:act}
+.tt-body ol li{counter-increment:act;position:relative;padding:12px 0 12px 44px;border-top:1px solid #c9b48226}
+.tt-body ol li::before{content:counter(act);position:absolute;left:0;top:10px;width:28px;height:28px;border:1px solid #c9b48280;border-radius:50%;display:grid;place-items:center;font-size:14px;color:var(--tt-brass)}
+.tt-voices{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1px;background:#c9b48226;border:1px solid #c9b48226;margin:6px 0 18px}
+.tt-voices blockquote{margin:0;padding:16px 18px;background:#15251f}
+.tt-voices cite{display:block;font-style:italic;font-size:15px;color:var(--tt-brass);margin-bottom:6px}
+.tt-voices p{margin:0;font-size:15.5px;line-height:1.6}
+.tt-voices p::first-letter{text-transform:uppercase}
+
+.tt-entrance{width:64%;display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(18px,3vw,36px);align-items:end;padding:36px clamp(20px,3.5vw,40px) 0;border:1px solid #c9b48233;border-top:3px solid #c9b48247;background:linear-gradient(180deg,#15251f,#101c17);position:relative}
+.tt-entrance::after{content:'';position:absolute;left:-40%;right:-40%;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,#c9b48280,transparent)}
+.tt-door{width:92px;height:132px;border:1px solid var(--tt-brass);border-bottom:0;border-radius:46px 46px 0 0;background:radial-gradient(ellipse at 50% 100%,#e2c98a40,transparent 70%)}
+.tt-entrance h2{font-size:24px;margin-bottom:8px}
+.tt-entrance p{margin:0;font-size:16px;line-height:1.65;color:#cdd5c9}
+.tt-entrance button{margin:16px 0 28px;background:var(--tt-brass);color:#101b17;border:1px solid var(--tt-brass);padding:12px 20px;border-radius:2px;font-size:14px}
+.tt-entrance button:hover{background:#dccb9d}
+.tt-note{max-width:640px;margin:56px auto 0;font-size:14px;line-height:1.6;color:var(--tt-sage)}
+.tt-note blockquote{margin:0;padding:0 0 0 14px;border-left:2px solid #c9b48255}
+.tt-note p{margin:0}
+
+.tt-rail{position:fixed;right:22px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:2px;z-index:5;border-left:1px solid #c9b48240;padding-left:4px}
+.tt-rail button{display:flex;align-items:center;gap:10px;background:none;border:0;padding:5px 8px;color:#c9b48288;text-align:left}
+.tt-rail span{font-family:var(--tt-serif);font-size:15px;min-width:2.2em}
+.tt-rail small{font-size:12px;color:var(--tt-sage);max-width:0;overflow:hidden;white-space:nowrap;opacity:0;transition:max-width .25s,opacity .25s}
+.tt-rail button.on{color:var(--tt-brass)}
+.tt-rail button.on span{font-weight:600}
+.tt-rail:hover small,.tt-rail button:focus-visible small{max-width:220px;opacity:1}
+.tt-rail button:hover{color:var(--tt-paper)}
+@media(max-width:1280px){.tt-rail{display:none}}
+@media(max-width:760px){.tt-floor,.tt-entrance{width:100%}.tt-floor{grid-template-columns:1fr}.tt-numeral{text-align:left;margin-bottom:8px}.tt-entrance{grid-template-columns:1fr}.tt-door{display:none}.tt-entrance::after{left:-16px;right:-16px}}
+@media(prefers-reduced-motion:reduce){.tt-numeral,.tt-rail small{transition:none}}
