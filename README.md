@@ -54,7 +54,7 @@ The frontend is one page with hash routing; there is no router library. Every vi
 | `#timeline` | The timeline as a tower you climb, floor by floor | `src/TimelineTower.tsx` |
 | `#<slug>` | One article, for example `#ilar-hesabu` | `src/main.tsx` |
 
-Client state stays deliberately plain: language in `quoderat-language`, bookmarks in `quoderat-bookmarks`, puzzle progress in `quoderat-sai-v1`, attempts on the Axiom in `quoderat-axiom-attempts`, Aldous Vane's ledger of finished assemblies in `quoderat-flat-ledger`, and closed court cases in `quoderat-court-solved`. Nothing else is persisted, and no account is involved.
+Client state stays deliberately plain: language in `quoderat-language`, bookmarks in `quoderat-bookmarks`, puzzle progress in `quoderat-sai-v1`, attempts on the Axiom in `quoderat-axiom-attempts`, Aldous Vane's ledger of finished assemblies in `quoderat-flat-ledger`, and closed court cases in `quoderat-court-solved`. Nothing else is persisted, and no account is involved. The four game keys are listed in `src/game/progress.tsx`; each game has a "Reset progress" link and the Play shelf has "Reset all games", which clear only those keys, so players never need to clear site data.
 
 ## How the pieces connect
 

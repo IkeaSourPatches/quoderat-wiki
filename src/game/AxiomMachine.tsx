@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Language } from '../i18n';
 import './games.css';
+import { gameKeys, ResetProgress } from './progress';
 
 // The Axiom's test is breaking the Axiom, and no one has ever scored a point.
 // So the Axiom is played as a useless machine: flip its switch and it flips it back.
@@ -9,7 +10,7 @@ import './games.css';
 type Arm = 'rest' | 'peek' | 'half' | 'reach' | 'push';
 type Variant = 'plain' | 'hesitate' | 'peek' | 'wag' | 'progress' | 'slam';
 
-const storageKey = 'quoderat-axiom-attempts';
+const storageKey = gameKeys.axiom;
 const loadAttempts = () => { try { return Math.max(0, Number(localStorage.getItem(storageKey)) || 0); } catch { return 0; } };
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
@@ -33,7 +34,8 @@ export function AxiomMachine({ language, open }: { language: Language; open: (sl
   const [progress, setProgress] = useState<number | null>(null);
   const [busy, setBusy] = useState(false);
   const [attempts, setAttempts] = useState(loadAttempts);
-  const [line, setLine] = useState<[string, string]>(['Flip the switch to attempt the test.', '拨动开关，尝试这场试炼。']);
+  const firstLine: [string, string] = ['Flip the switch to attempt the test.', '拨动开关，尝试这场试炼。'];
+  const [line, setLine] = useState<[string, string]>(firstLine);
   const [mattias, setMattias] = useState(false);
   const alive = useRef(true);
   const idle = useRef<number>(0);
@@ -126,6 +128,7 @@ export function AxiomMachine({ language, open }: { language: Language; open: (sl
       <span className="games-note">{text('Game adaptation: in the world, the Axiom is a bracelet. The zero is canon.', '游戏改编：在这个世界里，公理是一只手环。零分是正史。')}</span>
       <button className="games-link" onClick={() => open('the-app-and-the-law-of-all-laws')}>{text('Read about the Axiom', '阅读公理条目')}</button>
       <button className="games-link" onClick={() => open('play')}>{text('All games', '全部游戏')}</button>
+      {!busy && <ResetProgress language={language} game="axiom" onReset={() => { clearTimeout(idle.current); setMattias(false); setAttempts(0); setLine(firstLine); }} />}
     </p>
   </div>;
 }

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPoi
 import type { Language } from '../i18n';
 import { create, fling, HALL, nudge, onDais, pick, ramp, step, year, type Member, type Note, type State } from './flat/sim';
 import './games.css';
+import { gameKeys, ResetProgress } from './progress';
 
 // Keep it flat: Aldous Vane's game. The law always wins; you only decide how long it takes.
 
@@ -24,7 +25,7 @@ const captions: Record<string, Pair> = {
   century: ['A century. Somewhere in a port city, a clerk has stopped sleeping.', '一个世纪。在某座港口城市，一位书记失眠了。'],
 };
 const leaving: Pair[] = [['{n} left: the meetings moved again.', '{n}走了：会议又换地方了。'], ['{n} left: the agenda ran past dinner.', '{n}走了：议程开到了晚饭后。'], ['{n} left: couldn’t read the minutes.', '{n}走了：看不懂会议记录。'], ['{n} left: had a shift at the docks.', '{n}走了：要去码头上班。']];
-const ledgerKey = 'quoderat-flat-ledger';
+const ledgerKey = gameKeys.flat;
 type Entry = { n: number; commune: number; years: number; reason: 'committee' | 'dissolved'; names: number[] };
 function loadLedger(): Entry[] { try { const v = JSON.parse(localStorage.getItem(ledgerKey) || '[]'); return Array.isArray(v) ? v.filter(e => e && typeof e.years === 'number') : []; } catch { return []; } }
 
@@ -361,6 +362,7 @@ export function KeepItFlat({ language, open }: { language: Language; open: (slug
     <p className="games-foot">
       <span className="games-note">{label('Game adaptation, not canon events.', '游戏改编，并非正史事件。')}</span>
       <button className="games-link" onClick={() => open('play')}>{label('All games', '全部游戏')}</button>
+      {phase !== 'playing' && <ResetProgress language={language} game="flat" onReset={() => { setLedger([]); setEntry(null); if (phase === 'over') go('ready'); }} />}
     </p>
   </div>;
 }
