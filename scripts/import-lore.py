@@ -7,7 +7,7 @@ ROOT=Path(__file__).resolve().parents[1]
 SOURCE=ROOT/'data/sources'
 old={a['slug']:a for a in json.loads((ROOT/'data/articles.json').read_text(encoding='utf-8'))}
 world=['Premise','Law Holders','Physical Powers and Dragons','The Test','The Axiom and the Law of All Laws','Ordinary People and the Climb','Open Questions']
-pantheon=['How the Pantheon Is Ranked','Top-Tier Roster','The Law of Non-Contradiction','The Law of the Excluded Middle','Incompleteness','Number and Sets','The Physics Trio','Social Laws']
+pantheon=['How the Pantheon Is Ranked','Top-Tier Roster','The Law of Non-Contradiction','The Law of the Excluded Middle','Incompleteness','Number and Sets','The Physics Trio','Social Laws','Minor Laws']
 creatures=['How Creatures Work','Dragons','Other Creature Families','Hybrids']
 subheads=['The Holder','The Feud','Sets: Ensa, the Restorer','Number: Ilar Hesabu, the Uncounted','Relationships','Conservation of Energy: Voss Halloran, the Ledger-Keeper','Entropy: Rudolf Ludwig, the Chancellor of Thermal Decay','Causality: Rushd, the Uncertain Cause','The Iron Law of Oligarchy: Aldous Vane, the Iron Clerk','Supply and Demand: Lian Xiu, the Equilibrium Sovereign',"Goodhart's Law: Mattias Krane, the Moving Target",'To settle','Society','Unicorns: Life and Healing','Phoenixes: Renewal','Kitsune: Illusion and Concealment','Trolls: The Body','How to Read the Tower','The Floors']
 def slugify(s): return re.sub('[^a-z0-9]+','-',s.lower()).strip('-')
@@ -42,9 +42,11 @@ def find(lines, heading):
                      f"{getattr(lines, 'name', 'a snapshot')}.{hint} If it was renamed in Google Drive, "
                      "update the matching heading list in scripts/import-lore.py.")
 zh_world=['前提','执律者','物理之力与龙族','试炼','公理与万法之法','普通人与攀登','未决问题']
-zh_pantheon=['众神如何排位','顶层名单','不矛盾律','排中律','不完备性','数与集合','物理三巨头','社会法则']
+zh_pantheon=['众神如何排位','顶层名单','不矛盾律','排中律','不完备性','数与集合','物理三巨头','社会法则','小法则']
 zh_creatures=['神兽如何运作','龙族','其他神兽族群','混血种']
 zh_subheads=['执律者','宿怨','集合：恩莎，复原者','数：伊拉尔·赫萨布，不计者','关系','能量守恒：沃斯·哈洛兰，记账人','熵：鲁道夫·路德维希，热寂宰相','因果律：鲁什德，不确定之因','寡头铁律：奥尔德斯·维恩，铁律书记','供求律：连秀，均衡女王','古德哈特定律：马蒂亚斯·克兰，移动靶','待定事项','社会','独角兽：生命与治愈','不死鸟：重生','狐仙：幻术与隐匿','巨魔：躯体','如何阅读这座塔','楼层']
+subheads += ['The Pigeonhole Principle: Kalyan, the Quiet Heir', 'The Four Color Theorem: Sai, the Border-Baiter', 'The Halting Problem: Akhil, the Unfinished Answer', "Mendel's Laws: Zaid, the Patient Gardener", 'The Law of Superposition: Vera, the Witness Beneath', 'The Elder Council']
+zh_subheads += ['抽屉原理：卡利扬，沉默的继承人', '四色定理：彩，诱边人', '停机问题：阿基尔，未完的答案', '孟德尔定律：扎伊德，耐心的园丁', '叠覆律：维拉，地下的见证者', '长老议会']
 def markdown(lines):
     result=[]
     i=0
@@ -108,8 +110,9 @@ character_sections = [
     ('rushd', 'Rushd', '鲁什德', subheads[7], zh_subheads[7], 'Social Laws', '社会法则', 'Causality', '因果律'),
     ('aldous-vane', 'Aldous Vane', '奥尔德斯·维恩', subheads[8], zh_subheads[8], subheads[9], zh_subheads[9], 'The Iron Law of Oligarchy', '寡头铁律'),
     ('lian-xiu', 'Lian Xiu', '连秀', subheads[9], zh_subheads[9], subheads[10], zh_subheads[10], 'Supply and Demand', '供求律'),
-    ('mattias-krane', 'Mattias Krane', '马蒂亚斯·克兰', subheads[10], zh_subheads[10], 'To settle', '待定事项', "Goodhart's Law", '古德哈特定律'),
+    ('mattias-krane', 'Mattias Krane', '马蒂亚斯·克兰', subheads[10], zh_subheads[10], 'Minor Laws', '小法则', "Goodhart's Law", '古德哈特定律'),
 ]
+character_sections += [('kalyan', 'Kalyan', '卡利扬', 'The Pigeonhole Principle: Kalyan, the Quiet Heir', '抽屉原理：卡利扬，沉默的继承人', 'The Four Color Theorem: Sai, the Border-Baiter', '四色定理：彩，诱边人', 'Pigeonhole Principle', '抽屉原理'), ('sai', 'Sai', '彩', 'The Four Color Theorem: Sai, the Border-Baiter', '四色定理：彩，诱边人', 'The Halting Problem: Akhil, the Unfinished Answer', '停机问题：阿基尔，未完的答案', 'Four Color Theorem', '四色定理'), ('akhil', 'Akhil', '阿基尔', 'The Halting Problem: Akhil, the Unfinished Answer', '停机问题：阿基尔，未完的答案', "Mendel's Laws: Zaid, the Patient Gardener", '孟德尔定律：扎伊德，耐心的园丁', 'Halting Problem', '停机问题'), ('zaid', 'Zaid', '扎伊德', "Mendel's Laws: Zaid, the Patient Gardener", '孟德尔定律：扎伊德，耐心的园丁', 'The Law of Superposition: Vera, the Witness Beneath', '叠覆律：维拉，地下的见证者', "Mendel's Laws", '孟德尔定律'), ('vera', 'Vera', '维拉', 'The Law of Superposition: Vera, the Witness Beneath', '叠覆律：维拉，地下的见证者', 'To settle', '待定事项', 'Law of Superposition', '叠覆律')]
 lines = load('Quoderat The Pantheon.md')
 zlines = load('Quoderat The Pantheon.md', 'zh')
 for slug, title, ztitle, start, zstart, end, zend, law, zlaw in character_sections:
@@ -120,6 +123,16 @@ for slug, title, ztitle, start, zstart, end, zend, law, zlaw in character_sectio
         'body': markdown([zstart] + zlines[find(zlines,zstart)+1:find(zlines,zend)]),
         'stats': {'Held law': zlaw},
     }}
+# Reciprocal relationship is stated in Akhil's profile in the same source.
+question=next(a for a in articles if a['slug']=='the-open-question')
+akhil=next(a for a in articles if a['slug']=='akhil')
+for lang, heading, partner in [('en','Relationship — Akhil','Akhil (dating online, long-distance)'),('zh','关系——阿基尔','阿基尔（异地网恋）')]:
+    target=question if lang=='en' else question['translations']['zh']
+    original=akhil if lang=='en' else akhil['translations']['zh']
+    marker='* **Relationship:' if lang=='en' else '* **感情：'
+    relationship=next(line for line in original['body'].splitlines() if line.startswith(marker))
+    target['body'] += '\n\n### '+heading+'\n\n'+('From Akhil’s profile:' if lang=='en' else '摘自阿基尔的人物档案：')+'\n\n'+relationship+'\n\n['+('Read Akhil’s profile' if lang=='en' else '阅读阿基尔的人物档案')+'](#akhil)'
+    target['stats']['Relationship']=partner
 lines=load('Quoderat Creatures.md')
 families=['Unicorns: Life and Healing','Phoenixes: Renewal','Kitsune: Illusion and Concealment','Trolls: The Body']
 for i,heading in enumerate(families):
@@ -128,6 +141,19 @@ for i,heading in enumerate(families):
     zfamilies=['独角兽：生命与治愈','不死鸟：重生','狐仙：幻术与隐匿','巨魔：躯体']
     zlines=load('Quoderat Creatures.md','zh'); zhead=zfamilies[i]; zend=zfamilies[i+1] if i+1<len(zfamilies) else '混血种'
     articles[-1]['translations']={'zh':{'title':zhead,'body':markdown(zlines[find(zlines,zhead)+1:find(zlines,zend)]),'stats':{}}}
+# Dragon elders share physical powers; they are not law holders.
+lines=load('Quoderat Creatures.md')
+zlines=load('Quoderat Creatures.md','zh')
+start=find(lines,'The Elder Council')+1
+zstart=find(zlines,'长老议会')+1
+add('The Elder Council','Creatures',lines[start:find(lines,'Other Creature Families')],'Quoderat Creatures.md')
+articles[-1]['translations']={'zh':{'title':'长老议会','body':markdown(zlines[zstart:find(zlines,'其他神兽族群')]),'stats':{}}}
+elders=[('Ersetu','埃尔塞图','Keeper of Deep Vaults','深窖守护者','Earth','土'),('Imaq','伊玛克','The Tide-Easer','平潮者','Water','水'),('Salkhi','萨勒希','The Horizon-Eye','天际之眼','Air','气'),('Illapa','伊拉帕','The Unforgiving Spark','不赦之焰','Plasma','等离子')]
+for name,zname,title,ztitle,element,zelement in elders:
+    biography=next(line for line in lines[start:] if line.startswith('* '+name+' ('))
+    zbiography=next(line for line in zlines[zstart:] if line.startswith('* '+zname+'（'))
+    add(name,'Characters',[biography,'',lines[start]],'Quoderat Creatures.md',stats={'Title':title,'Elemental power':element,'Role':'Dragon elder'})
+    articles[-1]['translations']={'zh':{'title':zname,'body':markdown([zbiography,'',zlines[zstart]]),'stats':{'Title':ztitle,'Elemental power':zelement,'Role':'龙族长老'}}}
 add('The Tower of History','Timeline',load('Quoderat Timeline.md')[2:],'Quoderat Timeline.md','timeline')
 articles[-1]['translations']={'zh':{'title':'历史之塔','body':markdown(load('Quoderat Timeline.md','zh')[2:]),'stats':{}}}
 # Explicit editorial metadata keeps source disagreements separate from canon.

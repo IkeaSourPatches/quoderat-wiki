@@ -156,6 +156,62 @@ When a measure becomes a target, it stops being a good measure.
 * Flaw: he can't want anything openly. The moment he sets a goal, he sees it becoming a target and starts gaming it himself.
 * The Axiom's test: he believes no one scores because everyone attempting it is targeting the score. To score a point, you would have to attempt the test without wanting to win, and he is the one person alive who can't stop wanting it.
 * Exposure: high, through measures where gaming is improvement: a runner targeting a faster time simply gets faster. Anyone who formalizes that pattern could break off a slice of his law.
+Minor Laws
+Not the most powerful laws in the world, but the most fun. They are narrow in scope and mostly proven math, so their holders are safe from disproof and free to play.
+The Pigeonhole Principle: Kalyan, the Quiet Heir
+Put n+1 things into n boxes, and some box holds two.
+* Name: Kalyan, Sanskrit for "auspicious, fortunate": lucky enough to be born into a giant dynasty, not lucky enough to be born into a big branch of it.
+* Origin: heir from a small branch of the huge dynasty that grew around S&S. The principle is so simple that it was discovered early, so it has been held within the dynasty ever since. The dynasty is big enough that he has no reason to commit fully to either side, and his branch is small enough that he can't openly take on both.
+* Place: a sublaw of Number (Ilar Hesabu), which is itself a sublaw of Sets (Ensa), putting him two levels beneath the Feud.
+* Sensing: the law is so intuitive that it works as information. He knows what has collided, never where, just as the real principle is non-constructive: it guarantees a full box exists without saying which one.
+* Nudging: he can force two chosen things into the same box (two rivals, two letters, two secrets) without ever learning which box.
+* Role: a calm double agent spying for both Ilar and Ensa. He plays exactly two sides.
+* Channel to Ilar: he meets a middleman, who passes the note to a dragon, who carries it to Ilar. He never learns where Ilar hides.
+* Exposure: very low. Proven math can't be disproven, so his threats are physical.
+The Four Color Theorem: Sai, the Border-Baiter
+Any flat map can be colored with four colors so that no two neighboring regions share one. In reality, it was the first major theorem proven by computer (Appel and Haken, 1976).
+* Name: Sai, Japanese 彩, "color."
+* Nudging: given any four distinct things (paint, banners, stone, crops, uniforms), he can fill any surface so that no two neighbors match.
+* Limits: surfaces only, such as floors, walls and land. In three dimensions there is no limit, and on a donut-shaped surface the number rises to seven (Heawood). Every region must also be one connected piece; an empire with exclaves can need more than four.
+* Formulation: worded carefully around both limits, so he knows he can't be disproven and is calm about it.
+* Personality: a playful prankster, a 乐子人 who stands in the middle and stirs every side (站中间串两边). Where Kalyan plays two sides, Sai plays every possible side at once.
+* The ads: on Llama, he was the CEO of the tech company behind a mobile game whose fake ads show players botching map puzzles on purpose. On Origo, he hires actors to carry the puzzles into markets, squares and ports and play dumb until bystanders can't resist fixing them.
+* Motive: impact factor, fun and profit. Every person who picks up a puzzle is his law shaping daily life, and the ads pay him on top.
+* Exposure: very low.
+* Origin: self-made. He came from Llama, where he was the CEO of the tech company behind the game, and he proved the theorem by computer, as Appel and Haken did in reality. He then stepped down, keeping his shares, to hold his law full-time.
+The Halting Problem: Akhil, the Unfinished Answer
+No program can decide, for every program, whether it will ever stop (Turing, 1936).
+* Name: Akhil, Sanskrit for "whole, complete": a man named "complete" whose law says completion can't be known.
+* Origin: self-made, from Llama. A programmer who found the law once Llama had computers, which makes him a recent god like Sai.
+* Nudging: around him, no one can tell whether a process (a siege, a negotiation, a progress bar) will ever finish until it does.
+* Personality: serene and unhurried. Since nothing can be known to end, he sees no reason to rush anything. He is the calm counterweight to the Open Question's paranoia.
+* Relationship: dating the Open Question online, long-distance across the Limitrest Range. Around her no system can close; around him no one can tell whether anything ends. Neither of them knows whether the relationship will.
+* On the Axiom: "we will never know when it ends."
+* Flaw: he can't end anything. Projects, arguments and goodbyes all stay open, which drives everyone around him mad.
+* Protection: he lives on Llama, far from Origo's god politics. The Open Question being close to him is her weak point, not his.
+* Exposure: very low. Proven math can't be disproven.
+Mendel's Laws: Zaid, the Patient Gardener
+Traits pass from parents to children in predictable ratios.
+* Name: Zaid, Arabic for "growth, increase."
+* Origin: self-made. He discovered the law through years of slow breeding experiments, and still keeps the garden.
+* Nudging: he can verify any bloodline and, within the ratios his law allows, choose which traits a child inherits.
+* Role: a kingmaker, working in politics, especially in the kingdoms. His testimony decides which heirs are legitimate, and courtiers who dismiss him as a gardener learn too late that a succession rests on his word.
+* Personality: gentle, polite and endlessly patient, with a long memory for every slight.
+* Rival: the holder of the linkage slice, who partly disproved him during his own tenure. Zaid survived with a smaller law and considers the slice stolen.
+* Protection: every dynasty whose legitimacy rests on his testimony needs him alive and credible. If he is discredited, they fall with him.
+* Exposure: high. Real genetics breaks his law in more ways than linkage, so more slices are waiting to be cut.
+The Law of Superposition: Vera, the Witness Beneath
+In undisturbed layers, lower layers are older (Steno).
+* Name: Vera, Russian for "faith," though many hear the Latin verus, "true": she trusts what the layers show over what anyone says.
+* Origin: self-made, a field geologist who found the law in the rock.
+* Formulation: worded carefully around "undisturbed," so folds and intrusions can't disprove her.
+* Sensing: she reads anything layered (rock, ruins, cities built on cities, history) and senses where layers have been disturbed: tunnels, graves, hidden vaults.
+* Limit: the earth tribe's lands are riddled with tunnels, so a single hidden vault there is a needle in a haystack.
+* Day to day: hired to find what others buried: smugglers' tunnels, lost tombs, forged ruins, a city's true age.
+* Personality: blunt and skeptical. Testimony means nothing to her until the ground agrees.
+* Flaw: what leaves no layer escapes her, so she is easily fooled by illusion and by anything that never touched the ground.
+* Ambition: to read every layer of Origo, starting with the haystack under the earth tribe. She doesn't know Ilar is down there; she only knows something is.
+* Exposure: low.
 To settle
 * ☐ Settled: one person can't hold two laws. Killing Sets' holder let Number expand back into its lost status, so the paradox-finder left Sets alone, assuming it was finished, and it sat vacant.
 * ☐ Settled: discovering a parent law only kills the holder beneath it if it exposes a failure in their law (as relativity did to Newton). Otherwise the old law is demoted to a sublaw and its holder lives.
@@ -317,6 +373,62 @@ To settle
 * 缺陷：他无法公开地想要任何东西。一旦他设定了一个目标，他就会看到它变成靶子，并开始亲自操纵它。
 * 公理的试炼：他认为没有人得分，是因为每个尝试者都在瞄准分数。想要得一分，你必须在不想赢的状态下尝试，而他恰恰是世上唯一一个无法停止想要的人。
 * 风险：高，来自那些"操纵即提升"的指标：一个瞄准更快成绩的跑者只会跑得更快。任何把这一规律形式化的人，都可能从他的法则中分割出一部分。
+小法则
+它们并非世上最强大的法则，却是最有趣的。它们范围狭窄，大多是已被证明的数学，所以执律者不必担心被证伪，可以尽情玩耍。
+抽屉原理：卡利扬，沉默的继承人
+把n+1件东西放进n个盒子里，必有一个盒子装着两件。
+* 名字：卡利扬（Kalyan），梵语意为"吉祥、幸运"：幸运到生在一个庞大的王朝，却没幸运到生在其中的大支。
+* 起源：围绕矛盾成长起来的那个庞大王朝中，一个小分支的继承人。这条原理简单到很早就被发现，所以此后一直在王朝内部传承。王朝大到让他没有理由完全倒向任何一方，而他的分支又小到让他无法公开同时对抗双方。
+* 位置：数（伊拉尔·赫萨布）的子法则，而数本身又是集合（恩莎）的子法则，这让他位于宿怨之下两层。
+* 感知：这条法则直观到可以当作情报来用。他知道什么东西撞在了一起，却永远不知道在哪里，正如真实的抽屉原理是非构造性的：它保证存在一个装满的盒子，却不告诉你是哪一个。
+* 推动：他能迫使两件选定的东西进入同一个盒子（两个对手、两封信、两个秘密），却永远不知道是哪个盒子。
+* 角色：一位冷静的双面间谍，同时为伊拉尔和恩莎效力。他只玩两边。
+* 与伊拉尔的联络：他与一名中间人会面，中间人把信交给一条龙，再由龙带给伊拉尔。他永远不知道伊拉尔藏在哪里。
+* 风险：极低。已被证明的数学无法被证伪，所以他面临的威胁是物理上的。
+四色定理：彩，诱边人
+任何平面地图都能只用四种颜色着色，且相邻区域颜色不同。在现实中，它是第一个由计算机证明的重大定理（阿佩尔与哈肯，1976年）。
+* 名字：彩（Sai），日语意为"色彩"。
+* 推动：给他任意四种不同的东西（颜料、旗帜、石料、作物、制服），他就能填满任何表面，且相邻之处绝不相同。
+* 限制：只限于表面，例如地面、墙壁与土地。在三维空间中没有上限，而在甜甜圈形的表面上，所需的数目会升到七（希伍德）。每个区域还必须是连成一片的整体；一个拥有飞地的帝国可能需要四种以上的颜色。
+* 表述：他围绕这两条限制措辞严谨，所以他知道自己无法被证伪，对此十分淡定。
+* 性格：一个顽皮的恶作剧者，一个站中间串两边的乐子人。卡利扬玩两边，彩则同时玩所有可能的边。
+* 广告：在羊驼，他曾是一家科技公司的CEO，其手游的虚假广告里，玩家故意把地图谜题搞砸。在原点，他雇演员把谜题带到市场、广场与港口，故意装傻，直到围观者忍不住出手解题。
+* 动机：影响因子、乐趣与利润。每一个拿起谜题的人，都是他的法则在塑造日常生活，而广告还额外替他赚钱。
+* 风险：极低。
+* 起源：白手起家。他来自羊驼，曾是那款手游背后科技公司的CEO，并像现实中的阿佩尔与哈肯一样，用计算机证明了这条定理。此后他卸任CEO，保留股份，成为全职执律者。
+停机问题：阿基尔，未完的答案
+没有任何程序能对所有程序判定它们是否会停止（图灵，1936年）。
+* 名字：阿基尔（Akhil），梵语意为"完整、圆满"：一个名叫"圆满"的人，他的法则却说圆满无从得知。
+* 起源：白手起家，来自羊驼。一位程序员，在羊驼有了计算机之后发现了这条法则，这让他像彩一样成为一位新神。
+* 推动：在他身边，没有人能判断一个过程（一场围城、一次谈判、一条进度条）是否会结束，直到它真的结束。
+* 性格：从容不迫。既然什么都无法确知会结束，他便觉得没有任何事需要着急。他是未决之问那份多疑的冷静对照。
+* 感情：与未决之问网恋，隔着极限山脉异地相处。在她身边，没有系统能闭合；在他身边，没人能判断任何事是否会结束。两人都不知道这段感情会不会结束。
+* 对公理的看法："我们永远不会知道它何时结束。"
+* 缺陷：他无法结束任何事。项目、争论与告别都悬而未决，让身边每个人都快疯了。
+* 保护：他住在羊驼，远离原点的众神政治。与他亲近是未决之问的弱点，而不是他的。
+* 风险：极低。已被证明的数学无法被证伪。
+孟德尔定律：扎伊德，耐心的园丁
+性状以可预测的比例由父母传给子女。
+* 名字：扎伊德（Zaid），阿拉伯语意为"成长、增加"。
+* 起源：白手起家。他通过多年缓慢的育种实验发现了这条法则，至今仍打理着那座园子。
+* 推动：他能验证任何血统，并在法则允许的比例之内，选择一个孩子继承哪些性状。
+* 角色：一位造王者，活跃于政治，尤其是各个王国。他的证词决定哪些继承人是正统的；那些把他当成园丁而轻视他的廷臣，总是太晚才明白一场继承全系于他的一句话。
+* 性格：温和、有礼、耐心无穷，却记得每一次怠慢。
+* 对手：连锁切片的执律者，在他任内部分证伪了他的法则。扎伊德带着缩小的法则活了下来，并认为那一片是被偷走的。
+* 保护：每一个靠他的证词才获得正统地位的王朝，都需要他活着并且可信。他若被推翻，他们也会随之倒下。
+* 风险：高。真实的遗传学打破他法则的方式远不止连锁，还有更多切片等着被分割。
+叠覆律：维拉，地下的见证者
+在未受扰动的地层中，下层比上层更古老（斯坦诺）。
+* 名字：维拉（Vera），俄语意为"信仰"，不过许多人会联想到拉丁语的 verus，即"真实"：她相信地层所显示的，而不是任何人的说法。
+* 起源：白手起家，一位野外地质学家，在岩石中发现了这条法则。
+* 表述：她围绕"未受扰动"一词措辞严谨，所以褶皱与侵入体都无法证伪她。
+* 感知：她能解读任何分层的东西（岩石、废墟、层层叠建的城市、历史），并感知地层在哪里受过扰动：隧道、坟墓、隐秘的地窖。
+* 限制：土龙族的领地布满隧道，所以那里的一座隐秘地窖，就像大海里的一根针。
+* 日常：受雇寻找别人埋下的东西：走私隧道、失落的陵墓、伪造的遗迹、一座城市真实的年龄。
+* 性格：直率而多疑。在地层认同之前，任何证词对她都毫无意义。
+* 缺陷：不留下地层的东西都能逃过她的眼睛，所以她很容易被幻术，以及任何从未接触地面的东西所欺骗。
+* 野心：读遍原点的每一层，从土龙族地下那片"大海"开始。她不知道伊拉尔就在下面，只知道下面有东西。
+* 风险：低。
 待定事项
 * 已定：一个人不能同时执掌两条法则。杀死集合的执律者让数重新扩张，夺回了失去的地位，所以那位发现悖论者没有理会集合，以为它已经终结，于是集合陷入空置。
 * 已定：发现一条母法则，只有在它揭露其下法则的失效时，才会杀死那位执律者（正如相对论对牛顿所做的那样）。否则，旧法则只是降格为子法则，执律者存活。

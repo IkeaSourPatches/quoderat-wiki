@@ -20,6 +20,12 @@ Society
 * Totem users are thieves in dragon eyes, but most dragons accept they can do nothing about it and turn a blind eye. One faction hates this and would kill any totem user on sight, a hatred sharpened by mortals wearing dragon scale and bone, which aren't magical but are exceptional materials.
 * Coexistence: much time has passed, and most dragons are looking for a way to live peacefully with the rest of the world.
 * Ilar's hosts: the earth tribe shelters him, believing a law holder gives them the upper hand in internal politics and a voice in the world outside.
+The Elder Council
+Four elders, one per tribe, sit together as a council of equals who distrust each other; their dead ancestors fought each other. None of them lived through the Great Hunt, which is why the old hatred has faded, and no elder leads the faction that kills totem users on sight. Each tribe names its dragons in its own language.
+* Ersetu (earth), Keeper of Deep Vaults: Akkadian, "earth" and "the underworld." Patient and long-memoried, he plays the long game. He pushed the failed unification and secretly shelters Ilar Hesabu; the other three elders don't know.
+* Imaq (water), the Tide-Easer: Inuktitut, "water, sea." Adaptable, a mediator who flows around conflict.
+* Salkhi (air), the Horizon-Eye: Mongolian, "wind." Distant; sees the whole board and commits to nothing.
+* Illapa (plasma), the Unforgiving Spark: Quechua, after the Inca god of thunder and lightning. Volatile and the coldest toward mortals. Refused unification because plasma lands lie closest to mortal settlements and were attacked the most.
 Other Creature Families
 More families can be added as needed. Each draws on real folklore.
 Unicorns: Life and Healing
@@ -74,6 +80,12 @@ Half-creatures, half-elves among them. Possible but rare, much as a mortal holdi
 * 在龙族眼中，图腾使用者是窃贼，但大多数龙族接受自己对此无能为力，于是睁一只眼闭一只眼。有一个派系憎恨这一点，见到任何图腾使用者都会将其杀死；凡人身披龙鳞龙骨更加剧了这种仇恨，这些材料并无魔力，却极为非凡。
 * 共存：时间已经过去很久，大多数龙族都在寻找与世界其他部分和平共处的方式。
 * 伊拉尔的东道主：土龙族庇护着他，认为一位执律者能让他们在内部政治中占据上风，并在外部世界拥有话语权。
+长老议会
+四位长老，每个部族一位，共同组成一个议会。他们地位平等，却彼此猜忌；他们已故的祖先曾相互厮杀。没有一位长老经历过大狩猎，这就是旧日仇恨得以消退的原因，也没有一位长老领导那个见到图腾使用者就杀的派系。每个部族都用自己的语言为龙命名。
+* 埃尔塞图（土），深窖守护者：阿卡德语，意为"大地"，也指"冥界"。耐心而记性长久，他下的是一盘大棋。他推动了那场失败的统一，并秘密庇护着伊拉尔·赫萨布；其余三位长老并不知情。
+* 伊玛克（水），平潮者：因纽特语，意为"水、海"。善于变通，是一位绕开冲突、随势而流的调停者。
+* 萨勒希（气），天际之眼：蒙古语，意为"风"。疏离超然，纵览全局，却从不表态。
+* 伊拉帕（等离子），不赦之焰：克丘亚语，取自印加的雷电之神。暴烈无常，对凡人最为冷酷。他拒绝统一，因为等离子部族的领地离凡人聚落最近，遭受的攻击也最多。
 其他神兽族群
 日后可按需增加更多族群。每一族都取材于真实的民间传说。
 独角兽：生命与治愈

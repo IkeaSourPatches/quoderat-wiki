@@ -2,6 +2,7 @@ import type { Article } from './api';
 export type Language = 'en' | 'zh';
 // Keep translation strings separate from the annotated reader component.
 const zh: Record<string, string> = {
+  'Lore':'世界设定','LORE SECTIONS':'设定分区','All lore':'全部设定','Character navigation':'人物导航','Previous':'上一位','Next':'下一位','All characters':'所有人物','Start of the list':'列表起点','End of the list':'列表终点','Relationship':'关系',
   'QUODERAT':'证毕','THE LIVING ARCHIVE':'世界档案','THE ARCHIVE':'档案馆',
   'All entries':'全部条目','EXPLORE THE WORLD':'探索世界','World & laws':'世界与法则',
   'The pantheon':'众神','Characters':'人物','Creatures':'神兽','Timeline':'时间线',
@@ -19,7 +20,7 @@ const zh: Record<string, string> = {
   'Laws, lives, and the world between them.':'法则、众生，以及彼此之间的世界。','entries':'个条目',
   'No entries found. Try a different search or category.':'未找到条目，请尝试其他关键词或分类。',
   'CHARACTER DOSSIER':'人物档案','ARCHIVE NOTES':'档案札记','Law holder':'执律者',
-  'Title':'称号','Held law':'执掌法则','Origin':'起源','Affiliation':'所属','Status':'现状',
+  'Dragon':'龙族','Role':'身份','Title':'称号','Held law':'执掌法则','Origin':'起源','Affiliation':'所属','Status':'现状',
   'Elemental power':'元素之力','Lineage':'传承','Ally':'盟友','Rival':'对手',
   'Source-backed profile':'依据设定原文','Power follows proof.':'力量源于证明。',
   'Laws are unique. Physical powers are shared. Every claim has a consequence.':'法则独一，物理之力共享。每一项主张，都有其后果。',
