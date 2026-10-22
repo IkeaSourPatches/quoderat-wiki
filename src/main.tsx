@@ -2,6 +2,9 @@ import '@fontsource/stix-two-text/400.css';
 import '@fontsource/stix-two-text/400-italic.css';
 import '@fontsource/stix-two-text/600.css';
 import { SaiGame } from './game/SaiGame';
+import { AxiomMachine } from './game/AxiomMachine';
+import { VeraDig } from './game/VeraDig';
+import { GameShelf } from './game/GameShelf';
 import { LoreHome } from './LoreHome';
 import { TimelineTower } from './TimelineTower';
 // =============================================================================
@@ -357,7 +360,7 @@ function App() {
         <button className={`nav-item ${slug === "home" ? "active" : ""}`} onClick={() => navigate("home")}><Globe2 size={18}/>{language === "zh" ? "世界首页" : "The world"}<span>↗</span></button>
 
         <button className={`nav-item ${slug === 'characters' || article?.category === 'Characters' ? 'active' : ''}`} onClick={() => browse('Characters')}><Users size={18}/>{t('Characters')}<span>{characterList.length}</span></button>
-        <button className={`nav-item ${slug === 'play' ? 'active' : ''}`} onClick={() => navigate('play')}><Gamepad2 size={18}/>{language === 'zh' ? '游玩' : 'Play'}</button>
+        <button className={`nav-item ${slug.startsWith('play') ? 'active' : ''}`} onClick={() => navigate('play')}><Gamepad2 size={18}/>{language === 'zh' ? '游玩' : 'Play'}</button>
         <button className={`nav-item ${loreActive ? 'active' : ''}`} onClick={() => navigate('lore')}><BookOpen size={18}/>{t('Lore')}<span>↗</span></button>
         {loreActive && <div className="lore-subnav">
           <p className="nav-label">{t('LORE SECTIONS')}</p>
@@ -413,7 +416,7 @@ function App() {
           </button>
 
           {/* Breadcrumb showing "Archive" plus the active category. */}
-          <div className="breadcrumb">Quoderat <ChevronRight size={13} /> {(slug === "home" ? (language === "zh" ? "世界首页" : "The world") : slug === "play" ? (language === "zh" ? "游玩" : "Play") : slug === "lore" ? t("Lore") : slug === "suggestions" ? (language === "zh" ? "提问与建议" : "Questions & suggestions") : t(article?.category || category))}</div>
+          <div className="breadcrumb">Quoderat <ChevronRight size={13} /> {(slug === "home" ? (language === "zh" ? "世界首页" : "The world") : slug.startsWith("play") ? (language === "zh" ? "游玩" : "Play") : slug === "lore" ? t("Lore") : slug === "suggestions" ? (language === "zh" ? "提问与建议" : "Questions & suggestions") : t(article?.category || category))}</div>
 
           {/* Search input wrapped with its icon and clear button. */}
           <div className="search-wrap">
@@ -471,7 +474,7 @@ function App() {
           <div className={`page ${!article || (slug === "timeline" && !query) ? "catalogue-page" : "reading-page"}`}>
             {/* Main column: either an article reader or the entry list. */}
             <main>
-              {slug === "play" && !query ? <SaiGame language={language} open={navigate}/> : slug === "suggestions" && !query ? <SuggestionBox language={language}/> : slug === "home" && !query ? <WorldHome language={language} articles={articles} open={navigate} browse={browse} emblems={emblems} lawExpressions={lawExpressions}/> : slug === "lore" && !query ? <LoreHome language={language} articles={articles} browse={browse}/> : slug === "timeline" && !query && article ? <TimelineTower language={language} article={article}/> : article ? ( // Article view when a slug matches.
+              {slug === "play" && !query ? <GameShelf language={language} open={navigate}/> : slug === "play/sai" && !query ? <SaiGame language={language} open={navigate}/> : slug === "play/axiom" && !query ? <AxiomMachine language={language} open={navigate}/> : slug === "play/vera" && !query ? <VeraDig language={language} open={navigate}/> : slug === "suggestions" && !query ? <SuggestionBox language={language}/> : slug === "home" && !query ? <WorldHome language={language} articles={articles} open={navigate} browse={browse} emblems={emblems} lawExpressions={lawExpressions}/> : slug === "lore" && !query ? <LoreHome language={language} articles={articles} browse={browse}/> : slug === "timeline" && !query && article ? <TimelineTower language={language} article={article}/> : article ? ( // Article view when a slug matches.
                 <>{/* Fragment for the article view. */}
                   {/* Eyebrow line above the title. */}
                   <div className="eyebrow">

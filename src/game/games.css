@@ -1,0 +1,107 @@
+/* Shared shell for the Axiom and Vera games; Sai keeps game.css. */
+.games-head{max-width:640px;margin:0 auto 28px;text-align:center}
+.games-head h1{font-family:'STIX Two Text',Cambria,Georgia,'Songti SC',serif;font-weight:400;font-size:clamp(36px,4.5vw,56px);line-height:1.08;color:#f1ebd9;margin:0;letter-spacing:0}
+.games-head p{margin:14px auto 0;font-family:'STIX Two Text',Cambria,Georgia,'Songti SC',serif;font-size:18px;line-height:1.6;color:#a3b5a8}
+.games-foot{display:flex;justify-content:center;flex-wrap:wrap;gap:24px;margin:36px 0 0}
+.games-link{background:none;border:0;padding:4px 0;color:#c9b482;font-size:14px;cursor:pointer;text-decoration:underline;text-decoration-color:#c9b48266;text-underline-offset:6px}
+.games-link:hover{text-decoration-color:#c9b482}
+.games-btn{background:#c9b482;color:#101b17;border:1px solid #c9b482;padding:12px 22px;border-radius:2px;font-size:14px;cursor:pointer}
+.games-btn:hover{background:#dccb9d}
+.games-btn.quiet{background:transparent;color:#f1ebd9;border-color:#c9b48266}
+.games-btn.quiet:hover{border-color:#c9b482}
+.games-btn:disabled{opacity:.5;cursor:default}
+.games-btn:focus-visible,.games-link:focus-visible{outline:2px solid #c9b482;outline-offset:3px}
+
+/* The Axiom: a useless machine */
+.ax{max-width:760px;margin:0 auto;padding:clamp(28px,5vw,64px) 0 40px}
+.ax-stage{position:relative;max-width:560px;margin:0 auto}
+.ax-svg{display:block;width:100%;height:auto}
+.ax-shadow{fill:#00000055}
+.ax-box{fill:#1d3329;stroke:#c9b482;stroke-width:1.5}
+.ax-box-inset{fill:none;stroke:#c9b48233}
+.ax-ring{fill:none;stroke:#c9b48288;stroke-width:1.5}
+.ax-ring.thin{stroke-width:.8;stroke-dasharray:3 4}
+.ax-mark{font:italic 13px 'STIX Two Text',Georgia,serif;fill:#c9b482;text-anchor:middle}
+.ax-plate{fill:#c9b482}
+.ax-lid{fill:#c9b482;transform-box:view-box;transform-origin:322px 117px;transition:transform .28s cubic-bezier(.5,0,.3,1.4)}
+.ax-lid.open{transform:rotate(70deg)}
+.ax-lever{transform-box:view-box;transform-origin:150px 120px;transform:rotate(-25deg);transition:transform .16s ease-out}
+.ax-lever.on{transform:rotate(25deg)}
+.ax-lever-bar{fill:#d9d2bd}
+.ax-lever-knob{fill:#f1ebd9;stroke:#8f8156}
+.ax-arm{transform-box:view-box;transform-origin:320px 120px;transform:rotate(-60deg);transition:transform .26s cubic-bezier(.5,0,.3,1)}
+.ax-arm.peek{transform:rotate(40deg)}
+.ax-arm.half{transform:rotate(26deg)}
+.ax-arm.reach{transform:rotate(10deg)}
+.ax-arm.push{transform:rotate(8deg)}
+.ax-arm.wag{animation:ax-wag .32s ease-in-out infinite alternate}
+@keyframes ax-wag{from{transform:rotate(14deg)}to{transform:rotate(24deg)}}
+.ax-arm-bar{fill:#9fb3a6}
+.ax-arm-tip{fill:#f1ebd9}
+.ax-ghost .ax-lever-knob{fill:#f8e6b0}
+.ax-progress{position:absolute;left:18%;right:18%;top:10%;height:22px;border:1px solid #c9b48288;background:#101b17cc;border-radius:2px;overflow:hidden}
+.ax-progress div{height:100%;background:linear-gradient(90deg,#8f8156,#c9b482)}
+.ax-progress span{position:absolute;inset:0;display:grid;place-items:center;font-size:12px;color:#f1ebd9;font-variant-numeric:tabular-nums}
+.ax-controls{text-align:center;margin-top:18px}
+.ax-switch{min-width:220px;background:#c9b482;color:#101b17;border:1px solid #c9b482;padding:14px 26px;border-radius:2px;font-size:15px;cursor:pointer;transition:background .15s}
+.ax-switch:hover:not(:disabled){background:#dccb9d}
+.ax-switch.on{background:#2a4337;color:#f1ebd9}
+.ax-switch:disabled{cursor:progress}
+.ax-switch:focus-visible{outline:2px solid #c9b482;outline-offset:4px}
+.ax-line{min-height:3.2em;max-width:34em;margin:16px auto 0;font-family:'STIX Two Text',Georgia,'Songti SC',serif;font-style:italic;font-size:17px;line-height:1.6;color:#cdd5c9}
+.ax-score{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:560px;margin:20px auto 0;border-top:1px solid #c9b48233;border-bottom:1px solid #c9b48233}
+.ax-score div{padding:16px 8px;text-align:center}
+.ax-score div+div{border-left:1px solid #c9b48233}
+.ax-score dt{font-size:13px;color:#a3b5a8}
+.ax-score dd{margin:4px 0 0;font-family:'STIX Two Text',Georgia,serif;font-size:34px;color:#f1ebd9;font-variant-numeric:tabular-nums}
+@media(prefers-reduced-motion:reduce){.ax-lid,.ax-lever,.ax-arm{transition:none}.ax-arm.wag{animation:none}}
+
+/* Games shelf */
+.gs{max-width:900px;margin:0 auto;padding:clamp(28px,5vw,64px) 0 40px}
+.gs-list{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.gs-list button{width:100%;display:grid;grid-template-columns:minmax(120px,200px) minmax(0,1fr);gap:24px;align-items:center;text-align:left;background:#18291f;border:1px solid #c9b48233;padding:16px;border-radius:3px;color:inherit;cursor:pointer;transition:border-color .2s,background .2s}
+.gs-list button:hover{border-color:#c9b482;background:#1d3128}
+.gs-list button:focus-visible{outline:2px solid #c9b482;outline-offset:3px}
+.gs-list svg{width:100%;height:auto;display:block;border:1px solid #c9b48244}
+.gs-text{display:flex;flex-direction:column;gap:6px}
+.gs-text small{font-size:13px;color:#a3b5a8}
+.gs-text strong{font-family:'STIX Two Text',Georgia,'Songti SC',serif;font-weight:400;font-size:28px;color:#f1ebd9}
+.gs-text>span{font-family:'STIX Two Text',Georgia,'Songti SC',serif;font-size:17px;line-height:1.55;color:#cdd5c9}
+@media(max-width:560px){.gs-list button{grid-template-columns:1fr}}
+
+/* Vera's dig */
+.vd{max-width:860px;margin:0 auto;padding:clamp(28px,5vw,64px) 0 40px}
+.vd-steps{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:0 0 22px;padding:0}
+.vd-steps button{background:none;border:1px solid #c9b48233;color:#a3b5a8;padding:8px 14px;border-radius:999px;font-size:13px;cursor:pointer}
+.vd-steps li.past button{color:#c9b482;border-color:#c9b48266}
+.vd-steps li.on button{background:#c9b482;color:#101b17;border-color:#c9b482}
+.vd-steps button:focus-visible{outline:2px solid #c9b482;outline-offset:3px}
+.vd-board{background:#16271f;border:1px solid #c9b48233;padding:clamp(16px,3vw,28px);border-radius:3px}
+.vd-board h2{font-family:'STIX Two Text',Georgia,'Songti SC',serif;font-weight:400;font-size:28px;margin:0;color:#f1ebd9}
+.vd-brief{margin:6px 0 16px;font-family:'STIX Two Text',Georgia,'Songti SC',serif;font-size:17px;line-height:1.55;color:#cdd5c9}
+.vd-frame{border:1px solid #c9b48255;outline:4px double #c9b48222;outline-offset:4px;margin:4px}
+.vd-frame.shake{animation:vd-shake .35s}
+@keyframes vd-shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.vd-cliff{display:block;width:100%;height:auto;touch-action:manipulation}
+.vd-sky{fill:#102019}
+.vd-layer.tap{cursor:pointer}
+.vd-layer.tap:hover path:first-child,.vd-layer.tap:focus-visible path:first-child{filter:brightness(1.18)}
+.vd-layer:focus-visible{outline:none}
+.vd-layer.done path:first-child{filter:brightness(1.12) saturate(1.2)}
+.vd-mark{font:20px Georgia,serif;fill:#f1ebd9aa}
+.vd-num{font:600 22px 'STIX Two Text',Georgia,serif;fill:#f1ebd9;text-anchor:middle}
+.vd-dig{stroke:#c9b482;stroke-width:1.5;stroke-dasharray:5 3}
+.vd-dig.subtle{stroke:none;opacity:.42}
+.vd-dig.subtle.found{opacity:1;stroke:#f1dca0;stroke-width:2}
+.vd-dig.tap{cursor:pointer}
+.vd-dig.tap:hover,.vd-dig.tap:focus-visible{outline:none;stroke:#f1dca0;stroke-width:2.5}
+.vd-dig.found:not(.subtle){stroke:#f1dca0;stroke-width:2.5;filter:drop-shadow(0 0 6px #f1dca0)}
+.vd-choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.vd-choices .right{border-color:#8fc59a;color:#cfe9d4}
+.vd-choices .wrongpick{border-color:#c2675a;color:#f0c1b9}
+.vd-status{margin-top:14px;font-size:14px;color:#a3b5a8;min-height:1.2em}
+.vd-line{margin:8px 0 0;font-family:'STIX Two Text',Georgia,'Songti SC',serif;font-size:17px;line-height:1.6;color:#e9e1c9;min-height:3.2em}
+.vd-line b{color:#c9b482;font-weight:600}
+.vd-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:10px}
+.vd-hint{margin:0;font-size:14px;color:#a3b5a8;max-width:36em}
+@media(prefers-reduced-motion:reduce){.vd-frame.shake{animation:none}}
