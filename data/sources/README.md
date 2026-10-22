@@ -1,6 +1,6 @@
 # Quoderat source snapshots
 
-Fetched from Google Drive on 20 October 2026 (Singapore date). These are readable text snapshots of the complete text returned by the connector, not original Google Docs formatting or live-synced files.
+Pantheon and Creatures refreshed from Google Drive on 22 October 2026 (Singapore date). Other snapshots were retrieved on 20 October 2026. These are readable text snapshots of the complete text returned by the connector, not original Google Docs formatting or live-synced files.
 
 Drive folder: https://drive.google.com/drive/folders/1pMzl9GnEbEVEBGy0b5KXJsRHUMx3TFHs
 

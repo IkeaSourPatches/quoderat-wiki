@@ -213,13 +213,28 @@
     "slug": "social-laws",
     "title": "Social Laws",
     "category": "The pantheon",
-    "body": "Smaller in scope than physics, since they only operate where people are, but they shape daily life directly. Most are tendencies with known exceptions, so their holders are the most exposed to partial disproof in the world. Where STEM gods are distant forces, social gods sit across the table from you. No rule bars a social law from climbing; in practice, scope keeps them below STEM.\n\n### The Iron Law of Oligarchy: Aldous Vane, the Iron Clerk\n\n\nAlso called Keeper of the Inevitable Few. Every organization, however democratic at the start, ends up run by a small elite.\n\n* **Origin:**  inherited. His predecessor discovered the law watching his own commune centralize within a year, and set Vane's test: join a new trade guild and, without interfering, record the exact moment its assembly gave way to a permanent committee. Vane passed by predicting the committee's members three days early.\n* **Nudging:**  \"letting the floor tilt.\" He thickens the friction of flat decision-making: longer agendas, harder-to-reach meeting halls, more technical minutes. Those with time drift to the center; everyone else drifts away.\n* **Protection:**  he never leads anything. He attaches to existing hierarchies as a clerk or secretary, and his heirs watch for flat experiments, joining them to disrupt from within or discrediting their records.\n* **Day to day:**  a records keeper in a port city's customs house, watching committees form and predicting who gets sidelined first. He keeps a ledger of flat organizations that collapsed into cliques.\n* **Flaw:**  bored by stability. He has sabotaged competent councils just to watch a new elite scramble into place, making enemies among holders who value predictability.\n* **Ambition:**  to join a truly flat organization that has lasted long enough to threaten him, and be present when the law reasserts itself.\n* **Exposure:**  high, through slow accumulation. His formulation says organizations \"end up\" ruled by a few, so temporary flatness only delays it; what chips at him is an organization that stays flat for its entire life. A large, long-lived one could demote him.\n\n### Supply and Demand: Lian Xiu, the Equilibrium Sovereign\n\n* **Origin:**  inherited after her predecessor's death, with the law already wounded: the Giffen slice (goods whose demand rises with price) had been broken off and is held by someone else.\n* **Nudging:**  shifts supply chains and expectations to move market trends, but can't force outcomes.\n* **Protection:**  a network of economic analysts watching for anomalies; she avoids impoverished regions where Giffen behavior reappears.\n* **Day to day:**  travels between trade hubs, keeping markets balanced and watching for exceptions that could shrink her law.\n* **Flaw:**  overconfidence. She ignores early signs of new exceptions, like speculative bubbles or sudden demand surges.\n* **Ambition:**  to revise her own formulation so well that the Giffen holder's slice becomes redundant.\n* **Exposure:**  high. New market behaviors constantly threaten her, and the Giffen holder is a standing rival probing for weaknesses.\n\n### Goodhart's Law: Mattias Krane, the Moving Target\n\n\nWhen a measure becomes a target, it stops being a good measure.\n\n* **Origin:**  discovered. A guild examiner who spent twenty years watching apprentices learn the exam instead of the craft, crystallized by a nail workshop that, paid by count, made thousands of useless tiny nails, and paid by weight, made a few enormous ones.\n* **Nudging:**  he senses every measure that has become a target. He can push one further from the truth (a quota's numbers rise while what it counts rots), or shield a measure by keeping people from noticing it judges them.\n* **Protection:**  he is unmeasurable. Any metric aimed at finding him (a bounty description, a ranking, a pattern of sightings) stops being reliable the moment it is used to hunt him.\n* **Day to day:**  hired by rulers to find which reports are lies, feared by guilds that hit their targets suspiciously well, and paid more by those who want to learn how to game a measure.\n* **Flaw:**  he can't want anything openly. The moment he sets a goal, he sees it becoming a target and starts gaming it himself.\n* **The Axiom's test:**  he believes no one scores because everyone attempting it is targeting the score. To score a point, you would have to attempt the test without wanting to win, and he is the one person alive who can't stop wanting it.\n* **Exposure:**  high, through measures where gaming is improvement: a runner targeting a faster time simply gets faster. Anyone who formalizes that pattern could break off a slice of his law.\n\n### To settle\n\n- [ ] Settled: one person can't hold two laws. Killing Sets' holder let Number expand back into its lost status, so the paradox-finder left Sets alone, assuming it was finished, and it sat vacant.\n- [ ] Settled: discovering a parent law only kills the holder beneath it if it exposes a failure in their law (as relativity did to Newton). Otherwise the old law is demoted to a sublaw and its holder lives.",
+    "body": "Smaller in scope than physics, since they only operate where people are, but they shape daily life directly. Most are tendencies with known exceptions, so their holders are the most exposed to partial disproof in the world. Where STEM gods are distant forces, social gods sit across the table from you. No rule bars a social law from climbing; in practice, scope keeps them below STEM.\n\n### The Iron Law of Oligarchy: Aldous Vane, the Iron Clerk\n\n\nAlso called Keeper of the Inevitable Few. Every organization, however democratic at the start, ends up run by a small elite.\n\n* **Origin:**  inherited. His predecessor discovered the law watching his own commune centralize within a year, and set Vane's test: join a new trade guild and, without interfering, record the exact moment its assembly gave way to a permanent committee. Vane passed by predicting the committee's members three days early.\n* **Nudging:**  \"letting the floor tilt.\" He thickens the friction of flat decision-making: longer agendas, harder-to-reach meeting halls, more technical minutes. Those with time drift to the center; everyone else drifts away.\n* **Protection:**  he never leads anything. He attaches to existing hierarchies as a clerk or secretary, and his heirs watch for flat experiments, joining them to disrupt from within or discrediting their records.\n* **Day to day:**  a records keeper in a port city's customs house, watching committees form and predicting who gets sidelined first. He keeps a ledger of flat organizations that collapsed into cliques.\n* **Flaw:**  bored by stability. He has sabotaged competent councils just to watch a new elite scramble into place, making enemies among holders who value predictability.\n* **Ambition:**  to join a truly flat organization that has lasted long enough to threaten him, and be present when the law reasserts itself.\n* **Exposure:**  high, through slow accumulation. His formulation says organizations \"end up\" ruled by a few, so temporary flatness only delays it; what chips at him is an organization that stays flat for its entire life. A large, long-lived one could demote him.\n\n### Supply and Demand: Lian Xiu, the Equilibrium Sovereign\n\n* **Origin:**  inherited after her predecessor's death, with the law already wounded: the Giffen slice (goods whose demand rises with price) had been broken off and is held by someone else.\n* **Nudging:**  shifts supply chains and expectations to move market trends, but can't force outcomes.\n* **Protection:**  a network of economic analysts watching for anomalies; she avoids impoverished regions where Giffen behavior reappears.\n* **Day to day:**  travels between trade hubs, keeping markets balanced and watching for exceptions that could shrink her law.\n* **Flaw:**  overconfidence. She ignores early signs of new exceptions, like speculative bubbles or sudden demand surges.\n* **Ambition:**  to revise her own formulation so well that the Giffen holder's slice becomes redundant.\n* **Exposure:**  high. New market behaviors constantly threaten her, and the Giffen holder is a standing rival probing for weaknesses.\n\n### Goodhart's Law: Mattias Krane, the Moving Target\n\n\nWhen a measure becomes a target, it stops being a good measure.\n\n* **Origin:**  discovered. A guild examiner who spent twenty years watching apprentices learn the exam instead of the craft, crystallized by a nail workshop that, paid by count, made thousands of useless tiny nails, and paid by weight, made a few enormous ones.\n* **Nudging:**  he senses every measure that has become a target. He can push one further from the truth (a quota's numbers rise while what it counts rots), or shield a measure by keeping people from noticing it judges them.\n* **Protection:**  he is unmeasurable. Any metric aimed at finding him (a bounty description, a ranking, a pattern of sightings) stops being reliable the moment it is used to hunt him.\n* **Day to day:**  hired by rulers to find which reports are lies, feared by guilds that hit their targets suspiciously well, and paid more by those who want to learn how to game a measure.\n* **Flaw:**  he can't want anything openly. The moment he sets a goal, he sees it becoming a target and starts gaming it himself.\n* **The Axiom's test:**  he believes no one scores because everyone attempting it is targeting the score. To score a point, you would have to attempt the test without wanting to win, and he is the one person alive who can't stop wanting it.\n* **Exposure:**  high, through measures where gaming is improvement: a runner targeting a faster time simply gets faster. Anyone who formalizes that pattern could break off a slice of his law.",
     "source": "Quoderat The Pantheon.md",
     "stats": {},
     "translations": {
       "zh": {
         "title": "社会法则",
-        "body": "范围比物理小，因为它们只在有人的地方运作，却直接塑造着日常生活。大多数是存在已知例外的倾向，所以它们的执律者是世界上最容易被部分证伪的人。理工科的神是遥远的力量，而社会之神就坐在你对面的桌旁。没有规则禁止社会法则向上攀升；实际上，是范围让它们居于理工科之下。\n\n### 寡头铁律：奥尔德斯·维恩，铁律书记\n\n\n也被称为\"必然少数的守护者\"。每一个组织，无论起初多么民主，最终都会由一小撮精英掌控。\n\n* **起源：** 继承。他的前任在目睹自己的公社一年内走向集权时发现了这条法则，并为维恩设定了试炼：加入一个新的行会，在不加干涉的情况下，记录下它的议会让位于一个常设委员会的确切时刻。维恩提前三天预言了委员会的成员，从而通过了试炼。\n* **推动：** \"让地板倾斜\"。他加重扁平决策的摩擦：更长的议程，更难到达的会场，更专业的会议记录。有时间的人向中心靠拢，其他人则渐渐离开。\n* **保护：** 他从不领导任何事物。他以书记或秘书的身份依附于现有的等级结构，而他的继承人则留意各种扁平实验，加入其中从内部破坏，或抹黑它们的记录。\n* **日常：** 在一座港口城市的海关担任档案员，观察委员会的形成，预测谁会最先被边缘化。他保留着一本账簿，记录那些沦为小圈子的扁平组织。\n* **缺陷：** 厌倦稳定。他曾破坏称职的议会，只为看着新的精英争先恐后地上位，因此与看重可预测性的执律者结下了仇。\n* **野心：** 加入一个真正扁平、并且存在得足够久、足以威胁到他的组织，亲眼见证法则重新确立自身的时刻。\n* **风险：** 高，来自缓慢的积累。他的表述说组织\"最终\"会被少数人统治，所以暂时的扁平只是推迟了它；真正蚕食他的，是一个在整个生命周期中都保持扁平的组织。一个庞大而长寿的这类组织可能会降格他。\n\n### 供求律：连秀，均衡女王\n\n* **起源：** 在前任死后继承，而法则当时已经受损：吉芬切片（需求随价格上升的商品）已被分割出去，由另一个人执掌。\n* **推动：** 调整供应链与预期，以推动市场趋势，但无法强行决定结果。\n* **保护：** 一个监视异常的经济分析师网络；她回避吉芬现象重现的贫困地区。\n* **日常：** 往返于各个贸易枢纽之间，维持市场平衡，留意可能缩小她法则的例外。\n* **缺陷：** 过度自信。她忽视新例外的早期迹象，比如投机泡沫或需求骤增。\n* **野心：** 把自己的表述修订得足够好，让吉芬执律者的那一部分变得多余。\n* **风险：** 高。新的市场行为不断威胁着她，而吉芬执律者是一个时刻在试探她弱点的对手。\n\n### 古德哈特定律：马蒂亚斯·克兰，移动靶\n\n\n当一项指标成为目标，它就不再是一项好的指标。\n\n* **起源：** 亲自发现。一位行会考官，用二十年看着学徒们学会应付考试而非手艺；让他豁然开朗的是一家制钉作坊：按数量计酬时，它造出了成千上万枚毫无用处的小钉子；按重量计酬时，它只造出了几枚巨大的钉子。\n* **推动：** 他能感知每一项已经成为目标的指标。他可以把一项指标推得离真相更远（配额的数字不断上升，而它所统计的东西却在腐烂），或者让人们注意不到某项指标正在评判他们，从而保护它。\n* **保护：** 他无法被衡量。任何用来寻找他的指标（悬赏描述、排名、目击规律）在被用来追捕他的那一刻就不再可靠。\n* **日常：** 受统治者雇用，找出哪些报告是谎言；被那些达标达得可疑的行会所畏惧；而那些想学会如何操纵指标的人，会付给他更多的钱。\n* **缺陷：** 他无法公开地想要任何东西。一旦他设定了一个目标，他就会看到它变成靶子，并开始亲自操纵它。\n* **公理的试炼：** 他认为没有人得分，是因为每个尝试者都在瞄准分数。想要得一分，你必须在不想赢的状态下尝试，而他恰恰是世上唯一一个无法停止想要的人。\n* **风险：** 高，来自那些\"操纵即提升\"的指标：一个瞄准更快成绩的跑者只会跑得更快。任何把这一规律形式化的人，都可能从他的法则中分割出一部分。\n\n### 待定事项\n\n* **已定：** 一个人不能同时执掌两条法则。杀死集合的执律者让数重新扩张，夺回了失去的地位，所以那位发现悖论者没有理会集合，以为它已经终结，于是集合陷入空置。\n* **已定：** 发现一条母法则，只有在它揭露其下法则的失效时，才会杀死那位执律者（正如相对论对牛顿所做的那样）。否则，旧法则只是降格为子法则，执律者存活。",
+        "body": "范围比物理小，因为它们只在有人的地方运作，却直接塑造着日常生活。大多数是存在已知例外的倾向，所以它们的执律者是世界上最容易被部分证伪的人。理工科的神是遥远的力量，而社会之神就坐在你对面的桌旁。没有规则禁止社会法则向上攀升；实际上，是范围让它们居于理工科之下。\n\n### 寡头铁律：奥尔德斯·维恩，铁律书记\n\n\n也被称为\"必然少数的守护者\"。每一个组织，无论起初多么民主，最终都会由一小撮精英掌控。\n\n* **起源：** 继承。他的前任在目睹自己的公社一年内走向集权时发现了这条法则，并为维恩设定了试炼：加入一个新的行会，在不加干涉的情况下，记录下它的议会让位于一个常设委员会的确切时刻。维恩提前三天预言了委员会的成员，从而通过了试炼。\n* **推动：** \"让地板倾斜\"。他加重扁平决策的摩擦：更长的议程，更难到达的会场，更专业的会议记录。有时间的人向中心靠拢，其他人则渐渐离开。\n* **保护：** 他从不领导任何事物。他以书记或秘书的身份依附于现有的等级结构，而他的继承人则留意各种扁平实验，加入其中从内部破坏，或抹黑它们的记录。\n* **日常：** 在一座港口城市的海关担任档案员，观察委员会的形成，预测谁会最先被边缘化。他保留着一本账簿，记录那些沦为小圈子的扁平组织。\n* **缺陷：** 厌倦稳定。他曾破坏称职的议会，只为看着新的精英争先恐后地上位，因此与看重可预测性的执律者结下了仇。\n* **野心：** 加入一个真正扁平、并且存在得足够久、足以威胁到他的组织，亲眼见证法则重新确立自身的时刻。\n* **风险：** 高，来自缓慢的积累。他的表述说组织\"最终\"会被少数人统治，所以暂时的扁平只是推迟了它；真正蚕食他的，是一个在整个生命周期中都保持扁平的组织。一个庞大而长寿的这类组织可能会降格他。\n\n### 供求律：连秀，均衡女王\n\n* **起源：** 在前任死后继承，而法则当时已经受损：吉芬切片（需求随价格上升的商品）已被分割出去，由另一个人执掌。\n* **推动：** 调整供应链与预期，以推动市场趋势，但无法强行决定结果。\n* **保护：** 一个监视异常的经济分析师网络；她回避吉芬现象重现的贫困地区。\n* **日常：** 往返于各个贸易枢纽之间，维持市场平衡，留意可能缩小她法则的例外。\n* **缺陷：** 过度自信。她忽视新例外的早期迹象，比如投机泡沫或需求骤增。\n* **野心：** 把自己的表述修订得足够好，让吉芬执律者的那一部分变得多余。\n* **风险：** 高。新的市场行为不断威胁着她，而吉芬执律者是一个时刻在试探她弱点的对手。\n\n### 古德哈特定律：马蒂亚斯·克兰，移动靶\n\n\n当一项指标成为目标，它就不再是一项好的指标。\n\n* **起源：** 亲自发现。一位行会考官，用二十年看着学徒们学会应付考试而非手艺；让他豁然开朗的是一家制钉作坊：按数量计酬时，它造出了成千上万枚毫无用处的小钉子；按重量计酬时，它只造出了几枚巨大的钉子。\n* **推动：** 他能感知每一项已经成为目标的指标。他可以把一项指标推得离真相更远（配额的数字不断上升，而它所统计的东西却在腐烂），或者让人们注意不到某项指标正在评判他们，从而保护它。\n* **保护：** 他无法被衡量。任何用来寻找他的指标（悬赏描述、排名、目击规律）在被用来追捕他的那一刻就不再可靠。\n* **日常：** 受统治者雇用，找出哪些报告是谎言；被那些达标达得可疑的行会所畏惧；而那些想学会如何操纵指标的人，会付给他更多的钱。\n* **缺陷：** 他无法公开地想要任何东西。一旦他设定了一个目标，他就会看到它变成靶子，并开始亲自操纵它。\n* **公理的试炼：** 他认为没有人得分，是因为每个尝试者都在瞄准分数。想要得一分，你必须在不想赢的状态下尝试，而他恰恰是世上唯一一个无法停止想要的人。\n* **风险：** 高，来自那些\"操纵即提升\"的指标：一个瞄准更快成绩的跑者只会跑得更快。任何把这一规律形式化的人，都可能从他的法则中分割出一部分。",
+        "stats": {}
+      }
+    }
+  },
+  {
+    "slug": "minor-laws",
+    "title": "Minor Laws",
+    "category": "The pantheon",
+    "body": "Not the most powerful laws in the world, but the most fun. They are narrow in scope and mostly proven math, so their holders are safe from disproof and free to play.\n\n### The Pigeonhole Principle: Kalyan, the Quiet Heir\n\n\nPut n+1 things into n boxes, and some box holds two.\n\n* **Name:**  Kalyan, Sanskrit for \"auspicious, fortunate\": lucky enough to be born into a giant dynasty, not lucky enough to be born into a big branch of it.\n* **Origin:**  heir from a small branch of the huge dynasty that grew around S&S. The principle is so simple that it was discovered early, so it has been held within the dynasty ever since. The dynasty is big enough that he has no reason to commit fully to either side, and his branch is small enough that he can't openly take on both.\n* **Place:**  a sublaw of Number (Ilar Hesabu), which is itself a sublaw of Sets (Ensa), putting him two levels beneath the Feud.\n* **Sensing:**  the law is so intuitive that it works as information. He knows what has collided, never where, just as the real principle is non-constructive: it guarantees a full box exists without saying which one.\n* **Nudging:**  he can force two chosen things into the same box (two rivals, two letters, two secrets) without ever learning which box.\n* **Role:**  a calm double agent spying for both Ilar and Ensa. He plays exactly two sides.\n* **Channel to Ilar:**  he meets a middleman, who passes the note to a dragon, who carries it to Ilar. He never learns where Ilar hides.\n* **Exposure:**  very low. Proven math can't be disproven, so his threats are physical.\n\n### The Four Color Theorem: Sai, the Border-Baiter\n\n\nAny flat map can be colored with four colors so that no two neighboring regions share one. In reality, it was the first major theorem proven by computer (Appel and Haken, 1976).\n\n* **Name:**  Sai, Japanese 彩, \"color.\"\n* **Nudging:**  given any four distinct things (paint, banners, stone, crops, uniforms), he can fill any surface so that no two neighbors match.\n* **Limits:**  surfaces only, such as floors, walls and land. In three dimensions there is no limit, and on a donut-shaped surface the number rises to seven (Heawood). Every region must also be one connected piece; an empire with exclaves can need more than four.\n* **Formulation:**  worded carefully around both limits, so he knows he can't be disproven and is calm about it.\n* **Personality:**  a playful prankster, a 乐子人 who stands in the middle and stirs every side (站中间串两边). Where Kalyan plays two sides, Sai plays every possible side at once.\n* **The ads:**  on Llama, he was the CEO of the tech company behind a mobile game whose fake ads show players botching map puzzles on purpose. On Origo, he hires actors to carry the puzzles into markets, squares and ports and play dumb until bystanders can't resist fixing them.\n* **Motive:**  impact factor, fun and profit. Every person who picks up a puzzle is his law shaping daily life, and the ads pay him on top.\n* **Exposure:**  very low.\n* **Origin:**  self-made. He came from Llama, where he was the CEO of the tech company behind the game, and he proved the theorem by computer, as Appel and Haken did in reality. He then stepped down, keeping his shares, to hold his law full-time.\n\n### The Halting Problem: Akhil, the Unfinished Answer\n\n\nNo program can decide, for every program, whether it will ever stop (Turing, 1936).\n\n* **Name:**  Akhil, Sanskrit for \"whole, complete\": a man named \"complete\" whose law says completion can't be known.\n* **Origin:**  self-made, from Llama. A programmer who found the law once Llama had computers, which makes him a recent god like Sai.\n* **Nudging:**  around him, no one can tell whether a process (a siege, a negotiation, a progress bar) will ever finish until it does.\n* **Personality:**  serene and unhurried. Since nothing can be known to end, he sees no reason to rush anything. He is the calm counterweight to the Open Question's paranoia.\n* **Relationship:**  dating the Open Question online, long-distance across the Limitrest Range. Around her no system can close; around him no one can tell whether anything ends. Neither of them knows whether the relationship will.\n* **On the Axiom:**  \"we will never know when it ends.\"\n* **Flaw:**  he can't end anything. Projects, arguments and goodbyes all stay open, which drives everyone around him mad.\n* **Protection:**  he lives on Llama, far from Origo's god politics. The Open Question being close to him is her weak point, not his.\n* **Exposure:**  very low. Proven math can't be disproven.\n\n### Mendel's Laws: Zaid, the Patient Gardener\n\n\nTraits pass from parents to children in predictable ratios.\n\n* **Name:**  Zaid, Arabic for \"growth, increase.\"\n* **Origin:**  self-made. He discovered the law through years of slow breeding experiments, and still keeps the garden.\n* **Nudging:**  he can verify any bloodline and, within the ratios his law allows, choose which traits a child inherits.\n* **Role:**  a kingmaker, working in politics, especially in the kingdoms. His testimony decides which heirs are legitimate, and courtiers who dismiss him as a gardener learn too late that a succession rests on his word.\n* **Personality:**  gentle, polite and endlessly patient, with a long memory for every slight.\n* **Rival:**  the holder of the linkage slice, who partly disproved him during his own tenure. Zaid survived with a smaller law and considers the slice stolen.\n* **Protection:**  every dynasty whose legitimacy rests on his testimony needs him alive and credible. If he is discredited, they fall with him.\n* **Exposure:**  high. Real genetics breaks his law in more ways than linkage, so more slices are waiting to be cut.\n\n### The Law of Superposition: Vera, the Witness Beneath\n\n\nIn undisturbed layers, lower layers are older (Steno).\n\n* **Name:**  Vera, Russian for \"faith,\" though many hear the Latin verus, \"true\": she trusts what the layers show over what anyone says.\n* **Origin:**  self-made, a field geologist who found the law in the rock.\n* **Formulation:**  worded carefully around \"undisturbed,\" so folds and intrusions can't disprove her.\n* **Sensing:**  she reads anything layered (rock, ruins, cities built on cities, history) and senses where layers have been disturbed: tunnels, graves, hidden vaults.\n* **Limit:**  the earth tribe's lands are riddled with tunnels, so a single hidden vault there is a needle in a haystack.\n* **Day to day:**  hired to find what others buried: smugglers' tunnels, lost tombs, forged ruins, a city's true age.\n* **Personality:**  blunt and skeptical. Testimony means nothing to her until the ground agrees.\n* **Flaw:**  what leaves no layer escapes her, so she is easily fooled by illusion and by anything that never touched the ground.\n* **Ambition:**  to read every layer of Origo, starting with the haystack under the earth tribe. She doesn't know Ilar is down there; she only knows something is.\n* **Exposure:**  low.\n\n### To settle\n\n- [ ] Settled: one person can't hold two laws. Killing Sets' holder let Number expand back into its lost status, so the paradox-finder left Sets alone, assuming it was finished, and it sat vacant.\n- [ ] Settled: discovering a parent law only kills the holder beneath it if it exposes a failure in their law (as relativity did to Newton). Otherwise the old law is demoted to a sublaw and its holder lives.",
+    "source": "Quoderat The Pantheon.md",
+    "stats": {},
+    "translations": {
+      "zh": {
+        "title": "小法则",
+        "body": "它们并非世上最强大的法则，却是最有趣的。它们范围狭窄，大多是已被证明的数学，所以执律者不必担心被证伪，可以尽情玩耍。\n\n### 抽屉原理：卡利扬，沉默的继承人\n\n\n把n+1件东西放进n个盒子里，必有一个盒子装着两件。\n\n* **名字：** 卡利扬（Kalyan），梵语意为\"吉祥、幸运\"：幸运到生在一个庞大的王朝，却没幸运到生在其中的大支。\n* **起源：** 围绕矛盾成长起来的那个庞大王朝中，一个小分支的继承人。这条原理简单到很早就被发现，所以此后一直在王朝内部传承。王朝大到让他没有理由完全倒向任何一方，而他的分支又小到让他无法公开同时对抗双方。\n* **位置：** 数（伊拉尔·赫萨布）的子法则，而数本身又是集合（恩莎）的子法则，这让他位于宿怨之下两层。\n* **感知：** 这条法则直观到可以当作情报来用。他知道什么东西撞在了一起，却永远不知道在哪里，正如真实的抽屉原理是非构造性的：它保证存在一个装满的盒子，却不告诉你是哪一个。\n* **推动：** 他能迫使两件选定的东西进入同一个盒子（两个对手、两封信、两个秘密），却永远不知道是哪个盒子。\n* **角色：** 一位冷静的双面间谍，同时为伊拉尔和恩莎效力。他只玩两边。\n* **与伊拉尔的联络：** 他与一名中间人会面，中间人把信交给一条龙，再由龙带给伊拉尔。他永远不知道伊拉尔藏在哪里。\n* **风险：** 极低。已被证明的数学无法被证伪，所以他面临的威胁是物理上的。\n\n### 四色定理：彩，诱边人\n\n\n任何平面地图都能只用四种颜色着色，且相邻区域颜色不同。在现实中，它是第一个由计算机证明的重大定理（阿佩尔与哈肯，1976年）。\n\n* **名字：** 彩（Sai），日语意为\"色彩\"。\n* **推动：** 给他任意四种不同的东西（颜料、旗帜、石料、作物、制服），他就能填满任何表面，且相邻之处绝不相同。\n* **限制：** 只限于表面，例如地面、墙壁与土地。在三维空间中没有上限，而在甜甜圈形的表面上，所需的数目会升到七（希伍德）。每个区域还必须是连成一片的整体；一个拥有飞地的帝国可能需要四种以上的颜色。\n* **表述：** 他围绕这两条限制措辞严谨，所以他知道自己无法被证伪，对此十分淡定。\n* **性格：** 一个顽皮的恶作剧者，一个站中间串两边的乐子人。卡利扬玩两边，彩则同时玩所有可能的边。\n* **广告：** 在羊驼，他曾是一家科技公司的CEO，其手游的虚假广告里，玩家故意把地图谜题搞砸。在原点，他雇演员把谜题带到市场、广场与港口，故意装傻，直到围观者忍不住出手解题。\n* **动机：** 影响因子、乐趣与利润。每一个拿起谜题的人，都是他的法则在塑造日常生活，而广告还额外替他赚钱。\n* **风险：** 极低。\n* **起源：** 白手起家。他来自羊驼，曾是那款手游背后科技公司的CEO，并像现实中的阿佩尔与哈肯一样，用计算机证明了这条定理。此后他卸任CEO，保留股份，成为全职执律者。\n\n### 停机问题：阿基尔，未完的答案\n\n\n没有任何程序能对所有程序判定它们是否会停止（图灵，1936年）。\n\n* **名字：** 阿基尔（Akhil），梵语意为\"完整、圆满\"：一个名叫\"圆满\"的人，他的法则却说圆满无从得知。\n* **起源：** 白手起家，来自羊驼。一位程序员，在羊驼有了计算机之后发现了这条法则，这让他像彩一样成为一位新神。\n* **推动：** 在他身边，没有人能判断一个过程（一场围城、一次谈判、一条进度条）是否会结束，直到它真的结束。\n* **性格：** 从容不迫。既然什么都无法确知会结束，他便觉得没有任何事需要着急。他是未决之问那份多疑的冷静对照。\n* **感情：** 与未决之问网恋，隔着极限山脉异地相处。在她身边，没有系统能闭合；在他身边，没人能判断任何事是否会结束。两人都不知道这段感情会不会结束。\n* **对公理的看法：** \"我们永远不会知道它何时结束。\"\n* **缺陷：** 他无法结束任何事。项目、争论与告别都悬而未决，让身边每个人都快疯了。\n* **保护：** 他住在羊驼，远离原点的众神政治。与他亲近是未决之问的弱点，而不是他的。\n* **风险：** 极低。已被证明的数学无法被证伪。\n\n### 孟德尔定律：扎伊德，耐心的园丁\n\n\n性状以可预测的比例由父母传给子女。\n\n* **名字：** 扎伊德（Zaid），阿拉伯语意为\"成长、增加\"。\n* **起源：** 白手起家。他通过多年缓慢的育种实验发现了这条法则，至今仍打理着那座园子。\n* **推动：** 他能验证任何血统，并在法则允许的比例之内，选择一个孩子继承哪些性状。\n* **角色：** 一位造王者，活跃于政治，尤其是各个王国。他的证词决定哪些继承人是正统的；那些把他当成园丁而轻视他的廷臣，总是太晚才明白一场继承全系于他的一句话。\n* **性格：** 温和、有礼、耐心无穷，却记得每一次怠慢。\n* **对手：** 连锁切片的执律者，在他任内部分证伪了他的法则。扎伊德带着缩小的法则活了下来，并认为那一片是被偷走的。\n* **保护：** 每一个靠他的证词才获得正统地位的王朝，都需要他活着并且可信。他若被推翻，他们也会随之倒下。\n* **风险：** 高。真实的遗传学打破他法则的方式远不止连锁，还有更多切片等着被分割。\n\n### 叠覆律：维拉，地下的见证者\n\n\n在未受扰动的地层中，下层比上层更古老（斯坦诺）。\n\n* **名字：** 维拉（Vera），俄语意为\"信仰\"，不过许多人会联想到拉丁语的 verus，即\"真实\"：她相信地层所显示的，而不是任何人的说法。\n* **起源：** 白手起家，一位野外地质学家，在岩石中发现了这条法则。\n* **表述：** 她围绕\"未受扰动\"一词措辞严谨，所以褶皱与侵入体都无法证伪她。\n* **感知：** 她能解读任何分层的东西（岩石、废墟、层层叠建的城市、历史），并感知地层在哪里受过扰动：隧道、坟墓、隐秘的地窖。\n* **限制：** 土龙族的领地布满隧道，所以那里的一座隐秘地窖，就像大海里的一根针。\n* **日常：** 受雇寻找别人埋下的东西：走私隧道、失落的陵墓、伪造的遗迹、一座城市真实的年龄。\n* **性格：** 直率而多疑。在地层认同之前，任何证词对她都毫无意义。\n* **缺陷：** 不留下地层的东西都能逃过她的眼睛，所以她很容易被幻术，以及任何从未接触地面的东西所欺骗。\n* **野心：** 读遍原点的每一层，从土龙族地下那片\"大海\"开始。她不知道伊拉尔就在下面，只知道下面有东西。\n* **风险：** 低。\n\n### 待定事项\n\n* **已定：** 一个人不能同时执掌两条法则。杀死集合的执律者让数重新扩张，夺回了失去的地位，所以那位发现悖论者没有理会集合，以为它已经终结，于是集合陷入空置。\n* **已定：** 发现一条母法则，只有在它揭露其下法则的失效时，才会杀死那位执律者（正如相对论对牛顿所做的那样）。否则，旧法则只是降格为子法则，执律者存活。",
         "stats": {}
       }
     }
@@ -243,13 +258,13 @@
     "slug": "dragons",
     "title": "Dragons",
     "category": "Creatures",
-    "body": "The former owners of the elements, each rooted in one state of matter but extending to its substance in any state (ice and steam stay water's, lava stays earth's), giving dragons a monopoly on all matter: earth (solids, from dirt to metals), water (liquids), air (gases, everything in the atmosphere) and plasma (fire and lightning).\n\n* Survived the hunt, but lost their monopoly: the elements are now handed to mortals through totems, and every elemental totem is a fragment of their dead.\n* Innate elemental power at full creature depth, but nothing beyond it.\n* They resent the law holders and can never hold laws themselves.\n* An organized faction.\n* Ilar Hesabu (Number) lives under a dragon's protection. His host makes him acknowledge the law holders' persecution of dragons as the price of sanctuary.\n\n### Society\n\n* An entire race, numerous enough for a full society with multiple factions inside it.\n* Four tribes by element (earth, water, air, plasma), with ancient rivalries. They have tried to set those aside for a united Dragons, without much success. Ideological factions cut across the tribes, drawing members from all of them.\n* Totem users are thieves in dragon eyes, but most dragons accept they can do nothing about it and turn a blind eye. One faction hates this and would kill any totem user on sight, a hatred sharpened by mortals wearing dragon scale and bone, which aren't magical but are exceptional materials.\n* **Coexistence:**  much time has passed, and most dragons are looking for a way to live peacefully with the rest of the world.\n* **Ilar's hosts:**  the earth tribe shelters him, believing a law holder gives them the upper hand in internal politics and a voice in the world outside.",
+    "body": "The former owners of the elements, each rooted in one state of matter but extending to its substance in any state (ice and steam stay water's, lava stays earth's), giving dragons a monopoly on all matter: earth (solids, from dirt to metals), water (liquids), air (gases, everything in the atmosphere) and plasma (fire and lightning).\n\n* Survived the hunt, but lost their monopoly: the elements are now handed to mortals through totems, and every elemental totem is a fragment of their dead.\n* Innate elemental power at full creature depth, but nothing beyond it.\n* They resent the law holders and can never hold laws themselves.\n* An organized faction.\n* Ilar Hesabu (Number) lives under a dragon's protection. His host makes him acknowledge the law holders' persecution of dragons as the price of sanctuary.\n\n### Society\n\n* An entire race, numerous enough for a full society with multiple factions inside it.\n* Four tribes by element (earth, water, air, plasma), with ancient rivalries. They have tried to set those aside for a united Dragons, without much success. Ideological factions cut across the tribes, drawing members from all of them.\n* Totem users are thieves in dragon eyes, but most dragons accept they can do nothing about it and turn a blind eye. One faction hates this and would kill any totem user on sight, a hatred sharpened by mortals wearing dragon scale and bone, which aren't magical but are exceptional materials.\n* **Coexistence:**  much time has passed, and most dragons are looking for a way to live peacefully with the rest of the world.\n* **Ilar's hosts:**  the earth tribe shelters him, believing a law holder gives them the upper hand in internal politics and a voice in the world outside.\n\n### The Elder Council\n\n\nFour elders, one per tribe, sit together as a council of equals who distrust each other; their dead ancestors fought each other. None of them lived through the Great Hunt, which is why the old hatred has faded, and no elder leads the faction that kills totem users on sight. Each tribe names its dragons in its own language.\n\n* Ersetu (earth), Keeper of Deep Vaults: Akkadian, \"earth\" and \"the underworld.\" Patient and long-memoried, he plays the long game. He pushed the failed unification and secretly shelters Ilar Hesabu; the other three elders don't know.\n* **Imaq (water), the Tide-Easer:**  Inuktitut, \"water, sea.\" Adaptable, a mediator who flows around conflict.\n* **Salkhi (air), the Horizon-Eye:**  Mongolian, \"wind.\" Distant; sees the whole board and commits to nothing.\n* Illapa (plasma), the Unforgiving Spark: Quechua, after the Inca god of thunder and lightning. Volatile and the coldest toward mortals. Refused unification because plasma lands lie closest to mortal settlements and were attacked the most.",
     "source": "Quoderat Creatures.md",
     "stats": {},
     "translations": {
       "zh": {
         "title": "龙族",
-        "body": "龙族是元素曾经的主人。每种元素植根于一种物质状态，但延伸至其物质的任何状态（冰与蒸汽仍属于水，熔岩仍属于土），这让龙族垄断了一切物质：土（固体，从泥土到金属）、水（液体）、气（气体，大气中的一切）与等离子（火与闪电）。\n\n* **在狩猎中幸存，却失去了垄断：** 元素如今通过图腾交到凡人手中，而每一个元素图腾都是它们死去同族的碎片。\n* 天生的元素之力达到完整神兽的深度，但仅此而已。\n* 它们怨恨执律者，而且永远无法亲自执掌法则。\n* 一个有组织的派系。\n* 伊拉尔·赫萨布（数）生活在龙族的庇护之下。他的东道主要求他承认执律者对龙族的迫害，以此作为庇护的代价。\n\n### 社会\n\n* 一个完整的种族，数量多到足以形成一个拥有多个派系的完整社会。\n* 按元素分为四个部族（土、水、气、等离子），彼此之间有着古老的竞争。它们曾试图放下这些恩怨，建立一个统一的龙族，却收效甚微。意识形态派系横跨各部族，成员来自每一个部族。\n* 在龙族眼中，图腾使用者是窃贼，但大多数龙族接受自己对此无能为力，于是睁一只眼闭一只眼。有一个派系憎恨这一点，见到任何图腾使用者都会将其杀死；凡人身披龙鳞龙骨更加剧了这种仇恨，这些材料并无魔力，却极为非凡。\n* **共存：** 时间已经过去很久，大多数龙族都在寻找与世界其他部分和平共处的方式。\n* **伊拉尔的东道主：** 土龙族庇护着他，认为一位执律者能让他们在内部政治中占据上风，并在外部世界拥有话语权。",
+        "body": "龙族是元素曾经的主人。每种元素植根于一种物质状态，但延伸至其物质的任何状态（冰与蒸汽仍属于水，熔岩仍属于土），这让龙族垄断了一切物质：土（固体，从泥土到金属）、水（液体）、气（气体，大气中的一切）与等离子（火与闪电）。\n\n* **在狩猎中幸存，却失去了垄断：** 元素如今通过图腾交到凡人手中，而每一个元素图腾都是它们死去同族的碎片。\n* 天生的元素之力达到完整神兽的深度，但仅此而已。\n* 它们怨恨执律者，而且永远无法亲自执掌法则。\n* 一个有组织的派系。\n* 伊拉尔·赫萨布（数）生活在龙族的庇护之下。他的东道主要求他承认执律者对龙族的迫害，以此作为庇护的代价。\n\n### 社会\n\n* 一个完整的种族，数量多到足以形成一个拥有多个派系的完整社会。\n* 按元素分为四个部族（土、水、气、等离子），彼此之间有着古老的竞争。它们曾试图放下这些恩怨，建立一个统一的龙族，却收效甚微。意识形态派系横跨各部族，成员来自每一个部族。\n* 在龙族眼中，图腾使用者是窃贼，但大多数龙族接受自己对此无能为力，于是睁一只眼闭一只眼。有一个派系憎恨这一点，见到任何图腾使用者都会将其杀死；凡人身披龙鳞龙骨更加剧了这种仇恨，这些材料并无魔力，却极为非凡。\n* **共存：** 时间已经过去很久，大多数龙族都在寻找与世界其他部分和平共处的方式。\n* **伊拉尔的东道主：** 土龙族庇护着他，认为一位执律者能让他们在内部政治中占据上风，并在外部世界拥有话语权。\n\n### 长老议会\n\n\n四位长老，每个部族一位，共同组成一个议会。他们地位平等，却彼此猜忌；他们已故的祖先曾相互厮杀。没有一位长老经历过大狩猎，这就是旧日仇恨得以消退的原因，也没有一位长老领导那个见到图腾使用者就杀的派系。每个部族都用自己的语言为龙命名。\n\n* **埃尔塞图（土），深窖守护者：** 阿卡德语，意为\"大地\"，也指\"冥界\"。耐心而记性长久，他下的是一盘大棋。他推动了那场失败的统一，并秘密庇护着伊拉尔·赫萨布；其余三位长老并不知情。\n* **伊玛克（水），平潮者：** 因纽特语，意为\"水、海\"。善于变通，是一位绕开冲突、随势而流的调停者。\n* **萨勒希（气），天际之眼：** 蒙古语，意为\"风\"。疏离超然，纵览全局，却从不表态。\n* **伊拉帕（等离子），不赦之焰：** 克丘亚语，取自印加的雷电之神。暴烈无常，对凡人最为冷酷。他拒绝统一，因为等离子部族的领地离凡人聚落最近，遭受的攻击也最多。",
         "stats": {}
       }
     }
@@ -392,17 +407,19 @@
     "slug": "the-open-question",
     "title": "The Open Question",
     "category": "Characters",
-    "body": "Incompleteness\n\nAny consistent system rich enough to do arithmetic contains truths it can't prove, and can't prove its own consistency (Gödel, 1931).\n\nTitle: The Open Question. S&S is where questions go to end; she is proof that some never will.\n\n* **Origin:**  self-made. She discovered the law herself only a few decades ago, a newcomer among ancients with no dynasty.\n* **Nudging:**  near her, no system can close. Every rulebook, contract, fortress plan or strategy develops a gap that no revision fully seals; things don't fail, but they are never airtight.\n* **Protection:**  no dynasty and no guards. Any plan made against her has a hole in it, so she survives by being impossible to fully plan around.\n* **Day to day:**  a flaw-finder for hire. Factions pay her to find loopholes in rivals' treaties and succession claims.\n* **Flaw:**  paranoia. Someone who sees the hole in every system eventually trusts none of them, including the people around her.\n* **Ambition:**  to partially disprove Excluded Middle and claim the slice she breaks off, perhaps a law of the undecidable. Tertia senses every attempt, so the two are locked in a duel of minds at a distance.\n* **Relationships:**  rival to Tertia, philosophical opposite of S&S. He forces answers, Tertia forces sides, and she guarantees there's always one question nobody can settle.",
+    "body": "Incompleteness\n\nAny consistent system rich enough to do arithmetic contains truths it can't prove, and can't prove its own consistency (Gödel, 1931).\n\nTitle: The Open Question. S&S is where questions go to end; she is proof that some never will.\n\n* **Origin:**  self-made. She discovered the law herself only a few decades ago, a newcomer among ancients with no dynasty.\n* **Nudging:**  near her, no system can close. Every rulebook, contract, fortress plan or strategy develops a gap that no revision fully seals; things don't fail, but they are never airtight.\n* **Protection:**  no dynasty and no guards. Any plan made against her has a hole in it, so she survives by being impossible to fully plan around.\n* **Day to day:**  a flaw-finder for hire. Factions pay her to find loopholes in rivals' treaties and succession claims.\n* **Flaw:**  paranoia. Someone who sees the hole in every system eventually trusts none of them, including the people around her.\n* **Ambition:**  to partially disprove Excluded Middle and claim the slice she breaks off, perhaps a law of the undecidable. Tertia senses every attempt, so the two are locked in a duel of minds at a distance.\n* **Relationships:**  rival to Tertia, philosophical opposite of S&S. He forces answers, Tertia forces sides, and she guarantees there's always one question nobody can settle.\n\n### Relationship — Akhil\n\nFrom Akhil’s profile:\n\n* **Relationship:**  dating the Open Question online, long-distance across the Limitrest Range. Around her no system can close; around him no one can tell whether anything ends. Neither of them knows whether the relationship will.\n\n[Read Akhil’s profile](#akhil)",
     "source": "Quoderat The Pantheon.md",
     "stats": {
-      "Held law": "Incompleteness"
+      "Held law": "Incompleteness",
+      "Relationship": "Akhil (dating online, long-distance)"
     },
     "translations": {
       "zh": {
         "title": "未决之问",
-        "body": "不完备性\n\n任何足以进行算术的一致系统，都包含它无法证明的真理，而且无法证明自身的一致性（哥德尔，1931年）。\n\n称号：未决之问。矛盾是问题终结之处；而她证明了，有些问题永远不会终结。\n\n* **起源：** 白手起家。她在短短几十年前亲自发现了这条法则，是远古众神中的新人，没有王朝。\n* **推动：** 在她身边，没有任何系统能够闭合。每一本规则手册、每一份契约、每一个要塞方案或策略，都会出现一个任何修订都无法完全堵上的缺口；事情不会失败，但永远不会滴水不漏。\n* **保护：** 没有王朝，也没有守卫。任何针对她的计划都有漏洞，所以她靠着无法被完全算计而生存。\n* **日常：** 受雇的找茬者。各个派系付钱请她在对手的条约与继承主张中寻找漏洞。\n* **缺陷：** 多疑。一个能看见每个系统漏洞的人，最终谁都不信，包括她身边的人。\n* **野心：** 部分证伪排中律，并夺取她分割出来的那一部分，或许是一条不可判定之法。特尔提娅能感知每一次尝试，所以两人隔空陷入一场心智的对决。\n* **关系：** 特尔提娅的对手，矛盾在哲学上的对立面。他强迫答案出现，特尔提娅强迫人选边，而她保证总有一个问题无人能够解决。",
+        "body": "不完备性\n\n任何足以进行算术的一致系统，都包含它无法证明的真理，而且无法证明自身的一致性（哥德尔，1931年）。\n\n称号：未决之问。矛盾是问题终结之处；而她证明了，有些问题永远不会终结。\n\n* **起源：** 白手起家。她在短短几十年前亲自发现了这条法则，是远古众神中的新人，没有王朝。\n* **推动：** 在她身边，没有任何系统能够闭合。每一本规则手册、每一份契约、每一个要塞方案或策略，都会出现一个任何修订都无法完全堵上的缺口；事情不会失败，但永远不会滴水不漏。\n* **保护：** 没有王朝，也没有守卫。任何针对她的计划都有漏洞，所以她靠着无法被完全算计而生存。\n* **日常：** 受雇的找茬者。各个派系付钱请她在对手的条约与继承主张中寻找漏洞。\n* **缺陷：** 多疑。一个能看见每个系统漏洞的人，最终谁都不信，包括她身边的人。\n* **野心：** 部分证伪排中律，并夺取她分割出来的那一部分，或许是一条不可判定之法。特尔提娅能感知每一次尝试，所以两人隔空陷入一场心智的对决。\n* **关系：** 特尔提娅的对手，矛盾在哲学上的对立面。他强迫答案出现，特尔提娅强迫人选边，而她保证总有一个问题无人能够解决。\n\n### 关系——阿基尔\n\n摘自阿基尔的人物档案：\n\n* **感情：** 与未决之问网恋，隔着极限山脉异地相处。在她身边，没有系统能闭合；在他身边，没人能判断任何事是否会结束。两人都不知道这段感情会不会结束。\n\n[阅读阿基尔的人物档案](#akhil)",
         "stats": {
-          "Held law": "不完备性"
+          "Held law": "不完备性",
+          "Relationship": "阿基尔（异地网恋）"
         }
       }
     }
@@ -522,6 +539,101 @@
     }
   },
   {
+    "slug": "kalyan",
+    "title": "Kalyan",
+    "category": "Characters",
+    "body": "### The Pigeonhole Principle: Kalyan, the Quiet Heir\n\n\nPut n+1 things into n boxes, and some box holds two.\n\n* **Name:**  Kalyan, Sanskrit for \"auspicious, fortunate\": lucky enough to be born into a giant dynasty, not lucky enough to be born into a big branch of it.\n* **Origin:**  heir from a small branch of the huge dynasty that grew around S&S. The principle is so simple that it was discovered early, so it has been held within the dynasty ever since. The dynasty is big enough that he has no reason to commit fully to either side, and his branch is small enough that he can't openly take on both.\n* **Place:**  a sublaw of Number (Ilar Hesabu), which is itself a sublaw of Sets (Ensa), putting him two levels beneath the Feud.\n* **Sensing:**  the law is so intuitive that it works as information. He knows what has collided, never where, just as the real principle is non-constructive: it guarantees a full box exists without saying which one.\n* **Nudging:**  he can force two chosen things into the same box (two rivals, two letters, two secrets) without ever learning which box.\n* **Role:**  a calm double agent spying for both Ilar and Ensa. He plays exactly two sides.\n* **Channel to Ilar:**  he meets a middleman, who passes the note to a dragon, who carries it to Ilar. He never learns where Ilar hides.\n* **Exposure:**  very low. Proven math can't be disproven, so his threats are physical.",
+    "source": "Quoderat The Pantheon.md",
+    "stats": {
+      "Held law": "Pigeonhole Principle"
+    },
+    "translations": {
+      "zh": {
+        "title": "卡利扬",
+        "body": "### 抽屉原理：卡利扬，沉默的继承人\n\n\n把n+1件东西放进n个盒子里，必有一个盒子装着两件。\n\n* **名字：** 卡利扬（Kalyan），梵语意为\"吉祥、幸运\"：幸运到生在一个庞大的王朝，却没幸运到生在其中的大支。\n* **起源：** 围绕矛盾成长起来的那个庞大王朝中，一个小分支的继承人。这条原理简单到很早就被发现，所以此后一直在王朝内部传承。王朝大到让他没有理由完全倒向任何一方，而他的分支又小到让他无法公开同时对抗双方。\n* **位置：** 数（伊拉尔·赫萨布）的子法则，而数本身又是集合（恩莎）的子法则，这让他位于宿怨之下两层。\n* **感知：** 这条法则直观到可以当作情报来用。他知道什么东西撞在了一起，却永远不知道在哪里，正如真实的抽屉原理是非构造性的：它保证存在一个装满的盒子，却不告诉你是哪一个。\n* **推动：** 他能迫使两件选定的东西进入同一个盒子（两个对手、两封信、两个秘密），却永远不知道是哪个盒子。\n* **角色：** 一位冷静的双面间谍，同时为伊拉尔和恩莎效力。他只玩两边。\n* **与伊拉尔的联络：** 他与一名中间人会面，中间人把信交给一条龙，再由龙带给伊拉尔。他永远不知道伊拉尔藏在哪里。\n* **风险：** 极低。已被证明的数学无法被证伪，所以他面临的威胁是物理上的。",
+        "stats": {
+          "Held law": "抽屉原理"
+        }
+      }
+    }
+  },
+  {
+    "slug": "sai",
+    "title": "Sai",
+    "category": "Characters",
+    "body": "### The Four Color Theorem: Sai, the Border-Baiter\n\n\nAny flat map can be colored with four colors so that no two neighboring regions share one. In reality, it was the first major theorem proven by computer (Appel and Haken, 1976).\n\n* **Name:**  Sai, Japanese 彩, \"color.\"\n* **Nudging:**  given any four distinct things (paint, banners, stone, crops, uniforms), he can fill any surface so that no two neighbors match.\n* **Limits:**  surfaces only, such as floors, walls and land. In three dimensions there is no limit, and on a donut-shaped surface the number rises to seven (Heawood). Every region must also be one connected piece; an empire with exclaves can need more than four.\n* **Formulation:**  worded carefully around both limits, so he knows he can't be disproven and is calm about it.\n* **Personality:**  a playful prankster, a 乐子人 who stands in the middle and stirs every side (站中间串两边). Where Kalyan plays two sides, Sai plays every possible side at once.\n* **The ads:**  on Llama, he was the CEO of the tech company behind a mobile game whose fake ads show players botching map puzzles on purpose. On Origo, he hires actors to carry the puzzles into markets, squares and ports and play dumb until bystanders can't resist fixing them.\n* **Motive:**  impact factor, fun and profit. Every person who picks up a puzzle is his law shaping daily life, and the ads pay him on top.\n* **Exposure:**  very low.\n* **Origin:**  self-made. He came from Llama, where he was the CEO of the tech company behind the game, and he proved the theorem by computer, as Appel and Haken did in reality. He then stepped down, keeping his shares, to hold his law full-time.",
+    "source": "Quoderat The Pantheon.md",
+    "stats": {
+      "Held law": "Four Color Theorem"
+    },
+    "translations": {
+      "zh": {
+        "title": "彩",
+        "body": "### 四色定理：彩，诱边人\n\n\n任何平面地图都能只用四种颜色着色，且相邻区域颜色不同。在现实中，它是第一个由计算机证明的重大定理（阿佩尔与哈肯，1976年）。\n\n* **名字：** 彩（Sai），日语意为\"色彩\"。\n* **推动：** 给他任意四种不同的东西（颜料、旗帜、石料、作物、制服），他就能填满任何表面，且相邻之处绝不相同。\n* **限制：** 只限于表面，例如地面、墙壁与土地。在三维空间中没有上限，而在甜甜圈形的表面上，所需的数目会升到七（希伍德）。每个区域还必须是连成一片的整体；一个拥有飞地的帝国可能需要四种以上的颜色。\n* **表述：** 他围绕这两条限制措辞严谨，所以他知道自己无法被证伪，对此十分淡定。\n* **性格：** 一个顽皮的恶作剧者，一个站中间串两边的乐子人。卡利扬玩两边，彩则同时玩所有可能的边。\n* **广告：** 在羊驼，他曾是一家科技公司的CEO，其手游的虚假广告里，玩家故意把地图谜题搞砸。在原点，他雇演员把谜题带到市场、广场与港口，故意装傻，直到围观者忍不住出手解题。\n* **动机：** 影响因子、乐趣与利润。每一个拿起谜题的人，都是他的法则在塑造日常生活，而广告还额外替他赚钱。\n* **风险：** 极低。\n* **起源：** 白手起家。他来自羊驼，曾是那款手游背后科技公司的CEO，并像现实中的阿佩尔与哈肯一样，用计算机证明了这条定理。此后他卸任CEO，保留股份，成为全职执律者。",
+        "stats": {
+          "Held law": "四色定理"
+        }
+      }
+    }
+  },
+  {
+    "slug": "akhil",
+    "title": "Akhil",
+    "category": "Characters",
+    "body": "### The Halting Problem: Akhil, the Unfinished Answer\n\n\nNo program can decide, for every program, whether it will ever stop (Turing, 1936).\n\n* **Name:**  Akhil, Sanskrit for \"whole, complete\": a man named \"complete\" whose law says completion can't be known.\n* **Origin:**  self-made, from Llama. A programmer who found the law once Llama had computers, which makes him a recent god like Sai.\n* **Nudging:**  around him, no one can tell whether a process (a siege, a negotiation, a progress bar) will ever finish until it does.\n* **Personality:**  serene and unhurried. Since nothing can be known to end, he sees no reason to rush anything. He is the calm counterweight to the Open Question's paranoia.\n* **Relationship:**  dating the Open Question online, long-distance across the Limitrest Range. Around her no system can close; around him no one can tell whether anything ends. Neither of them knows whether the relationship will.\n* **On the Axiom:**  \"we will never know when it ends.\"\n* **Flaw:**  he can't end anything. Projects, arguments and goodbyes all stay open, which drives everyone around him mad.\n* **Protection:**  he lives on Llama, far from Origo's god politics. The Open Question being close to him is her weak point, not his.\n* **Exposure:**  very low. Proven math can't be disproven.",
+    "source": "Quoderat The Pantheon.md",
+    "stats": {
+      "Held law": "Halting Problem"
+    },
+    "translations": {
+      "zh": {
+        "title": "阿基尔",
+        "body": "### 停机问题：阿基尔，未完的答案\n\n\n没有任何程序能对所有程序判定它们是否会停止（图灵，1936年）。\n\n* **名字：** 阿基尔（Akhil），梵语意为\"完整、圆满\"：一个名叫\"圆满\"的人，他的法则却说圆满无从得知。\n* **起源：** 白手起家，来自羊驼。一位程序员，在羊驼有了计算机之后发现了这条法则，这让他像彩一样成为一位新神。\n* **推动：** 在他身边，没有人能判断一个过程（一场围城、一次谈判、一条进度条）是否会结束，直到它真的结束。\n* **性格：** 从容不迫。既然什么都无法确知会结束，他便觉得没有任何事需要着急。他是未决之问那份多疑的冷静对照。\n* **感情：** 与未决之问网恋，隔着极限山脉异地相处。在她身边，没有系统能闭合；在他身边，没人能判断任何事是否会结束。两人都不知道这段感情会不会结束。\n* **对公理的看法：** \"我们永远不会知道它何时结束。\"\n* **缺陷：** 他无法结束任何事。项目、争论与告别都悬而未决，让身边每个人都快疯了。\n* **保护：** 他住在羊驼，远离原点的众神政治。与他亲近是未决之问的弱点，而不是他的。\n* **风险：** 极低。已被证明的数学无法被证伪。",
+        "stats": {
+          "Held law": "停机问题"
+        }
+      }
+    }
+  },
+  {
+    "slug": "zaid",
+    "title": "Zaid",
+    "category": "Characters",
+    "body": "### Mendel's Laws: Zaid, the Patient Gardener\n\n\nTraits pass from parents to children in predictable ratios.\n\n* **Name:**  Zaid, Arabic for \"growth, increase.\"\n* **Origin:**  self-made. He discovered the law through years of slow breeding experiments, and still keeps the garden.\n* **Nudging:**  he can verify any bloodline and, within the ratios his law allows, choose which traits a child inherits.\n* **Role:**  a kingmaker, working in politics, especially in the kingdoms. His testimony decides which heirs are legitimate, and courtiers who dismiss him as a gardener learn too late that a succession rests on his word.\n* **Personality:**  gentle, polite and endlessly patient, with a long memory for every slight.\n* **Rival:**  the holder of the linkage slice, who partly disproved him during his own tenure. Zaid survived with a smaller law and considers the slice stolen.\n* **Protection:**  every dynasty whose legitimacy rests on his testimony needs him alive and credible. If he is discredited, they fall with him.\n* **Exposure:**  high. Real genetics breaks his law in more ways than linkage, so more slices are waiting to be cut.",
+    "source": "Quoderat The Pantheon.md",
+    "stats": {
+      "Held law": "Mendel's Laws"
+    },
+    "translations": {
+      "zh": {
+        "title": "扎伊德",
+        "body": "### 孟德尔定律：扎伊德，耐心的园丁\n\n\n性状以可预测的比例由父母传给子女。\n\n* **名字：** 扎伊德（Zaid），阿拉伯语意为\"成长、增加\"。\n* **起源：** 白手起家。他通过多年缓慢的育种实验发现了这条法则，至今仍打理着那座园子。\n* **推动：** 他能验证任何血统，并在法则允许的比例之内，选择一个孩子继承哪些性状。\n* **角色：** 一位造王者，活跃于政治，尤其是各个王国。他的证词决定哪些继承人是正统的；那些把他当成园丁而轻视他的廷臣，总是太晚才明白一场继承全系于他的一句话。\n* **性格：** 温和、有礼、耐心无穷，却记得每一次怠慢。\n* **对手：** 连锁切片的执律者，在他任内部分证伪了他的法则。扎伊德带着缩小的法则活了下来，并认为那一片是被偷走的。\n* **保护：** 每一个靠他的证词才获得正统地位的王朝，都需要他活着并且可信。他若被推翻，他们也会随之倒下。\n* **风险：** 高。真实的遗传学打破他法则的方式远不止连锁，还有更多切片等着被分割。",
+        "stats": {
+          "Held law": "孟德尔定律"
+        }
+      }
+    }
+  },
+  {
+    "slug": "vera",
+    "title": "Vera",
+    "category": "Characters",
+    "body": "### The Law of Superposition: Vera, the Witness Beneath\n\n\nIn undisturbed layers, lower layers are older (Steno).\n\n* **Name:**  Vera, Russian for \"faith,\" though many hear the Latin verus, \"true\": she trusts what the layers show over what anyone says.\n* **Origin:**  self-made, a field geologist who found the law in the rock.\n* **Formulation:**  worded carefully around \"undisturbed,\" so folds and intrusions can't disprove her.\n* **Sensing:**  she reads anything layered (rock, ruins, cities built on cities, history) and senses where layers have been disturbed: tunnels, graves, hidden vaults.\n* **Limit:**  the earth tribe's lands are riddled with tunnels, so a single hidden vault there is a needle in a haystack.\n* **Day to day:**  hired to find what others buried: smugglers' tunnels, lost tombs, forged ruins, a city's true age.\n* **Personality:**  blunt and skeptical. Testimony means nothing to her until the ground agrees.\n* **Flaw:**  what leaves no layer escapes her, so she is easily fooled by illusion and by anything that never touched the ground.\n* **Ambition:**  to read every layer of Origo, starting with the haystack under the earth tribe. She doesn't know Ilar is down there; she only knows something is.\n* **Exposure:**  low.",
+    "source": "Quoderat The Pantheon.md",
+    "stats": {
+      "Held law": "Law of Superposition"
+    },
+    "translations": {
+      "zh": {
+        "title": "维拉",
+        "body": "### 叠覆律：维拉，地下的见证者\n\n\n在未受扰动的地层中，下层比上层更古老（斯坦诺）。\n\n* **名字：** 维拉（Vera），俄语意为\"信仰\"，不过许多人会联想到拉丁语的 verus，即\"真实\"：她相信地层所显示的，而不是任何人的说法。\n* **起源：** 白手起家，一位野外地质学家，在岩石中发现了这条法则。\n* **表述：** 她围绕\"未受扰动\"一词措辞严谨，所以褶皱与侵入体都无法证伪她。\n* **感知：** 她能解读任何分层的东西（岩石、废墟、层层叠建的城市、历史），并感知地层在哪里受过扰动：隧道、坟墓、隐秘的地窖。\n* **限制：** 土龙族的领地布满隧道，所以那里的一座隐秘地窖，就像大海里的一根针。\n* **日常：** 受雇寻找别人埋下的东西：走私隧道、失落的陵墓、伪造的遗迹、一座城市真实的年龄。\n* **性格：** 直率而多疑。在地层认同之前，任何证词对她都毫无意义。\n* **缺陷：** 不留下地层的东西都能逃过她的眼睛，所以她很容易被幻术，以及任何从未接触地面的东西所欺骗。\n* **野心：** 读遍原点的每一层，从土龙族地下那片\"大海\"开始。她不知道伊拉尔就在下面，只知道下面有东西。\n* **风险：** 低。",
+        "stats": {
+          "Held law": "叠覆律"
+        }
+      }
+    }
+  },
+  {
     "slug": "unicorns-life-and-healing",
     "title": "Unicorns: Life and Healing",
     "category": "Creatures",
@@ -578,6 +690,113 @@
         "title": "巨魔：躯体",
         "body": "* **幸存者：** 数量不多，生活在昼伏夜出的地下氏族中。猎人利用了日光，因为阳光会把巨魔变成石头（斯堪的纳维亚民间传说）。\n* **仍在石中：** 在狩猎中被石化的巨魔并没有死。它们的力量被封锁在体内，而非被释放，这就是躯体图腾比其他图腾更稀有的原因。唤醒它们究竟是灾难还是解放，取决于你问的是谁。\n* **社会：** 住在山下、直率而讲究交易的氏族，仇恨真的被刻在石头上。\n* **对待图腾使用者：** 用巨魔的方式解决，即力量的较量。",
         "stats": {}
+      }
+    }
+  },
+  {
+    "slug": "the-elder-council",
+    "title": "The Elder Council",
+    "category": "Creatures",
+    "body": "Four elders, one per tribe, sit together as a council of equals who distrust each other; their dead ancestors fought each other. None of them lived through the Great Hunt, which is why the old hatred has faded, and no elder leads the faction that kills totem users on sight. Each tribe names its dragons in its own language.\n\n* Ersetu (earth), Keeper of Deep Vaults: Akkadian, \"earth\" and \"the underworld.\" Patient and long-memoried, he plays the long game. He pushed the failed unification and secretly shelters Ilar Hesabu; the other three elders don't know.\n* **Imaq (water), the Tide-Easer:**  Inuktitut, \"water, sea.\" Adaptable, a mediator who flows around conflict.\n* **Salkhi (air), the Horizon-Eye:**  Mongolian, \"wind.\" Distant; sees the whole board and commits to nothing.\n* Illapa (plasma), the Unforgiving Spark: Quechua, after the Inca god of thunder and lightning. Volatile and the coldest toward mortals. Refused unification because plasma lands lie closest to mortal settlements and were attacked the most.",
+    "source": "Quoderat Creatures.md",
+    "stats": {},
+    "translations": {
+      "zh": {
+        "title": "长老议会",
+        "body": "四位长老，每个部族一位，共同组成一个议会。他们地位平等，却彼此猜忌；他们已故的祖先曾相互厮杀。没有一位长老经历过大狩猎，这就是旧日仇恨得以消退的原因，也没有一位长老领导那个见到图腾使用者就杀的派系。每个部族都用自己的语言为龙命名。\n\n* **埃尔塞图（土），深窖守护者：** 阿卡德语，意为\"大地\"，也指\"冥界\"。耐心而记性长久，他下的是一盘大棋。他推动了那场失败的统一，并秘密庇护着伊拉尔·赫萨布；其余三位长老并不知情。\n* **伊玛克（水），平潮者：** 因纽特语，意为\"水、海\"。善于变通，是一位绕开冲突、随势而流的调停者。\n* **萨勒希（气），天际之眼：** 蒙古语，意为\"风\"。疏离超然，纵览全局，却从不表态。\n* **伊拉帕（等离子），不赦之焰：** 克丘亚语，取自印加的雷电之神。暴烈无常，对凡人最为冷酷。他拒绝统一，因为等离子部族的领地离凡人聚落最近，遭受的攻击也最多。",
+        "stats": {}
+      }
+    }
+  },
+  {
+    "slug": "ersetu",
+    "title": "Ersetu",
+    "category": "Characters",
+    "body": "* Ersetu (earth), Keeper of Deep Vaults: Akkadian, \"earth\" and \"the underworld.\" Patient and long-memoried, he plays the long game. He pushed the failed unification and secretly shelters Ilar Hesabu; the other three elders don't know.\n\n\nFour elders, one per tribe, sit together as a council of equals who distrust each other; their dead ancestors fought each other. None of them lived through the Great Hunt, which is why the old hatred has faded, and no elder leads the faction that kills totem users on sight. Each tribe names its dragons in its own language.",
+    "source": "Quoderat Creatures.md",
+    "stats": {
+      "Title": "Keeper of Deep Vaults",
+      "Elemental power": "Earth",
+      "Role": "Dragon elder"
+    },
+    "translations": {
+      "zh": {
+        "title": "埃尔塞图",
+        "body": "* **埃尔塞图（土），深窖守护者：** 阿卡德语，意为\"大地\"，也指\"冥界\"。耐心而记性长久，他下的是一盘大棋。他推动了那场失败的统一，并秘密庇护着伊拉尔·赫萨布；其余三位长老并不知情。\n\n\n四位长老，每个部族一位，共同组成一个议会。他们地位平等，却彼此猜忌；他们已故的祖先曾相互厮杀。没有一位长老经历过大狩猎，这就是旧日仇恨得以消退的原因，也没有一位长老领导那个见到图腾使用者就杀的派系。每个部族都用自己的语言为龙命名。",
+        "stats": {
+          "Title": "深窖守护者",
+          "Elemental power": "土",
+          "Role": "龙族长老"
+        }
+      }
+    }
+  },
+  {
+    "slug": "imaq",
+    "title": "Imaq",
+    "category": "Characters",
+    "body": "* **Imaq (water), the Tide-Easer:**  Inuktitut, \"water, sea.\" Adaptable, a mediator who flows around conflict.\n\n\nFour elders, one per tribe, sit together as a council of equals who distrust each other; their dead ancestors fought each other. None of them lived through the Great Hunt, which is why the old hatred has faded, and no elder leads the faction that kills totem users on sight. Each tribe names its dragons in its own language.",
+    "source": "Quoderat Creatures.md",
+    "stats": {
+      "Title": "The Tide-Easer",
+      "Elemental power": "Water",
+      "Role": "Dragon elder"
+    },
+    "translations": {
+      "zh": {
+        "title": "伊玛克",
+        "body": "* **伊玛克（水），平潮者：** 因纽特语，意为\"水、海\"。善于变通，是一位绕开冲突、随势而流的调停者。\n\n\n四位长老，每个部族一位，共同组成一个议会。他们地位平等，却彼此猜忌；他们已故的祖先曾相互厮杀。没有一位长老经历过大狩猎，这就是旧日仇恨得以消退的原因，也没有一位长老领导那个见到图腾使用者就杀的派系。每个部族都用自己的语言为龙命名。",
+        "stats": {
+          "Title": "平潮者",
+          "Elemental power": "水",
+          "Role": "龙族长老"
+        }
+      }
+    }
+  },
+  {
+    "slug": "salkhi",
+    "title": "Salkhi",
+    "category": "Characters",
+    "body": "* **Salkhi (air), the Horizon-Eye:**  Mongolian, \"wind.\" Distant; sees the whole board and commits to nothing.\n\n\nFour elders, one per tribe, sit together as a council of equals who distrust each other; their dead ancestors fought each other. None of them lived through the Great Hunt, which is why the old hatred has faded, and no elder leads the faction that kills totem users on sight. Each tribe names its dragons in its own language.",
+    "source": "Quoderat Creatures.md",
+    "stats": {
+      "Title": "The Horizon-Eye",
+      "Elemental power": "Air",
+      "Role": "Dragon elder"
+    },
+    "translations": {
+      "zh": {
+        "title": "萨勒希",
+        "body": "* **萨勒希（气），天际之眼：** 蒙古语，意为\"风\"。疏离超然，纵览全局，却从不表态。\n\n\n四位长老，每个部族一位，共同组成一个议会。他们地位平等，却彼此猜忌；他们已故的祖先曾相互厮杀。没有一位长老经历过大狩猎，这就是旧日仇恨得以消退的原因，也没有一位长老领导那个见到图腾使用者就杀的派系。每个部族都用自己的语言为龙命名。",
+        "stats": {
+          "Title": "天际之眼",
+          "Elemental power": "气",
+          "Role": "龙族长老"
+        }
+      }
+    }
+  },
+  {
+    "slug": "illapa",
+    "title": "Illapa",
+    "category": "Characters",
+    "body": "* Illapa (plasma), the Unforgiving Spark: Quechua, after the Inca god of thunder and lightning. Volatile and the coldest toward mortals. Refused unification because plasma lands lie closest to mortal settlements and were attacked the most.\n\n\nFour elders, one per tribe, sit together as a council of equals who distrust each other; their dead ancestors fought each other. None of them lived through the Great Hunt, which is why the old hatred has faded, and no elder leads the faction that kills totem users on sight. Each tribe names its dragons in its own language.",
+    "source": "Quoderat Creatures.md",
+    "stats": {
+      "Title": "The Unforgiving Spark",
+      "Elemental power": "Plasma",
+      "Role": "Dragon elder"
+    },
+    "translations": {
+      "zh": {
+        "title": "伊拉帕",
+        "body": "* **伊拉帕（等离子），不赦之焰：** 克丘亚语，取自印加的雷电之神。暴烈无常，对凡人最为冷酷。他拒绝统一，因为等离子部族的领地离凡人聚落最近，遭受的攻击也最多。\n\n\n四位长老，每个部族一位，共同组成一个议会。他们地位平等，却彼此猜忌；他们已故的祖先曾相互厮杀。没有一位长老经历过大狩猎，这就是旧日仇恨得以消退的原因，也没有一位长老领导那个见到图腾使用者就杀的派系。每个部族都用自己的语言为龙命名。",
+        "stats": {
+          "Title": "不赦之焰",
+          "Elemental power": "等离子",
+          "Role": "龙族长老"
+        }
       }
     }
   },

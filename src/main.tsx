@@ -1,3 +1,5 @@
+import { SaiGame } from './game/SaiGame';
+import { LoreHome } from './LoreHome';
 // =============================================================================
 // QUODERAT WIKI — root entry file.
 // This module builds the MUI theme, defines the <App /> component, and mounts
@@ -36,6 +38,7 @@ import {
   X, // Close icon for the drawer and clear icon for search.
   Globe2, // Icon for the "World & laws" category.
   Scale, // Icon for "The pantheon" category.
+  Gamepad2,
   Users, // Icon for the "Characters" category.
   Flame, // Icon for the "Creatures" category.
   Bookmark, // Icon for saved pages and the save toggle.
@@ -102,6 +105,8 @@ const categories = [
 
 // Decorative law emblems identify characters without inventing canonical appearances.
 const emblems: Record<string, string> = {
+  kalyan: '⊞', sai: '◈', akhil: '…', zaid: '⚘', vera: '≋',
+  ersetu: '◇', imaq: '≈', salkhi: '↝', illapa: 'ϟ',
   'ilar-hesabu': 'ℕ', ensa: '∈', tertia: '∨', 'the-spear-and-shield': '¬',
   'the-open-question': '?', 'voss-halloran': 'Σ', 'rudolf-ludwig': 'Δ',
   rushd: '→', 'aldous-vane': '⋮', 'lian-xiu': '⇌', 'mattias-krane': '◎',
@@ -122,6 +127,14 @@ const lawExpressions: Record<string, string> = {
   'aldous-vane': '∀ O ∈ Organizations, ∃ E ⊂ O : |E| < ½|O| ∧ ◇Rules(E, O)',
   'lian-xiu': 'Qᴅ(P*) = Qˢ(P*)',
   'mattias-krane': '□∀X [Target(X) → ¬Reliable(X)]',
+  // Finite sets A and B, with f mapping A to B.
+  kalyan: '|A| > |B| ⇒ ∀f : A → B, ∃x ≠ y : f(x) = f(y)',
+  sai: 'Planar(G) ⇒ χ(G) ≤ 4',
+  // H ranges over total computable Boolean functions; P(x)↓ means it halts.
+  akhil: '¬∃H ∈ TotalComputable ∀P, x : H(P, x) = 1 ⇔ P(x)↓',
+  // A Mendelian segregation example, not a claim that all traits follow this ratio.
+  zaid: 'Aa × Aa ⇒ P(AA) : P(Aa) : P(aa) = 1 : 2 : 1',
+  vera: 'Undisturbed(L) ∧ Below(a, b) ⇒ Age(a) > Age(b)',
 };
 
 // Root component that holds all application state and renders the UI.
@@ -154,7 +167,7 @@ function App() {
   const [query, setQuery] = useState("");
 
   // Currently selected sidebar category.
-  const [category, setCategory] = useState(location.hash === "#browse" ? "All entries" : "Characters");
+  const [category, setCategory] = useState(location.hash === "#saved" ? "Saved pages" : location.hash.startsWith("#lore/") ? decodeURIComponent(location.hash.slice(6)) : location.hash === "#browse" ? "All entries" : "Characters");
 
   // Whether the mobile navigation drawer is open.
   const [mobile, setMobile] = useState(false);
@@ -197,6 +210,9 @@ function App() {
       { const next = decodeURIComponent(location.hash.slice(1)) || "home";
         setSlug(next);
         if (next === 'characters') setCategory('Characters');
+        if (next.startsWith('lore/')) setCategory(next.slice(5));
+        if (next === 'saved') setCategory('Saved pages');
+        if (next === 'browse') setCategory('All entries');
       }; // Store the decoded slug, falling back to the default article.
 
     // Listen for back/forward navigation and manual hash edits.
@@ -208,12 +224,15 @@ function App() {
 
   // The article that matches the current slug, or undefined if none matches.
   const article = articles.find((a) => a.slug === slug);
+  const characterList = articles.filter(a => a.category === 'Characters');
+  const characterIndex = characterList.findIndex(a => a.slug === slug);
+  const loreActive = slug === 'lore' || slug.startsWith('lore/') || (!!article && article.category !== 'Characters');
 
   // Articles that satisfy both the category filter and the search query.
   const filtered = articles.filter(
     (a) => // For each article, evaluate the category and search conditions.
       // Category condition: "All entries" passes everything.
-      (category === "All entries" ||
+      ((category === "All lore" ? a.category !== "Characters" : category === "All entries") ||
         // "Saved pages" passes only bookmarked slugs.
         (category === "Saved pages"
           ? saved.includes(a.slug) // Saved pages: keep only bookmarked slugs.
@@ -232,7 +251,7 @@ function App() {
     // Clear the slug so the list view renders instead of an article.
     setSlug("");
     // Reflect the list view in the URL hash.
-    location.hash = cat === "Characters" ? "characters" : "browse";
+    location.hash = cat === "Characters" ? "characters" : cat === "Saved pages" ? "saved" : cat === "All entries" ? "browse" : `lore/${encodeURIComponent(cat)}`;
     setQuery("");
     window.scrollTo(0, 0);
     // Close the mobile drawer after choosing a category.
@@ -333,42 +352,13 @@ function App() {
         <p className="nav-label">{language === "zh" ? "走进证毕" : "ENTER QUODERAT"}</p>
         <button className={`nav-item ${slug === "home" ? "active" : ""}`} onClick={() => navigate("home")}><Globe2 size={18}/>{language === "zh" ? "世界首页" : "The world"}<span>↗</span></button>
 
-        {/* "All entries" button, active when no article is open. */}
-        <button
-          // Add "active" when the list view is showing all entries.
-          className={`nav-item ${
-            category === "All entries" && !article ? "active" : "" // Apply the active class only for the unfiltered list.
-          }`} // End of the dynamic class expression.
-          // Switch to the unfiltered listing.
-          onClick={() => browse("All entries")}
-        >{/* All-entries button content starts here. */}
-          <BookOpen size={18} />{/* 18px open-book icon. */}
-          {t("All entries")}{/* Visible button label. */}
-          <span>{articles.length}</span>{/* Count of loaded articles. */}
-        </button>
-
-        {/* Section label above the category buttons. */}
-        <p className="nav-label category-label">{t("EXPLORE THE WORLD")}</p>
-
-        {/* One navigation button per category defined above. */}
-        {categories.map(({ name, icon: Icon }) => (
-          <button // One button per category.
-            // Stable React key derived from the category name.
-            key={name}
-            // Highlight when the open article or list view matches this category.
-            className={`nav-item ${
-              article?.category === name || (!article && category === name) // Active when the open article has this category.
-                ? "active" // Yes: use the active style.
-                : "" // No: add no extra class.
-            }`} // End of the dynamic class expression.
-            // Show this category's listing.
-            onClick={() => browse(name)}
-          >{/* Category button content starts here. */}
-            <Icon size={18} />{/* Category-specific Lucide icon. */}
-            {t(name)}{/* Visible category name. */}
-            <span>{articles.filter((a) => a.category === name).length}</span>{/* Per-category count. */}
-          </button>
-        ))}{/* End of the category list render. */}
+        <button className={`nav-item ${slug === 'characters' || article?.category === 'Characters' ? 'active' : ''}`} onClick={() => browse('Characters')}><Users size={18}/>{t('Characters')}<span>{characterList.length}</span></button>
+        <button className={`nav-item ${slug === 'play' ? 'active' : ''}`} onClick={() => navigate('play')}><Gamepad2 size={18}/>{language === 'zh' ? '游玩' : 'Play'}</button>
+        <button className={`nav-item ${loreActive ? 'active' : ''}`} onClick={() => navigate('lore')}><BookOpen size={18}/>{t('Lore')}<span>↗</span></button>
+        {loreActive && <div className="lore-subnav">
+          <p className="nav-label">{t('LORE SECTIONS')}</p>
+          {categories.filter(({name}) => name !== 'Characters').map(({name, icon: Icon}) => <button key={name} className={`nav-item ${article?.category === name || (!article && slug.startsWith('lore/') && category === name) ? 'active' : ''}`} onClick={() => browse(name)}><Icon size={16}/>{t(name)}</button>)}
+        </div>}
 
         {/* Separator before the saved-pages entry. */}
         <div className="nav-divider" />
@@ -419,7 +409,7 @@ function App() {
           </button>
 
           {/* Breadcrumb showing "Archive" plus the active category. */}
-          <div className="breadcrumb">{t("Archive")} <ChevronRight size={13} /> {(slug === "home" ? (language === "zh" ? "世界首页" : "The world") : slug === "suggestions" ? (language === "zh" ? "提问与建议" : "Questions & suggestions") : t(article?.category || category))}</div>
+          <div className="breadcrumb">Quoderat <ChevronRight size={13} /> {(slug === "home" ? (language === "zh" ? "世界首页" : "The world") : slug === "play" ? (language === "zh" ? "游玩" : "Play") : slug === "lore" ? t("Lore") : slug === "suggestions" ? (language === "zh" ? "提问与建议" : "Questions & suggestions") : t(article?.category || category))}</div>
 
           {/* Search input wrapped with its icon and clear button. */}
           <div className="search-wrap">
@@ -477,7 +467,7 @@ function App() {
           <div className={`page ${!article ? "catalogue-page" : "reading-page"}`}>
             {/* Main column: either an article reader or the entry list. */}
             <main>
-              {slug === "suggestions" && !query ? <SuggestionBox language={language}/> : slug === "home" && !query ? <WorldHome language={language} articles={articles} open={navigate} browse={browse}/> : article ? ( // Article view when a slug matches.
+              {slug === "play" && !query ? <SaiGame language={language} open={navigate}/> : slug === "suggestions" && !query ? <SuggestionBox language={language}/> : slug === "home" && !query ? <WorldHome language={language} articles={articles} open={navigate} browse={browse}/> : slug === "lore" && !query ? <LoreHome language={language} articles={articles} browse={browse}/> : article ? ( // Article view when a slug matches.
                 <>{/* Fragment for the article view. */}
                   {/* Eyebrow line above the title. */}
                   <div className="eyebrow">
@@ -602,6 +592,12 @@ function App() {
                     </article> // End of the rendered Markdown article.
                   )}{/* End of the source/render conditional. */}
 
+                  {article.category === 'Characters' && <nav className="character-pager" aria-label={t('Character navigation')}>
+                    <button disabled={characterIndex <= 0} onClick={() => navigate(characterList[characterIndex - 1].slug)}><small>← {t('Previous')}</small><strong>{characterList[characterIndex - 1]?.title || t('Start of the list')}</strong></button>
+                    <button className="pager-index" onClick={() => browse('Characters')}>{t('All characters')}<small>{characterIndex + 1} / {characterList.length}</small></button>
+                    <button disabled={characterIndex === characterList.length - 1} onClick={() => navigate(characterList[characterIndex + 1].slug)}><small>{t('Next')} →</small><strong>{characterList[characterIndex + 1]?.title || t('End of the list')}</strong></button>
+                  </nav>}
+
                   {/* Footer noting where the article came from. */}
                   <div className="source-note">
                     <ScrollText size={17} />{/* 17px scroll icon. */}
@@ -660,13 +656,13 @@ function App() {
                           <span className="folio-number">{String(index + 1).padStart(3, '0')} / QUODERAT</span>
                           <div className="engraving-orbit" /><div className="engraving-diamond" />
                           <span className="character-emblem">{emblems[a.slug] || '✧'}</span>
-                          <span className="art-law">{a.stats['Held law']}</span>
+                          <span className="art-law">{a.stats['Held law'] || a.stats['Elemental power']}</span>
                         </div>}
                         <span>{/* Text column. */}
-                          <small>{category === "Characters" ? `No. ${String(index + 1).padStart(3, "0")} · Folio` : t(a.category)}</small>{/* Category label. */}
+                          <small>{category === "Characters" ? `No. ${String(index + 1).padStart(3, "0")} · ${["ersetu", "imaq", "salkhi", "illapa"].includes(a.slug) ? t("Dragon") : "Folio"}` : t(a.category)}</small>{/* Category label. */}
                           <h2>{a.title}</h2>{/* Article title. */}
                           <p>{/* Short preview text. */}
-                            {category === "Characters" ? (lawExpressions[a.slug] || a.stats["Held law"]) : `${a.body.replace(/[#*]/g, "").slice(0, 125)}…`}
+                            {category === "Characters" ? (lawExpressions[a.slug] || a.stats["Held law"] || a.stats["Elemental power"]) : `${a.body.replace(/[#*]/g, "").slice(0, 125)}…`}
                           </p>{/* End of the preview paragraph. */}
                         </span>{/* End of the text column. */}
                         <ArrowUpRight size={21} />{/* Open-link arrow. */}
@@ -702,12 +698,12 @@ function App() {
                       {emblems[article.slug] || '✧'}{/* Fallback symbol. */}
                     </span>
                     <i>✧</i>{/* Sparkle ornament. */}
-                    <small>{article.stats["Held law"]?.toUpperCase()}</small>{/* Held law, uppercased. */}
+                    <small>{(article.stats["Held law"] || article.stats["Elemental power"])?.toUpperCase()}</small>{/* Held law, uppercased. */}
                   </div>
                   <div className="dossier-title">{/* Dossier title block starts here. */}
                     <h2>{article.title}</h2>{/* Character name. */}
-                    <p>{article.stats.Title || article.stats["Held law"]}</p>{/* Title or law fallback. */}
-                    <Chip size="small" variant="outlined" label={t("Law holder")} />{/* Role chip. */}
+                    <p>{article.stats.Title || article.stats["Held law"] || article.stats["Elemental power"]}</p>{/* Title or law fallback. */}
+                    <Chip size="small" variant="outlined" label={article.stats.Role || t("Law holder")} />{/* Role chip. */}
                   </div>
                   <dl>{/* Definition list of every stat. */}
                     {Object.entries(article.stats).map(([k, v]) => (
