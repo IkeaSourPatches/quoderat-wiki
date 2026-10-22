@@ -3,7 +3,8 @@ import '@fontsource/stix-two-text/400-italic.css';
 import '@fontsource/stix-two-text/600.css';
 import { SaiGame } from './game/SaiGame';
 import { AxiomMachine } from './game/AxiomMachine';
-import { VeraDig } from './game/VeraDig';
+import { KeepItFlat } from './game/KeepItFlat';
+import { SpearShieldCourt } from './game/SpearShieldCourt';
 import { GameShelf } from './game/GameShelf';
 import { LoreHome } from './LoreHome';
 import { TimelineTower } from './TimelineTower';
@@ -474,7 +475,7 @@ function App() {
           <div className={`page ${!article || (slug === "timeline" && !query) ? "catalogue-page" : "reading-page"}`}>
             {/* Main column: either an article reader or the entry list. */}
             <main>
-              {slug === "play" && !query ? <GameShelf language={language} open={navigate}/> : slug === "play/sai" && !query ? <SaiGame language={language} open={navigate}/> : slug === "play/axiom" && !query ? <AxiomMachine language={language} open={navigate}/> : slug === "play/vera" && !query ? <VeraDig language={language} open={navigate}/> : slug === "suggestions" && !query ? <SuggestionBox language={language}/> : slug === "home" && !query ? <WorldHome language={language} articles={articles} open={navigate} browse={browse} emblems={emblems} lawExpressions={lawExpressions}/> : slug === "lore" && !query ? <LoreHome language={language} articles={articles} browse={browse}/> : slug === "timeline" && !query && article ? <TimelineTower language={language} article={article}/> : article ? ( // Article view when a slug matches.
+              {slug === "play" && !query ? <GameShelf language={language} open={navigate}/> : slug === "play/sai" && !query ? <SaiGame language={language} open={navigate}/> : slug === "play/axiom" && !query ? <AxiomMachine language={language} open={navigate}/> : slug === "play/flat" && !query ? <KeepItFlat language={language} open={navigate}/> : slug === "play/court" && !query ? <SpearShieldCourt language={language} open={navigate}/> : slug === "suggestions" && !query ? <SuggestionBox language={language}/> : slug === "home" && !query ? <WorldHome language={language} articles={articles} open={navigate} browse={browse} emblems={emblems} lawExpressions={lawExpressions}/> : slug === "lore" && !query ? <LoreHome language={language} articles={articles} browse={browse}/> : slug === "timeline" && !query && article ? <TimelineTower language={language} article={article}/> : article ? ( // Article view when a slug matches.
                 <>{/* Fragment for the article view. */}
                   {/* Eyebrow line above the title. */}
                   <div className="eyebrow">

@@ -123,6 +123,7 @@ export function AxiomMachine({ language, open }: { language: Language; open: (sl
     </dl>
 
     <p className="games-foot">
+      <span className="games-note">{text('Game adaptation: in the world, the Axiom is a bracelet. The zero is canon.', '游戏改编：在这个世界里，公理是一只手环。零分是正史。')}</span>
       <button className="games-link" onClick={() => open('the-app-and-the-law-of-all-laws')}>{text('Read about the Axiom', '阅读公理条目')}</button>
       <button className="games-link" onClick={() => open('play')}>{text('All games', '全部游戏')}</button>
     </p>
