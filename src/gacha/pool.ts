@@ -10,6 +10,7 @@
 //   impact factor is how much a law has shaped history and daily life.
 //
 // Everything marked PROVISIONAL is a site mechanic, not canon, and is open for discussion.
+// Star ratings for holders are a hand-made tier list (see HOLDERS below).
 
 export type Text = { en: string; zh: string };
 
@@ -80,7 +81,49 @@ export const pullTotems = (count: number, rng: Rng = Math.random): Totem[] =>
 export const familyById = (id: string) => FAMILIES.find(f => f.id === id) ?? FAMILIES[0];
 export const tierById = (id: string) => TIERS.find(t => t.id === id) ?? TIERS[0];
 
-// Laws: the second banner. Both axes exist in canon; how each is scored, how the two
-// combine into one rarity, and what a pull would even give are not decided yet.
-export type LawRating = { range: number | null; impact: number | null };
-export const LAW_BANNER_OPEN = false;
+// Laws: the second banner. Like any gacha, a pull gives a holder; repeat pulls upgrade them.
+// Canon gives every law two ratings, range (the docs call it scope) and impact factor.
+// Star values here are a hand-made tier list, not a formula and not canon: edit freely.
+// Names and laws come from the character articles, so only the slug lives here.
+
+export type Stars = 3 | 4 | 5;
+export type HolderRating = { slug: string; stars: Stars; range: number; impact: number };
+
+export const HOLDERS: HolderRating[] = [
+  { slug: 'the-spear-and-shield', stars: 5, range: 5, impact: 5 },
+  { slug: 'tertia', stars: 5, range: 5, impact: 4 },
+  { slug: 'the-open-question', stars: 5, range: 5, impact: 3 },
+  { slug: 'ilar-hesabu', stars: 5, range: 5, impact: 5 },
+  { slug: 'ensa', stars: 5, range: 5, impact: 4 },
+  { slug: 'voss-halloran', stars: 4, range: 4, impact: 5 },
+  { slug: 'rudolf-ludwig', stars: 4, range: 4, impact: 4 },
+  { slug: 'rushd', stars: 4, range: 4, impact: 5 },
+  { slug: 'lian-xiu', stars: 4, range: 3, impact: 5 },
+  { slug: 'akhil', stars: 4, range: 3, impact: 4 },
+  { slug: 'aldous-vane', stars: 3, range: 2, impact: 4 },
+  { slug: 'mattias-krane', stars: 3, range: 2, impact: 3 },
+  { slug: 'zaid', stars: 3, range: 2, impact: 4 },
+  { slug: 'vera', stars: 3, range: 2, impact: 3 },
+  { slug: 'kalyan', stars: 3, range: 2, impact: 2 },
+  { slug: 'sai', stars: 3, range: 1, impact: 2 },
+];
+
+/** PROVISIONAL odds per star tier; within a tier every holder is equally likely. */
+export const STAR_ODDS: { stars: Stars; chance: number }[] = [
+  { stars: 5, chance: 0.02 },
+  { stars: 4, chance: 0.13 },
+  { stars: 3, chance: 0.85 },
+];
+
+/** Upgrades: each repeat adds one level, up to this cap. What a level does is not decided yet. */
+export const MAX_UPGRADE = 6;
+export const upgradeLevel = (copies: number) => Math.max(0, Math.min(copies - 1, MAX_UPGRADE));
+
+export function pullHolder(rng: Rng = Math.random, pool: readonly HolderRating[] = HOLDERS): HolderRating {
+  const tiers = STAR_ODDS.filter(o => pool.some(h => h.stars === o.stars));
+  const tier = pickWeighted(tiers, o => o.chance, rng);
+  return pickWeighted(pool.filter(h => h.stars === tier.stars), () => 1, rng);
+}
+
+export const pullHolders = (count: number, rng: Rng = Math.random, pool: readonly HolderRating[] = HOLDERS) =>
+  Array.from({ length: count }, () => pullHolder(rng, pool));

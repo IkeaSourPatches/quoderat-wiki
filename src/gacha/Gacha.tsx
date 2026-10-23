@@ -1,14 +1,29 @@
 import { useState, type CSSProperties } from 'react';
+import type { Article } from '../api';
+import { emblems } from '../emblems';
 import type { Language } from '../i18n';
-import { DEPTH_LANDMARKS, FAMILIES, TIERS, familyById, pullTotems, tierById, type Text, type Totem } from './pool';
+import { DEPTH_LANDMARKS, FAMILIES, HOLDERS, MAX_UPGRADE, STAR_ODDS, TIERS, pullHolders, upgradeLevel, type HolderRating, familyById, pullTotems, tierById, type Text, type Totem } from './pool';
 import { STORAGE_KEY, addPulls, decodeCollection, emptyCollection, mergeReward, mergeStack, stackKey, type Collection } from './collection';
 import '../game/games.css';
 import './gacha.css';
 
-// The gacha page. Totems pull for real; laws wait until their two ratings are settled.
-// Pull history stays in this browser only.
+// Law holders and totems have separate local saves; the workshop upgrades owned totems.
 
+function useStored<T>(key: string, empty: T, valid: (value: any) => boolean) {
+  const [value, setValue] = useState<T>(() => {
+    try { const saved = JSON.parse(localStorage.getItem(key) || 'null'); if (saved && valid(saved)) return saved as T; } catch { /* Start fresh. */ }
+    return empty;
+  });
+  const save = (next: T) => { setValue(next); try { localStorage.setItem(key, JSON.stringify(next)); } catch { /* Memory only. */ } };
+  return [value, save] as const;
+}
+
+type HolderLog = { total: number; copies: Record<string, number> };
+type HolderResult = { rating: HolderRating; copies: number };
 const percent = (chance: number) => `${+(chance * 100).toFixed(1)}%`;
+
+const StarRow = ({ n, label }: { n: number; label: string }) =>
+  <span className="gc-stars" role="img" aria-label={label}>{'★'.repeat(n)}<i>{'★'.repeat(5 - n)}</i></span>;
 
 function DepthBar({ depth, tx, label }: { depth: number; tx: (t: Text) => string; label: string }) {
   return <div className="gc-depth" role="img" aria-label={label}>
@@ -17,11 +32,14 @@ function DepthBar({ depth, tx, label }: { depth: number; tx: (t: Text) => string
   </div>;
 }
 
-export function Gacha({ language }: { language: Language }) {
+const Pips = ({ level, label }: { level: number; label: string }) =>
+  <span className="gc-pips" role="img" aria-label={label}>{Array.from({ length: MAX_UPGRADE }, (_, i) => <i key={i} className={i < level ? 'on' : ''} />)}</span>;
+
+export function Gacha({ language, articles, open }: { language: Language; articles: Article[]; open: (slug: string) => void }) {
   const zh = language === 'zh';
   const tx = (t: Text) => zh ? t.zh : t.en;
   const text = (en: string, cn: string) => zh ? cn : en;
-  const [banner, setBanner] = useState<'totems' | 'laws' | 'workshop'>('totems');
+  const [banner, setBanner] = useState<'totems' | 'laws' | 'workshop'>('laws');
   const [results, setResults] = useState<Totem[]>([]);
   const [initial] = useState(() => {
     try { return { saved: decodeCollection(localStorage.getItem(STORAGE_KEY)), failed: false }; }
@@ -56,16 +74,37 @@ export function Gacha({ language }: { language: Language }) {
     setNotice({ en: `Merged 3 into 1: ${name.en}, depth ${reward.depth}. Added to your collection.`, zh: `三合一完成：${name.zh}，深度 ${reward.depth}。已加入收藏。` });
   };
 
+  // Only holders whose character page exists can be pulled, so names never go missing.
+  const pages = new Map(articles.map(a => [a.slug, a]));
+  const pool = HOLDERS.filter(h => pages.has(h.slug));
+  const nameOf = (slug: string) => pages.get(slug)?.title ?? slug;
+  const lawOf = (slug: string) => pages.get(slug)?.stats['Held law'] ?? '';
+  const stars = (n: number) => <StarRow n={n} label={text(`${n} stars`, `${n} 星`)} />;
+
+  const [holderLog, saveHolders] = useStored<HolderLog>('quoderat-gacha-holders', { total: 0, copies: {} }, v => typeof v.total === 'number' && typeof v.copies === 'object');
+  const [holders, setHolders] = useState<HolderResult[]>([]);
+
+  const pullH = (count: number) => {
+    const copies = { ...holderLog.copies };
+    const got = pullHolders(count, Math.random, pool).map(rating => ({ rating, copies: copies[rating.slug] = (copies[rating.slug] || 0) + 1 }));
+    setHolders(got);
+    saveHolders({ total: holderLog.total + count, copies });
+  };
+  const holderOwned = pool.filter(h => holderLog.copies[h.slug]).length;
+  const badge = (copies: number) => copies === 1 ? text('New', '新') : copies - 1 > MAX_UPGRADE ? text('Max', '已满') : `+${upgradeLevel(copies)}`;
+  const history = (label: string, reset: () => void, total: number) =>
+    <>{label}{total > 0 && <> · <button className="games-link" onClick={reset}>{text('Reset', '重置')}</button></>}</>;
+
+
   return <div className="gc">
     <header className="games-head">
       <h1>{text('Gacha', '抽卡')}</h1>
-      <p>{text('The world condenses the power of the slain creatures back out as totems. See what it hands you.', '世界把被杀神兽的力量重新凝聚成图腾。看看它会交给你什么。')}</p>
+      <p>{text('Pull a law holder, or a totem the world condenses back out of the slain creatures. Repeat holders grow stronger.', '抽取一位执律者，或世界从被杀神兽身上重新凝聚出的图腾。重复抽到的执律者会变得更强。')}</p>
     </header>
 
     <div className="gc-tabs" role="tablist" aria-label={text('Banners', '卡池')}>
-      {(['totems', 'workshop', 'laws'] as const).map(id => <button key={id} role="tab" aria-selected={banner === id} onClick={() => setBanner(id)}>
-        {id === 'totems' ? text('Totems', '图腾') : id === 'workshop' ? text('Mage & collection', '法师与收藏') : text('Laws', '法则')}
-        {id === 'laws' && <small>{text('soon', '即将')}</small>}
+      {(['laws', 'totems', 'workshop'] as const).map(id => <button key={id} role="tab" aria-selected={banner === id} onClick={() => setBanner(id)}>
+        {id === 'totems' ? text('Totems', '图腾') : id === 'workshop' ? text('Mage & collection', '法师与收藏') : text('Law holders', '执律者')}
       </button>)}
     </div>
 
@@ -122,24 +161,47 @@ export function Gacha({ language }: { language: Language }) {
       })}</ul>
       {owned > 0 && !saved.stacks.some(t => familyFilter === 'all' || t.family === familyFilter) && <p>{text('No totems in this family yet.', '尚未收集到该族群的图腾。')}</p>}
     </section> : <section className="gc-banner gc-laws" role="tabpanel">
-      <p className="gc-lede">{text('Every law is rated twice. Range decides power, and power decides status. Impact factor measures how much a law has shaped history and daily life, so a narrow law with heavy impact can carry more prestige than its power alone suggests.', '每条法则都有两个评级。范围决定力量，力量决定地位。影响因子衡量一条法则在多大程度上塑造了历史与日常生活，所以一条影响深远的狭窄法则，其声望可能超过其力量本身所显示的。')}</p>
-      <svg className="gc-axes" viewBox="0 0 320 220" role="img" aria-label={text('Range runs left to right, impact factor bottom to top.', '范围自左向右，影响因子自下而上。')}>
-        <path d="M40 190H300M40 190V20" />
-        <path className="gc-grid" d="M170 190V20M40 105H300" />
-        <text x="300" y="210" textAnchor="end">{text('Range →', '范围 →')}</text>
-        <text x="30" y="20" textAnchor="end" transform="rotate(-90 30 20)">{text('Impact factor →', '影响因子 →')}</text>
-        <text className="gc-zone-label" x="105" y="58" textAnchor="middle">{text('narrow, heavy impact', '狭窄而影响深远')}</text>
-        <text className="gc-zone-label" x="235" y="148" textAnchor="middle">{text('the broadest laws', '最广的法则')}</text>
-      </svg>
-      <h2>{text('Still to decide', '尚待决定')}</h2>
-      <ul className="gc-open">
-        <li>{text('The scale for each axis, and who rates each law.', '每个维度的刻度，以及由谁为每条法则评级。')}</li>
-        <li>{text('How two ratings become one rarity: a sum, the higher of the two, or a grid of tiers.', '两个评级如何合成一个稀有度：相加、取较高者，还是一张分级表。')}</li>
-        <li>{text('What a pull gives. A held law is unique and only passes through its test, so is it a law, its holder, or a chance at the test?', '抽到的是什么。已被执掌的法则独一无二，只能通过试炼传承：抽到的是法则、执律者，还是一次试炼的机会？')}</li>
-      </ul>
-      <div className="gc-actions"><button className="games-btn" disabled>{text('Pull — rules not set', '抽取 — 规则未定')}</button></div>
+      <ul className="gc-odds">{STAR_ODDS.map(o => <li key={o.stars} className={`stars-${o.stars}`}>
+        <strong>{stars(o.stars)}</strong>
+        <span>{text(`${pool.filter(h => h.stars === o.stars).length} holders`, `${pool.filter(h => h.stars === o.stars).length} 位执律者`)}</span>
+        <b>{percent(o.chance)}</b>
+      </li>)}</ul>
+      <div className="gc-actions">
+        <button className="games-btn" disabled={!pool.length} onClick={() => pullH(1)}>{text('Pull ×1', '抽取 ×1')}</button>
+        <button className="games-btn quiet" disabled={!pool.length} onClick={() => pullH(10)}>{text('Pull ×10', '抽取 ×10')}</button>
+      </div>
+      {holders.length > 0 && <ul className={`gc-results${holders.length === 1 ? ' single' : ''}`} aria-live="polite">
+        {holders.map(({ rating: h, copies }, i) => <li key={`${holderLog.total}-${i}`} className={`gc-card gc-holder stars-${h.stars}`} style={{ '--i': i } as CSSProperties}>
+          <span className={`gc-badge${copies === 1 ? ' new' : ''}`}>{badge(copies)}</span>
+          <span className="gc-glyph" aria-hidden="true">{emblems[h.slug] || '✧'}</span>
+          {stars(h.stars)}
+          <strong>{nameOf(h.slug)}</strong>
+          <span className="gc-creature">{lawOf(h.slug)}</span>
+          <dl className="gc-ratings">
+            <dt>{text('Range', '范围')}</dt><dd><StarRow n={h.range} label={text(`Range ${h.range} of 5`, `范围 ${h.range}/5`)} /></dd>
+            <dt>{text('Impact', '影响因子')}</dt><dd><StarRow n={h.impact} label={text(`Impact factor ${h.impact} of 5`, `影响因子 ${h.impact}/5`)} /></dd>
+          </dl>
+        </li>)}
+      </ul>}
+      <h2 className="gc-sub">{text(`Collection ${holderOwned} / ${pool.length}`, `收藏 ${holderOwned} / ${pool.length}`)}</h2>
+      <ul className="gc-collection">{[...pool].sort((a, b) => b.stars - a.stars).map(h => {
+        const copies = holderLog.copies[h.slug] || 0, level = upgradeLevel(copies);
+        return <li key={h.slug} className={`stars-${h.stars}${copies ? '' : ' missing'}`}>
+          {copies ? <button onClick={() => open(h.slug)} title={text('Read their page', '阅读人物页面')}>
+            <span className="gc-glyph" aria-hidden="true">{emblems[h.slug] || '✧'}</span>
+            <strong>{nameOf(h.slug)}</strong>
+            {stars(h.stars)}
+            <Pips level={level} label={text(`Upgrade ${level} of ${MAX_UPGRADE}`, `升级 ${level}/${MAX_UPGRADE}`)} />
+          </button> : <span className="gc-unknown">
+            <span className="gc-glyph" aria-hidden="true">?</span>
+            <strong>{text('Not yet pulled', '尚未抽到')}</strong>
+            {stars(h.stars)}
+          </span>}
+        </li>;
+      })}</ul>
+      <p className="gc-history">{history(text(`Holder pulls: ${holderLog.total}`, `执律者抽取次数：${holderLog.total}`), () => { setHolders([]); saveHolders({ total: 0, copies: {} }); }, holderLog.total)}</p>
     </section>}
 
-    <p className="gc-fine">{text('Odds, depth bands and merging are site game mechanics, not canon. Your collection is saved on this browser and device only; clearing browser data erases it.', '概率、深度区间与合成是网站游戏机制，并非正典。收藏仅保存在当前浏览器与设备中；清除浏览器数据会删除收藏。')}</p>
+    <p className="gc-fine">{text('Star ratings, odds, depth bands, upgrades and merging are site game mechanics, not canon. Your collection is saved on this browser and device only; clearing browser data erases it.', '星级、概率、深度区间、升级与合成是网站游戏机制，并非正典。收藏仅保存在当前浏览器与设备中；清除浏览器数据会删除收藏。')}</p>
   </div>;
 }
