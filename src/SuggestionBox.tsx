@@ -67,7 +67,7 @@ export function SuggestionBox({ language }: { language: Language }) {
         <span className="visitor-name-field"><input autoComplete="nickname" onFocus={()=>setNameFocused(true)} onBlur={()=>setNameFocused(false)} maxLength={100} value={name} onChange={e=>setName(e.target.value)} disabled={status==='sending'}/>{!name && !nameFocused && <span className="dynamic-role" aria-hidden="true">{roleText}</span>}</span></label>
       <label>{zh ? '你想说些什么？' : 'What is on your mind?'}
         <textarea required maxLength={3000} rows={7} placeholder={zh ? '我在想……' : 'I have been wondering…'} value={message} onChange={e=>{setMessage(e.target.value);if(status!=='sending')setStatus('idle')}} disabled={status==='sending'}/></label>
-      <div className="letter-signature"><span>□ Q.E.D.</span><small>{message.length.toLocaleString()} / 3,000</small></div>
+      <div className="letter-signature"><span>&#x220E; Q.E.D.</span><small>{message.length.toLocaleString()} / 3,000</small></div>
       <div className="letter-send"><span className="wax-seal" aria-hidden="true">Q</span><button disabled={status==='sending' || !message.trim()}>{status==='sending' ? (zh?'正在寄出…':'Sending…') : (zh?'封缄并寄出 ↗':'Seal & send ↗')}</button></div>
       <p className={`letter-status ${status}`} role="status">{status==='sent' ? (zh?'信已送达。谢谢你为这个世界留下的想法。':'Your letter has arrived. Thank you for adding your voice to this world.') : status==='limited' ? (zh?'今天的信件已经够多了。文字已保留，请过一会儿再寄。':'The post is full for now. Your text is still here; please try again later.') : status==='error' ? (zh?'暂时未能寄出。文字已保留，请稍后重试。':'Your letter could not be sent. Your text is still here; please try again.') : ''}</p>
     </form>

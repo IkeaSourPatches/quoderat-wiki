@@ -16,6 +16,7 @@ Shared rules for every AI agent working in this repo (Codex reads this file; Cla
 - Two agents (Claude and Codex) may work on this repo at the same time. Never commit directly to `main`; work on your own branch and merge through a pull request.
 - Pull before starting and keep commits small, so the large `src/main.tsx` doesn't produce painful merge conflicts.
 - Don't commit `.venv/`, `node_modules/`, `dist/`, `*.sqlite3` or `.env` (already in `.gitignore`).
+- Unbuilt or retired design ideas live in `ideas.md`. Add to it instead of deleting an idea.
 
 ## Checks before pushing
 

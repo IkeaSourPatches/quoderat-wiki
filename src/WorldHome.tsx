@@ -10,7 +10,7 @@ const loreSections = [
   ['World & laws', 'Laws, inheritance, disproof and the Axiom.', '法则、继承、证伪与公理。'],
   ['The pantheon', 'Who holds which law, and how far it reaches.', '谁执掌哪条法则，其范围又有多广。'],
   ['Creatures', 'Dragons, the other families, and the legacy of the hunt.', '龙族、其他神兽族群与狩猎的遗产。'],
-  ['Timeline', 'The Tower of History, floor by floor.', '历史之塔，一层一层。'],
+  ['Timeline', 'History you can rewind.', '可以倒带的历史。'],
 ];
 
 // Sai's botched four-colour map: regions D and G share a border and a colour.

@@ -51,7 +51,7 @@ The frontend is one page with hash routing; there is no router library. Every vi
 | `#play/flat` | Keep it flat: hold an assembly level while the floor tilts | `src/game/KeepItFlat.tsx` |
 | `#play/court` | The Spear and Shield's court: find the evidence a testimony contradicts | `src/game/SpearShieldCourt.tsx` |
 | `#play/axiom` | The Axiom's test: a switch that turns itself back off | `src/game/AxiomMachine.tsx` |
-| `#timeline` | The timeline as a tower you climb, floor by floor | `src/TimelineTower.tsx` |
+| `#timeline` | The timeline as one living scene you can rewind | `src/timeline/WorldRewound.tsx` |
 | `#<slug>` | One article, for example `#ilar-hesabu` | `src/main.tsx` |
 
 Client state stays deliberately plain: language in `quoderat-language`, bookmarks in `quoderat-bookmarks`, puzzle progress in `quoderat-sai-v1`, attempts on the Axiom in `quoderat-axiom-attempts`, Aldous Vane's ledger of finished assemblies in `quoderat-flat-ledger`, and closed court cases in `quoderat-court-solved`. Nothing else is persisted, and no account is involved.
@@ -66,7 +66,7 @@ SaiGame       → GET /api/game/puzzles|daily/ · POST /api/game/validate/ → d
 Django admin  → authenticated, CSRF-protected edit → Article
 ```
 
-`src/main.tsx` holds the reading layout, article catalogue, search, bookmarks, Markdown workspace and the shared breadcrumb/search/language top bar. `WorldHome.tsx`, `LoreHome.tsx`, `TimelineTower.tsx`, `SuggestionBox.tsx` and the games in `game/` are the destination views it swaps in. `src/i18n.ts` owns the interface dictionary and merges `translations.zh` into an article; `src/styles.css` carries the responsive design, and MUI supplies accessible dialogs, fields, buttons and notices. `src/api.ts` is the data boundary: the UI receives the same Article shape in either mode. Markdown is rendered by react-markdown with GitHub-style tables; raw HTML is not executed.
+`src/main.tsx` holds the reading layout, article catalogue, search, bookmarks, Markdown workspace and the shared breadcrumb/search/language top bar. `WorldHome.tsx`, `LoreHome.tsx`, `timeline/WorldRewound.tsx`, `SuggestionBox.tsx` and the games in `game/` are the destination views it swaps in. `src/i18n.ts` owns the interface dictionary and merges `translations.zh` into an article; `src/styles.css` carries the responsive design, and MUI supplies accessible dialogs, fields, buttons and notices. `src/api.ts` is the data boundary: the UI receives the same Article shape in either mode. Markdown is rendered by react-markdown with GitHub-style tables; raw HTML is not executed.
 
 On the server, `backend/wiki/models.py` defines persistence, `views.py` exposes read-only article JSON and the rate-limited suggestion endpoint, `game.py` serves puzzle data and validates colourings, and `admin.py` supplies authenticated authoring. The article API is read-only by design: a `POST` to `/api/articles/` answers `405`.
 
@@ -85,7 +85,8 @@ We use separate React and Django applications rather than Django HTML templates 
 
 ```sh
 npm run build                          # tsc --noEmit, then the Vite production build
-node scripts/check-localization.mjs    # bilingual data contract, Node 22.18+
+node scripts/check-localization.mjs    # bilingual data contract and timeline text, Node 22.18+
+node scripts/check-timeline.mjs        # reduced motion, visibility, animation cleanup
 node scripts/check-game.mjs            # Sai's puzzles, the court cases, Keep it flat
 python backend/manage.py check
 python backend/manage.py test wiki
@@ -149,6 +150,10 @@ location /api/suggestions/ {
 
 In development (`DJANGO_DEBUG=true`) the counters live in process memory and reset when `runserver` restarts.
 
+## The timeline
+
+`#timeline` shows the timeline article as one scene: laws hang in the sky, Llama and Origo sit either side of the Limitrest Range, and a slider has one stop for each floor of the doc and one for each act of the Feud. Stepping forward plays each moment in order; stepping back rewinds it. A named moment picker makes all ten stops accessible without dragging. Select a scene object or use the keyboard-accessible inspector below it to read its details. Play begins at the current moment; at the end it restarts from Creation. `src/timeline/world.ts` reads the floors, acts, myths and fates out of the article and holds the scene's layout, `fx.ts` moves the camera, the laws and the canvas particles, and `WorldRewound.tsx` draws the scene and the text of one moment beside it. The doc's own wording, including "How to Read the Tower" and its floors, is unchanged.
+
 ## The games shelf
 
 `#play` shelves four small games, each built on one character's law. They are adaptations: dialogue, maps, cases and events are not additions to canon, and each game says so on its page. Progress stays on the visitor's device, with no account or leaderboard. `src/game/games.css` holds the shelf styles the games share.
@@ -179,3 +184,7 @@ The simulation lives in `src/game/flat/sim.ts`, free of drawing code, so the che
 `AxiomMachine.tsx` is a useless machine: flip the switch and an arm comes out of the box to flip it back. Every attempt scores zero, as canon requires; only the count of attempts is kept.
 
 Run `node scripts/check-game.mjs` to check map solvability, adjacency and save data; that every court case is complete in both languages, with exactly one contradiction per testimony; and that Keep it flat always ends on its own. Django game tests are included in `python backend/manage.py test wiki`.
+
+## Ideas
+
+Design ideas that are not built yet, or that were replaced, are kept in `ideas.md`, with pointers to any code that exists for them.
