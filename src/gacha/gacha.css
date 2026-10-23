@@ -43,3 +43,17 @@
 @keyframes gc-in{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
 @media(max-width:560px){.gc-odds{grid-template-columns:1fr}.gc-odds li{grid-template-columns:1fr auto;align-items:baseline}.gc-odds b{grid-row:span 2}}
 @media(prefers-reduced-motion:reduce){.gc-card{animation:none}}
+/* A small workshop and a permanent shelf for the rewards. */
+.gc-tabs{max-width:620px}.gc-tabs button{min-height:48px}
+.gc-mage{display:flex;gap:22px;align-items:center;padding-bottom:24px;border-bottom:1px solid #c9b48233}
+.gc-mage-sigil{flex-shrink:0;display:grid;place-items:center;width:84px;height:104px;border:1px solid #c9b48277;border-radius:44px 44px 8px 8px;background:radial-gradient(ellipse,#c9b48222,transparent 70%);color:#dec78e;font-size:56px}
+.gc-mage small{color:#c9b482;font-size:11px;letter-spacing:2px}.gc-mage h2{font:400 clamp(23px,3vw,32px)/1.15 'STIX Two Text',Georgia,serif;margin:8px 0 12px}
+.gc-mage p{margin:0;color:#b7c7bb;font-size:15px;line-height:1.65}
+.gc-collection-stats{display:flex;gap:12px;flex-wrap:wrap;padding:18px 0;color:#e1cf9f;font-size:14px}.gc-collection-stats span{padding:6px 12px;border:1px solid #c9b48233;border-radius:24px}
+.gc-filter{display:flex;align-items:center;gap:12px;margin:18px 0;color:#b7c7bb}.gc-filter select{background:#0f1d17;color:#f1ebd9;border:1px solid #c9b48255;border-radius:4px;padding:10px;max-width:100%;font:inherit;color-scheme:dark}
+.gc-stock{position:absolute;right:12px;top:12px;border-radius:4px;padding:3px 8px;background:#0b1711;color:#e8d4a0;font-size:14px;font-variant-numeric:tabular-nums}
+.gc-inventory{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}.gc-inventory .gc-card{animation:none;gap:8px}.gc-inventory .games-btn{width:100%;font-size:13px;padding:10px 8px;min-height:44px}.gc-inventory .games-btn:disabled{opacity:.45;cursor:not-allowed}
+.gc-recipe{font-size:12px;line-height:1.6;color:#c5ceb9;margin:0 0 4px}.gc-merge-notice{min-height:48px;padding:12px 14px;border-left:2px solid #c9b482;background:#c9b4820c;font-size:14px;line-height:1.6;color:#ded6bd}
+.gc-warning{padding:12px 16px;border:1px solid #d3a86e66;background:#d3a86e12;color:#ead5b4;font-size:14px;line-height:1.6}.gc-empty{text-align:center;padding:30px 10px;color:#b7c7bb}.gc-empty h3{font:400 26px 'STIX Two Text',Georgia,serif;color:#f1ebd9}.gc-empty p{line-height:1.7}
+.gc :focus-visible{outline:2px solid #dec78e;outline-offset:4px}
+@media(max-width:560px){.gc-mage{align-items:flex-start;gap:14px}.gc-mage-sigil{width:48px;height:70px;font-size:36px}.gc-tabs button{font-size:13px;padding:10px 7px}.gc-inventory{grid-template-columns:1fr}.gc-filter{flex-wrap:wrap}}

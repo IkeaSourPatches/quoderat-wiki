@@ -188,3 +188,14 @@ Run `node scripts/check-game.mjs` to check map solvability, adjacency and save d
 ## Ideas
 
 Design ideas that are not built yet, or that were replaced, are kept in `ideas.md`, with pointers to any code that exists for them.
+
+
+## Gacha collection and mage workshop
+
+`#gacha` includes a **Mage & collection** tab. Every pull becomes an owned reward, grouped by family and depth with a copy count. The workshop consumes three identical copies and returns one at +1 depth, crossing rarity bands at 26 and 31 and stopping at 39. These are game rules, not lore canon.
+
+`src/gacha/collection.ts` owns validation, legacy migration, inventory updates and merging; `Gacha.tsx` renders the collection and writes it to localStorage under `quoderat-gacha-totems`. Version 2 stores all owned copies, total pulls, merge count and the most recent 50 draw results. The recent list is historical, so merging does not remove entries from it. Old saves can recover only the recent pulls they retained; the UI discloses missing earlier rewards. Storage failures show a warning. Reset asks for confirmation before clearing the collection.
+
+No account or server is involved: each browser origin has its own collection, and clearing browser data removes it. When adding a backend, move ownership and merge validation to the server rather than trusting these client counts.
+
+Run `node scripts/check-gacha.mjs` for persistence round trips, old-save recovery, merge costs, tier upgrades, the depth cap and corrupt-save handling.
