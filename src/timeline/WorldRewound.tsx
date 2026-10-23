@@ -231,7 +231,7 @@ export function WorldRewound({ language, article }: { language: Language; articl
   const [playing, setPlaying] = useState(false);
   const [rewinding, setRewinding] = useState(false);
   const [drag, setDrag] = useState<number | null>(null);
-  const [tip, setTip] = useState<{ key: string; x: number; y: number; below: boolean } | null>(null);
+  const [selected, setSelected] = useState('town');
   const [touch] = useState(() => typeof matchMedia !== 'undefined' && matchMedia('(hover: none)').matches);
   const refs = useRef<Refs>({ world: null, number: null, sets: null, apexNumber: null, apexSets: null, setsNumber: null, threadNumber: null });
   const engine = useRef<Engine | null>(null);
@@ -256,6 +256,9 @@ export function WorldRewound({ language, article }: { language: Language; articl
     if (next === prev && !replay) return;
     const m: Move = how ?? (next === prev + 1 ? 'fwd' : next === prev - 1 ? 'back' : 'jump');
     stopRef.current = next;
+    setSelected(key => (['kingdom', 'dynasty'].includes(key) && next < S.gods)
+      || (['elite', 'empire'].includes(key) && next < S.totems)
+      || (key === 'ilar' && next < S.paradox) ? 'town' : key);
     setStop(next); setMove(replay ? 'fwd' : m);
     engine.current?.setStop(next, m, prev, replay);
     window.clearTimeout(rewindTimer.current);
@@ -274,24 +277,20 @@ export function WorldRewound({ language, article }: { language: Language; articl
   }, [playing, stop]);
   const togglePlay = () => {
     if (playing) { setPlaying(false); return; }
-    if (stopRef.current === LAST) go(0, 'jump', true); else go(stopRef.current + 1, 'fwd');
+    if (stopRef.current === LAST) go(0, 'jump', true);
     setPlaying(true);
   };
   const step = (d: number) => { setPlaying(false); go(stopRef.current + d); };
 
+  const updateTrack = (clientX: number) => {
+    const r = track.current!.getBoundingClientRect();
+    const x = Math.max(0, Math.min(100, ((clientX - r.left) / r.width) * 100));
+    setDrag(x); goRef.current(nearest(x));
+  };
   const onTrackDown = (e: ReactPointerEvent<HTMLDivElement>) => {
-    const el = track.current;
-    if (!el) return;
-    e.preventDefault(); el.focus(); el.setPointerCapture(e.pointerId); setPlaying(false);
-    const update = (clientX: number) => {
-      const r = el.getBoundingClientRect(), x = Math.max(0, Math.min(100, ((clientX - r.left) / r.width) * 100));
-      setDrag(x);
-      goRef.current(nearest(x));
-    };
-    update(e.clientX);
-    const moveTo = (ev: PointerEvent) => update(ev.clientX);
-    const end = () => { setDrag(null); el.removeEventListener('pointermove', moveTo); el.removeEventListener('pointerup', end); el.removeEventListener('pointercancel', end); };
-    el.addEventListener('pointermove', moveTo); el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+    if (!e.isPrimary || e.button !== 0) return;
+    e.preventDefault(); e.currentTarget.focus(); e.currentTarget.setPointerCapture(e.pointerId);
+    setPlaying(false); updateTrack(e.clientX);
   };
   const onTrackKey = (e: ReactKeyboardEvent<HTMLDivElement>) => {
     const s = stopRef.current, floor = STOPS[s].floor;
@@ -304,21 +303,26 @@ export function WorldRewound({ language, article }: { language: Language; articl
     e.preventDefault(); setPlaying(false); go(target);
   };
 
-  // Pointing at a thing in the scene names it; on touch screens a tap does the same.
-  const showTip = (target: EventTarget | null) => {
-    const el = (target as Element | null)?.closest?.('[data-tip]');
-    const box = view.current?.getBoundingClientRect();
-    if (!el || !box) { setTip(null); return; }
-    const r = el.getBoundingClientRect(), x = Math.max(120, Math.min(box.width - 120, r.left + r.width / 2 - box.left)), top = r.top - box.top;
-    setTip({ key: el.getAttribute('data-tip')!, x, y: top < 90 ? r.bottom - box.top : top, below: top < 90 });
+  // Selection survives pointer movement and stays readable outside the artwork.
+  const inspect = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const el = (e.target as Element).closest('[data-tip]');
+    if (el) setSelected(el.getAttribute('data-tip')!);
   };
-  const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => { if (e.pointerType === 'mouse') showTip(e.target); };
-  const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => { if (e.pointerType !== 'mouse') showTip(e.target); };
 
   const current = STOPS[stop], f = floors[current.floor], isFeud = current.floor === FEUD && current.act !== undefined;
   const actLabel = isFeud ? (language === 'zh' ? T.act.zh.replace('{n}', ACT_NUMERALS[current.act!]) : T.act.en.replace('{n}', String(current.act! + 1))) : '';
   const valueText = f ? `${f.numeral} · ${f.title}${isFeud ? ` · ${actLabel}` : ''}` : '';
-  const shownTip = tip && tipFor(tip.key, stop, floors, language);
+  const shownTip = tipFor(selected, stop, floors, language);
+  const inspectKeys = [...new Set(['town', 'all', 'number', 'sets', 'nc', 'llama', 'origo', 'range', 'peak',
+    'creature:dragon-earth', 'creature:unicorn-1', 'creature:phoenix', 'creature:kitsune-1', 'creature:troll-1',
+    ...(stop >= S.gods ? ['kingdom', 'dynasty'] : []),
+    ...(stop >= S.totems ? ['elite', 'empire'] : []),
+    ...(stop >= S.paradox ? ['ilar'] : []), selected])];
+  const momentLabel = (i: number) => {
+    const moment = STOPS[i], floor = floors[moment.floor];
+    const name = moment.act === undefined ? floor?.title : actName(splitActs(floor?.body ?? '').acts[moment.act] ?? '');
+    return `${floor?.numeral ?? ''} · ${name}`;
+  };
   const thumb = drag ?? pct(stop);
   const playLabel = playing ? t(T.pause) : stop === LAST ? t(T.again) : t(T.play);
 
@@ -331,26 +335,42 @@ export function WorldRewound({ language, article }: { language: Language; articl
 
     <div className="wr-stage">
       <div className="wr-main">
-        <div className="wr-view" ref={view} data-stop={stop} onPointerMove={onPointerMove} onPointerLeave={() => setTip(null)} onPointerDown={onPointerDown}>
+        <div className="wr-moment">
+          <label htmlFor="wr-moment">{t(T.slider)}<span>{String(stop + 1).padStart(2, '0')} / {STOPS.length}</span></label>
+          <select id="wr-moment" value={stop} onChange={e => { setPlaying(false); go(Number(e.target.value)); }}>
+            {STOPS.map((_, i) => <option key={i} value={i}>{momentLabel(i)}</option>)}
+          </select>
+        </div>
+        <div className="wr-view" ref={view} data-stop={stop} onPointerDown={inspect}>
           <Scene stop={stop} language={language} refs={refs} />
           <canvas ref={canvas} aria-hidden="true" />
           {rewinding && <div className="wr-chip"><Rewind size={13} />{t(T.rewinding)}</div>}
-          {shownTip && tip && <div className={cls('wr-tip', tip.below && 'below')} style={{ left: tip.x, top: tip.y }}><strong>{shownTip.title}</strong>{shownTip.caption && <small>{shownTip.caption}</small>}<span>{shownTip.body}</span></div>}
+
         </div>
         <div className="wr-time">
-          <button className="wr-play" onClick={togglePlay} aria-label={playLabel} title={playLabel}>{playing ? <Pause size={18} /> : stop === LAST ? <RotateCcw size={18} /> : <Play size={18} />}</button>
-          <div ref={track} className={cls('wr-track', drag !== null && 'dragging')} role="slider" tabIndex={0} aria-label={t(T.slider)} aria-valuemin={0} aria-valuemax={LAST} aria-valuenow={stop} aria-valuetext={valueText} onPointerDown={onTrackDown} onKeyDown={onTrackKey}>
+          <button className="wr-play" aria-pressed={playing} onClick={togglePlay} aria-label={playLabel} title={playLabel}>{playing ? <Pause size={18} /> : stop === LAST ? <RotateCcw size={18} /> : <Play size={18} />}</button>
+          <div ref={track} className={cls('wr-track', drag !== null && 'dragging')} role="slider" tabIndex={0} aria-label={t(T.slider)} aria-valuemin={0} aria-valuemax={LAST} aria-valuenow={stop} aria-valuetext={valueText} onPointerDown={onTrackDown}
+            onPointerMove={e => { if (e.currentTarget.hasPointerCapture(e.pointerId)) updateTrack(e.clientX); }}
+            onPointerUp={e => { if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId); setDrag(null); }}
+            onPointerCancel={() => setDrag(null)} onLostPointerCapture={() => setDrag(null)} onKeyDown={onTrackKey}>
             <div className="wr-rail"><i style={{ width: `${thumb}%` }} /></div>
             {STOPS.map((s, i) => <span key={i} className={cls('wr-tick', s.act ? 'minor' : 'major', i === stop && 'on', i < stop && 'past')} style={{ left: `${pct(i)}%`, ['--tick' as string]: ERA[s.floor] }}>{!s.act && <b>{floors[s.floor]?.numeral}</b>}</span>)}
             <span className="wr-thumb" style={{ left: `${thumb}%` }} />
           </div>
         </div>
         <p className="wr-caption"><span>{t(touch ? T.hintTouch : T.hint)}</span><span>{t(T.adaptation)}</span></p>
+        <section className="wr-inspect" aria-label={t(T.inspect)}>
+          <label htmlFor="wr-inspect">{t(T.inspect)}</label>
+          <select id="wr-inspect" value={selected} onChange={e => setSelected(e.target.value)}>
+            {inspectKeys.map(key => <option key={key} value={key}>{tipFor(key, stop, floors, language)?.title}</option>)}
+          </select>
+          {shownTip && <div className="wr-inspect-body">{shownTip.caption && <small>{shownTip.caption}</small>}<p>{shownTip.body}</p></div>}
+        </section>
       </div>
 
       <aside className="wr-card">
         <header><span className="wr-numeral">{f?.numeral}</span>{isFeud && <small>{actLabel}</small>}</header>
-        <h2>{f?.title}</h2>
+        <h2 aria-live="polite" aria-atomic="true">{isFeud ? momentLabel(stop).split(" · ").slice(1).join(" · ") : f?.title}</h2>
         <div className="wr-card-body" key={stop}>{f && (isFeud ? <FeudBody body={f.body} act={current.act!} /> : <FloorBody body={f.body} />)}</div>
         <footer>
           <button className="wr-step" onClick={() => step(-1)} disabled={stop === 0}><ChevronLeft size={16} />{t(T.earlier)}</button>

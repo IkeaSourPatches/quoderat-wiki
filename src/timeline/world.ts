@@ -92,8 +92,9 @@ export const T = {
   later: { en: 'Later', zh: '更晚' },
   rewinding: { en: 'Rewinding', zh: '倒带中' },
   act: { en: 'Act {n} of 4', zh: '第{n}幕，共四幕' },
-  hint: { en: 'Point at anything in the scene to see what it is.', zh: '把指针移到场景中的任何事物上，看看它是什么。' },
-  hintTouch: { en: 'Tap anything in the scene to see what it is.', zh: '轻点场景中的任何事物，看看它是什么。' },
+  hint: { en: 'Select something in the scene, or explore it below.', zh: '选择场景中的事物，或在下方查看详情。' },
+  hintTouch: { en: 'Tap something in the scene, or explore it below.', zh: '轻点场景中的事物，或在下方查看详情。' },
+  inspect: { en: 'Explore the scene', zh: '探索场景' },
   fullText: { en: 'Read the whole timeline', zh: '阅读完整时间线' },
   adaptation: { en: 'The scene illustrates the text. Its shapes are not a map.', zh: '场景只是文字的图解，其中的形状并非地图。' },
 } satisfies Record<string, L>;

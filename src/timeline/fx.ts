@@ -306,29 +306,37 @@ export function createEngine(canvas: HTMLCanvasElement, refs: Refs) {
   }
 
   function frame(now: number) {
-    raf = requestAnimationFrame(frame);
+    raf = 0;
     const dt = Math.min(.05, (now - last) / 1000);
     last = now;
     if (!visible) return;
     const still = reduce.matches, tg = target(), kc = still ? 1 : 1 - Math.exp(-dt * 1.7), kr = still ? 1 : 1 - Math.exp(-dt * 3.4);
     cam.x += (tg.x - cam.x) * kc; cam.y += (tg.y - cam.y) * kc; cam.z += (tg.z - cam.z) * kc;
-    for (const n of [rig.number, rig.sets]) if (now >= n.at) { n.x += (n.tx - n.x) * kr; n.y += (n.ty - n.y) * kr; }
+    for (const n of [rig.number, rig.sets]) if (still || now >= n.at) { n.x += (n.tx - n.x) * kr; n.y += (n.ty - n.y) * kr; }
     apply();
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.setTransform(scale * cam.z, 0, 0, scale * cam.z, scale * (W / 2 - cam.x * cam.z), scale * (H / 2 - cam.y * cam.z));
     ctx.globalCompositeOperation = 'lighter';
     if (!still) ambient(dt, now);
+    if (still) fx = null;
     if (fx) {
       const p = clamp((now - fx.t0) / fx.dur);
       draw(fx, fx.rev ? 1 - p : p);
       if (p >= 1) fx = null;
     }
     ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+    if (!still) wake();
   }
+
+  function wake() {
+    if (visible && !raf) raf = requestAnimationFrame(frame);
+  }
+  reduce.addEventListener('change', wake);
 
   function setStop(s: number, move: Move, prev: number, replay = false) {
     stop = s;
+    wake();
     const now = performance.now(), slots = lawSlots(s);
     const delay = move === 'fwd' && !replay && !reduce.matches ? (RIG_DELAY[s] ?? 0) : 0;
     for (const key of ['number', 'sets'] as const) {
@@ -345,14 +353,19 @@ export function createEngine(canvas: HTMLCanvasElement, refs: Refs) {
     canvas.width = Math.max(1, Math.round(width * dpr)); canvas.height = Math.max(1, Math.round(height * dpr));
     scale = canvas.width / W; mobile = width < 560;
     const tg = target(); cam.x = tg.x; cam.y = tg.y; cam.z = tg.z;
+    wake();
   }
 
   apply();
   raf = requestAnimationFrame(frame);
   return {
     setStop, resize,
-    setVisible(v: boolean) { visible = v; },
-    destroy() { cancelAnimationFrame(raf); },
+    setVisible(v: boolean) {
+      visible = v;
+      if (v) { last = performance.now(); wake(); }
+      else { cancelAnimationFrame(raf); raf = 0; }
+    },
+    destroy() { cancelAnimationFrame(raf); reduce.removeEventListener('change', wake); },
     // Plays the opening of the first stop, for the first visit.
     open() { if (!reduce.matches) fx = make('condense', performance.now(), false); },
   };

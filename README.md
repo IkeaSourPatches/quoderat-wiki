@@ -86,6 +86,7 @@ We use separate React and Django applications rather than Django HTML templates 
 ```sh
 npm run build                          # tsc --noEmit, then the Vite production build
 node scripts/check-localization.mjs    # bilingual data contract and timeline text, Node 22.18+
+node scripts/check-timeline.mjs        # reduced motion, visibility, animation cleanup
 node scripts/check-game.mjs            # Sai's puzzles, the court cases, Keep it flat
 python backend/manage.py check
 python backend/manage.py test wiki
@@ -151,7 +152,7 @@ In development (`DJANGO_DEBUG=true`) the counters live in process memory and res
 
 ## The timeline
 
-`#timeline` shows the timeline article as one scene: laws hang in the sky, Llama and Origo sit either side of the Limitrest Range, and a slider has one stop for each floor of the doc and one for each act of the Feud. Stepping forward plays each moment in order; stepping back rewinds it. `src/timeline/world.ts` reads the floors, acts, myths and fates out of the article and holds the scene's layout, `fx.ts` moves the camera, the laws and the canvas particles, and `WorldRewound.tsx` draws the scene and the text of one moment beside it. The doc's own wording, including "How to Read the Tower" and its floors, is unchanged.
+`#timeline` shows the timeline article as one scene: laws hang in the sky, Llama and Origo sit either side of the Limitrest Range, and a slider has one stop for each floor of the doc and one for each act of the Feud. Stepping forward plays each moment in order; stepping back rewinds it. A named moment picker makes all ten stops accessible without dragging. Select a scene object or use the keyboard-accessible inspector below it to read its details. Play begins at the current moment; at the end it restarts from Creation. `src/timeline/world.ts` reads the floors, acts, myths and fates out of the article and holds the scene's layout, `fx.ts` moves the camera, the laws and the canvas particles, and `WorldRewound.tsx` draws the scene and the text of one moment beside it. The doc's own wording, including "How to Read the Tower" and its floors, is unchanged.
 
 ## The games shelf
 

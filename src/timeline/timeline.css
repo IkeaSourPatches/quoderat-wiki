@@ -34,7 +34,7 @@ html[lang="zh-CN"] .wr{--wr-serif:'Songti SC','Noto Serif CJK SC','STIX Two Text
 .wr-track.dragging .wr-thumb,.wr-track.dragging .wr-rail i{transition:none}
 
 /* The text of one moment */
-.wr-card{position:sticky;top:24px;display:flex;flex-direction:column;max-height:calc(100vh - 48px);padding:22px 24px 16px;border:1px solid var(--wr-line);border-top:3px solid var(--era);border-radius:4px;background:linear-gradient(180deg,#15251ef2,#0f1a15f2);transition:border-color 1s}
+.wr-card{position:sticky;top:100px;display:flex;flex-direction:column;max-height:calc(100dvh - 124px);padding:22px 24px 16px;border:1px solid var(--wr-line);border-top:3px solid var(--era);border-radius:4px;background:linear-gradient(180deg,#15251ef2,#0f1a15f2);transition:border-color 1s}
 .wr-card header{display:flex;align-items:baseline;gap:12px}
 .wr-numeral{font:400 40px/1 var(--wr-serif);color:color-mix(in srgb,var(--era) 55%,#f1ebd9);transition:color 1s}
 .wr-card header small{font:600 11px var(--wr-sans);letter-spacing:2px;text-transform:uppercase;color:#a9b8ab}
@@ -71,11 +71,6 @@ html[lang="zh-CN"] .wr{--wr-serif:'Songti SC','Noto Serif CJK SC','STIX Two Text
 .wr-note strong{color:#e0b9a8}
 
 /* Pointing at the scene */
-.wr-tip{position:absolute;z-index:3;width:max-content;max-width:250px;padding:9px 12px;transform:translate(-50%,calc(-100% - 10px));border:1px solid #c9b48266;border-radius:4px;background:#0b1511f2;box-shadow:0 10px 30px #0008;pointer-events:none;font:12.5px/1.5 var(--wr-sans);color:#ddd8c6;animation:wr-in .18s ease both}
-.wr-tip.below{transform:translate(-50%,10px)}
-.wr-tip strong{display:block;margin-bottom:3px;font:600 11px var(--wr-sans);letter-spacing:1.5px;text-transform:uppercase;color:var(--wr-gold)}
-.wr-tip small{display:block;margin-bottom:2px;font-size:10.5px;font-style:italic;color:#93a598}
-.wr-tip span{display:block}
 .wr-chip{position:absolute;z-index:2;top:12px;left:12px;display:flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid #9fc2ff55;border-radius:999px;background:#0b1511d0;color:#cfe0ff;font:600 11px var(--wr-sans);letter-spacing:1.5px;text-transform:uppercase;animation:wr-blink 1s steps(2) infinite}
 .wr.rewinding .wr-view::after{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,#9fc2ff10 0 2px,transparent 2px 5px);mix-blend-mode:screen;animation:wr-scan .4s linear infinite}
 
@@ -229,3 +224,18 @@ html[lang="zh-CN"] .wr{--wr-serif:'Songti SC','Noto Serif CJK SC','STIX Two Text
 @media(prefers-reduced-motion:reduce){
 .wr *,.wr *::before,.wr *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important}
 }
+
+/* Named moments and a readable alternative to tiny scene targets. */
+.wr-moment{padding:16px 18px;background:#192b23;border:1px solid var(--wr-line);border-bottom:0;border-radius:8px 8px 0 0}
+.wr-moment label,.wr-inspect label{display:flex;justify-content:space-between;gap:12px;margin-bottom:8px;font:600 10px/1.4 var(--wr-sans);letter-spacing:1.8px;text-transform:uppercase;color:var(--wr-gold)}
+.wr-moment label span{font-variant-numeric:tabular-nums;color:#b2c2b4;letter-spacing:1px}
+.wr select{width:100%;min-width:0;min-height:44px;padding:9px 30px 9px 12px;color:var(--wr-paper);background:#101f19;border:1px solid #c9b48250;border-radius:4px;font:16px/1.4 var(--wr-serif);color-scheme:dark;cursor:pointer}
+.wr-moment + .wr-view{border-radius:0 0 8px 8px}
+.wr-inspect{margin-top:18px;padding:18px;border:1px solid #c9b48230;border-radius:8px;background:linear-gradient(135deg,#21362b,#13231c)}
+.wr-inspect-body{min-height:90px;padding-top:12px;color:#dcd8c7;font:15px/1.65 var(--wr-serif)}
+.wr-inspect-body small{color:#b7c5b9;font:italic 12px/1.5 var(--wr-sans)}
+.wr-inspect-body p{margin:5px 0 0}
+.wr-card{border-radius:8px;padding:24px 26px 18px;box-shadow:0 18px 50px #0002}
+.wr-card-body{scrollbar-width:thin;scrollbar-color:#c9b48266 transparent}
+.wr-step{min-height:44px}
+@media(max-width:600px){.wr-moment,.wr-inspect{padding:14px}.wr-card{padding:20px 18px 16px}.wr-inspect-body{min-height:0}.wr-caption{font-size:12px;color:#acbcae}}
