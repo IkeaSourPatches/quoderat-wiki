@@ -190,12 +190,10 @@ Run `node scripts/check-game.mjs` to check map solvability, adjacency and save d
 Design ideas that are not built yet, or that were replaced, are kept in `ideas.md`, with pointers to any code that exists for them.
 
 
-## Gacha collection and mage workshop
+## Gacha totem pools
 
-`#gacha` includes a **Mage & collection** tab. Every pull becomes an owned reward, grouped by family and depth with a copy count. The workshop consumes three identical copies and returns one at +1 depth, crossing rarity bands at 26 and 31 and stopping at 39. These are game rules, not lore canon.
+Each totem type has one locally saved power pool. Pulls add their depth directly: Earth 20 plus Earth 25 gives Earth power 45 and a count of two. Types stay separate. Pool totals are a game score, not a single totem’s lore depth, so they have no 39-point cap. Pull cards show the contribution and the pool total after the batch.
 
-`src/gacha/collection.ts` owns validation, legacy migration, inventory updates and merging; `Gacha.tsx` renders the collection and writes it to localStorage under `quoderat-gacha-totems`. Version 2 stores all owned copies, total pulls, merge count and the most recent 50 draw results. The recent list is historical, so merging does not remove entries from it. Old saves can recover only the recent pulls they retained; the UI discloses missing earlier rewards. Storage failures show a warning. Reset asks for confirmation before clearing the collection.
+`src/gacha/collection.ts` validates saves and accumulates rewards. Version 3 uses the existing `quoderat-gacha-totems` localStorage key. Version 2 inventories migrate by summing depth × count for each type; previously consumed copies are not recreated. Older recent-only saves recover only the pulls they retained. Law-holder saves are separate and unchanged.
 
-No account or server is involved: each browser origin has its own collection, and clearing browser data removes it. When adding a backend, move ownership and merge validation to the server rather than trusting these client counts.
-
-Run `node scripts/check-gacha.mjs` for persistence round trips, old-save recovery, merge costs, tier upgrades, the depth cap and corrupt-save handling.
+No account or server is involved: each browser origin has its own collection, and clearing browser data removes it. Run `node scripts/check-gacha.mjs` to check pooling, persistence, migrations and malformed data.

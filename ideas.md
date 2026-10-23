@@ -43,3 +43,7 @@ The timeline doc still opens with "How to Read the Tower" and calls each section
 ### Vera's dig (shelved)
 
 Vera, the Witness Beneath, holds the Law of Superposition. The game had you read cliffs, date a grave, find the tunnels, then search earth-tribe ground for something hidden that is never named. It was not fun enough yet. The full version is kept on the branch `claude/shelved-vera-dig` (b3aac07) for when it has a better design.
+
+
+### Retired: matching-depth totem merging
+The first workshop consumed three copies with identical type and depth to produce one at +1 depth (maximum 39). Replaced by automatic type-only pools: every pull adds its depth to that type’s power total.

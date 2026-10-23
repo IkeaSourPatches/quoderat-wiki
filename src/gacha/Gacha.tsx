@@ -3,11 +3,11 @@ import type { Article } from '../api';
 import { emblems } from '../emblems';
 import type { Language } from '../i18n';
 import { DEPTH_LANDMARKS, FAMILIES, HOLDERS, MAX_UPGRADE, STAR_ODDS, TIERS, pullHolders, upgradeLevel, type HolderRating, familyById, pullTotems, tierById, type Text, type Totem } from './pool';
-import { STORAGE_KEY, addPulls, decodeCollection, emptyCollection, mergeReward, mergeStack, stackKey, type Collection } from './collection';
+import { STORAGE_KEY, addPulls, decodeCollection, emptyCollection, type Collection } from './collection';
 import '../game/games.css';
 import './gacha.css';
 
-// Law holders and totems have separate local saves; the workshop upgrades owned totems.
+// Law holders and totems have separate local saves; totem depth accumulates by type.
 
 function useStored<T>(key: string, empty: T, valid: (value: any) => boolean) {
   const [value, setValue] = useState<T>(() => {
@@ -47,33 +47,22 @@ export function Gacha({ language, articles, open }: { language: Language; articl
   });
   const [saved, setSaved] = useState<Collection>(initial.saved);
   const [storageFailed, setStorageFailed] = useState(initial.failed);
-  const [notice, setNotice] = useState<Text | null>(null);
   const [familyFilter, setFamilyFilter] = useState('all');
   const save = (next: Collection) => {
     setSaved(next);
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); setStorageFailed(false); }
     catch { setStorageFailed(true); }
   };
-  const owned = saved.stacks.reduce((sum, t) => sum + t.count, 0);
+  const owned = saved.pools.reduce((sum, t) => sum + t.count, 0);
 
   const pull = (count: number) => {
     const got = pullTotems(count);
-    setResults(got); save(addPulls(saved, got)); setNotice(null);
+    setResults(got); save(addPulls(saved, got));
   };
   const reset = () => {
     if (!window.confirm(text('Erase your entire collection and pull history on this browser?', '清空本浏览器中的全部收藏与抽取记录？'))) return;
-    setResults([]); save(emptyCollection()); setNotice(null);
+    setResults([]); save(emptyCollection());
   };
-  const merge = (key: string) => {
-    const stack = saved.stacks.find(t => stackKey(t) === key);
-    const reward = stack && mergeReward(stack);
-    const next = mergeStack(saved, key);
-    if (!reward || next === saved) return;
-    save(next);
-    const name = familyById(reward.family).power;
-    setNotice({ en: `Merged 3 into 1: ${name.en}, depth ${reward.depth}. Added to your collection.`, zh: `三合一完成：${name.zh}，深度 ${reward.depth}。已加入收藏。` });
-  };
-
   // Only holders whose character page exists can be pulled, so names never go missing.
   const pages = new Map(articles.map(a => [a.slug, a]));
   const pool = HOLDERS.filter(h => pages.has(h.slug));
@@ -104,7 +93,7 @@ export function Gacha({ language, articles, open }: { language: Language; articl
 
     <div className="gc-tabs" role="tablist" aria-label={text('Banners', '卡池')}>
       {(['laws', 'totems', 'workshop'] as const).map(id => <button key={id} role="tab" aria-selected={banner === id} onClick={() => setBanner(id)}>
-        {id === 'totems' ? text('Totems', '图腾') : id === 'workshop' ? text('Mage & collection', '法师与收藏') : text('Law holders', '执律者')}
+        {id === 'totems' ? text('Totems', '图腾') : id === 'workshop' ? text('Totem pools', '图腾池') : text('Law holders', '执律者')}
       </button>)}
     </div>
 
@@ -126,6 +115,7 @@ export function Gacha({ language, articles, open }: { language: Language; articl
             <strong>{tx(f.power)}</strong>
             <span className="gc-creature">{tx(f.creature)}</span>
             <span className="gc-note">{tx(f.note)}</span>
+            <span className="gc-pool-gain">{text(`+${r.depth} to ${tx(f.power)} pool · Total ${saved.pools.find(p => p.family === r.family)?.power ?? 0}`, `+${r.depth} 加入${tx(f.power)}池 · 共 ${saved.pools.find(p => p.family === r.family)?.power ?? 0}`)}</span>
             <span className="gc-depth-num">{text('Depth', '深度')} <b>{r.depth}</b><small>/100</small></span>
             <DepthBar depth={r.depth} tx={tx} label={text(`Depth ${r.depth} of 100`, `深度 ${r.depth}/100`)} />
           </li>;
@@ -139,27 +129,26 @@ export function Gacha({ language, articles, open }: { language: Language; articl
     </section> : banner === 'workshop' ? <section className="gc-banner gc-workshop" role="tabpanel">
       <header className="gc-mage">
         <span className="gc-mage-sigil" aria-hidden="true">✧</span>
-        <div><small>{text('THE MAGE’S WORKSHOP', '法师工坊')}</small><h2>{text('Give your duplicates a purpose.', '让重复的收藏有用武之地。')}</h2>
-        <p>{text('Merge 3 copies of the same family and depth into 1 totem at +1 depth. Guaranteed, with no fee. Maximum depth: 39.', '将同族群、同深度的三个图腾合为一个，深度 +1。必定成功，无需费用。最高深度：39。')}</p></div>
+        <div><small>{text('THE MAGE’S WORKSHOP', '法师工坊')}</small><h2>{text('One pool for every type.', '每种图腾，共用一个池。')}</h2>
+        <p>{text('Every pull adds its depth to its type’s power pool. Earth 20 + Earth 25 = Earth 45. Different types stay separate; no matching depths or manual merging needed.', '每次抽取的深度直接加入对应类型的力量池。土 20 + 土 25 = 土 45。不同类型各自累积，无需匹配深度或手动合成。')}</p></div>
       </header>
-      <div className="gc-collection-stats"><span>{text(`${owned} owned`, `持有 ${owned} 个`)}</span><span>{text(`${saved.stacks.length} varieties`, `${saved.stacks.length} 种收藏`)}</span><span>{text(`Merges: ${saved.merges}`, `已合成 ${saved.merges} 次`)}</span></div>
+      <div className="gc-collection-stats"><span>{text(`${owned} owned`, `持有 ${owned} 个`)}</span><span>{text(`${saved.pools.length} types`, `${saved.pools.length} 种类型`)}</span><span>{text(`Total power: ${saved.pools.reduce((n, p) => n + p.power, 0)}`, `总力量：${saved.pools.reduce((n, p) => n + p.power, 0)}`)}</span></div>
       {saved.recovered && <p className="gc-warning">{text('Recovered the last 50 pulls available in your old save. Earlier rewards were not stored by the old version.', '已恢复旧存档中保留的最近抽取（最多 50 个）。旧版本未保存更早的奖励。')}</p>}
-      <p className="gc-merge-notice" role="status">{notice ? tx(notice) : text('Choose a stack below. Each merge consumes exactly three copies.', '选择下方的收藏。每次合成恰好消耗三个副本。')}</p>
+
       <label className="gc-filter">{text('Family', '族群')} <select value={familyFilter} onChange={e => setFamilyFilter(e.target.value)}>
         <option value="all">{text('All families', '全部族群')}</option>
         {FAMILIES.map(f => <option key={f.id} value={f.id}>{tx(f.power)}</option>)}
       </select></label>
       {!owned && <div className="gc-empty"><h3>{text('Your shelves are waiting.', '收藏架正等待着你。')}</h3><p>{text('Pull a few totems to start your collection. Every reward stays here after you reload.', '抽取一些图腾来开启收藏。刷新页面后，奖励仍会保留在这里。')}</p><button className="games-btn" onClick={() => setBanner('totems')}>{text('Go to the banner', '前往卡池')}</button></div>}
-      <ul className="gc-results gc-inventory">{saved.stacks.filter(t => familyFilter === 'all' || t.family === familyFilter).map(t => {
-        const f = familyById(t.family), reward = mergeReward(t), ready = t.count >= 3 && reward;
-        return <li key={stackKey(t)} className={`gc-card tier-${t.tier}`} style={{ '--c': f.colour } as CSSProperties}>
-          <span className="gc-stock">×{t.count}</span><span className="gc-glyph" aria-hidden="true">{f.glyph}</span><small>{tx(tierById(t.tier).name)}</small><strong>{tx(f.power)}</strong>
-          <span className="gc-depth-num">{text('Depth', '深度')} <b>{t.depth}</b></span>
-          <p className="gc-recipe">{reward ? text(`3 × depth ${t.depth} → 1 × depth ${reward.depth}`, `3 × 深度 ${t.depth} → 1 × 深度 ${reward.depth}`) : text('Maximum depth reached', '已达到最高深度')}</p>
-          <button className="games-btn quiet" disabled={!ready} onClick={() => merge(stackKey(t))}>{ready ? text('Merge 3 → 1', '合成 3 → 1') : reward ? text(`Need ${3 - t.count} more`, `还需 ${3 - t.count} 个`) : text('Complete', '已满级')}</button>
+      <ul className="gc-results gc-inventory">{saved.pools.filter(t => familyFilter === 'all' || t.family === familyFilter).map(t => {
+        const f = familyById(t.family);
+        return <li key={t.family} className="gc-card" style={{ '--c': f.colour } as CSSProperties}>
+          <span className="gc-stock">×{t.count}</span><span className="gc-glyph" aria-hidden="true">{f.glyph}</span><strong>{tx(f.power)}</strong>
+          <span className="gc-depth-num">{text('Pooled power', '池内力量')} <b>{t.power}</b></span>
+          <p className="gc-recipe">{text(`${t.count} totems combined automatically`, `${t.count} 个图腾已自动汇入`)}</p>
         </li>;
       })}</ul>
-      {owned > 0 && !saved.stacks.some(t => familyFilter === 'all' || t.family === familyFilter) && <p>{text('No totems in this family yet.', '尚未收集到该族群的图腾。')}</p>}
+      {owned > 0 && !saved.pools.some(t => familyFilter === 'all' || t.family === familyFilter) && <p>{text('No totems in this family yet.', '尚未收集到该族群的图腾。')}</p>}
     </section> : <section className="gc-banner gc-laws" role="tabpanel">
       <ul className="gc-odds">{STAR_ODDS.map(o => <li key={o.stars} className={`stars-${o.stars}`}>
         <strong>{stars(o.stars)}</strong>
@@ -202,6 +191,6 @@ export function Gacha({ language, articles, open }: { language: Language; articl
       <p className="gc-history">{history(text(`Holder pulls: ${holderLog.total}`, `执律者抽取次数：${holderLog.total}`), () => { setHolders([]); saveHolders({ total: 0, copies: {} }); }, holderLog.total)}</p>
     </section>}
 
-    <p className="gc-fine">{text('Star ratings, odds, depth bands, upgrades and merging are site game mechanics, not canon. Your collection is saved on this browser and device only; clearing browser data erases it.', '星级、概率、深度区间、升级与合成是网站游戏机制，并非正典。收藏仅保存在当前浏览器与设备中；清除浏览器数据会删除收藏。')}</p>
+    <p className="gc-fine">{text('Star ratings, odds, depth bands, upgrades and power pools are site game mechanics, not canon. Your collection is saved on this browser and device only; clearing browser data erases it.', '星级、概率、深度区间、升级与力量池是网站游戏机制，并非正典。收藏仅保存在当前浏览器与设备中；清除浏览器数据会删除收藏。')}</p>
   </div>;
 }
