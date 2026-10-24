@@ -53,3 +53,9 @@ Replaced by one mixed summon banner with independent per-draw reward types. The 
 
 ### Retired: ten-pull rolling rare guarantee
 The first mixed banner had a single 10% rare chance (holder 50%, S 35%, SS 15% within it) and forced a rare after nine misses. Replaced by the S+ / 5★ / featured pity system in `docs/gacha-pity.md`. The code is in checkpoint 6bf462d.
+
+### Retired: automatic type-only totem pools
+Every new reward previously merged immediately into a family total. Replaced by eight display slots and an individual inventory: players choose what to equip, discard, and merge. Same-type manual merging sums power without matching rank or depth; existing totals migrate to one merged item per family.
+
+### Retired: additive totem merging
+Adding power made ranks irrelevant. Replaced with same-type, same-rank recipes: 10 B to A, 20 A to S, 30 S to SS. Upgrades start at the new rank's minimum power. Owner authorized wiping previous gacha data for the new rules.

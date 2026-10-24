@@ -2,11 +2,11 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Article } from '../api';
 import { emblems } from '../emblems';
 import type { Language } from '../i18n';
-import { DEPTH_LANDMARKS, FAMILIES, HOLDERS, MAX_UPGRADE, TIERS, BASE_RATES, CURRENT_BANNER, outcomeTable, validateBanner, PITY_LIMIT, pullMixed, upgradeLevel, type HolderRating, familyById,  tierById, type Text, type Totem } from './pool';
-import { STORAGE_KEY, emptyCollection } from './collection';
-import { SAVE_KEY, loadSave, emptySave, applyDraw, type GachaSave } from './save';
+import { DEPTH_LANDMARKS, HOLDERS, MAX_UPGRADE, TIERS, BASE_RATES, CURRENT_BANNER, outcomeTable, validateBanner, PITY_LIMIT, pullMixed, upgradeLevel, type HolderRating, familyById,  tierById, type Text, type Totem } from './pool';
+import { SAVE_KEY, readCurrentSave, emptySave, applyDraw, type GachaSave } from './save';
 import '../game/games.css';
 import './gacha.css';
+import { TotemWorkshop } from './TotemWorkshop';
 import effectiveRates from './effective-rates.json';
 
 type HolderResult = { rating: HolderRating; copies: number };
@@ -39,23 +39,16 @@ export function Gacha({ language, articles, open }: { language: Language; articl
     return () => window.clearTimeout(timer);
   }, [revealing]);
   const [initial] = useState(() => {
-    try { return { save: loadSave(localStorage.getItem(SAVE_KEY), localStorage.getItem(STORAGE_KEY), localStorage.getItem('quoderat-gacha-holders')), failed: false }; }
+    try { return { save: readCurrentSave(localStorage), failed: false }; }
     catch { return { save: emptySave(), failed: true }; }
   });
   const [game, setGame] = useState<GachaSave>(initial.save);
   const saved = game.totems, holderLog = game.holders;
   const [storageFailed, setStorageFailed] = useState(false);
-  const [familyFilter, setFamilyFilter] = useState('all');
   const save = (next: GachaSave) => {
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(next)); setStorageFailed(false); }
     catch { setStorageFailed(true); return false; }
     setGame(next); return true;
-  };
-  const owned = saved.pools.reduce((sum, t) => sum + t.count, 0);
-
-  const reset = () => {
-    if (!window.confirm(text('Erase your totem inventory? Pity counters are kept.', '清空图腾收藏？保底计数将保留。'))) return;
-    setResults([]); save({ ...game, totems: emptyCollection() });
   };
   // Only holders whose character page exists can be pulled, so names never go missing.
   const pages = new Map(articles.map(a => [a.slug, a]));
@@ -95,7 +88,7 @@ export function Gacha({ language, articles, open }: { language: Language; articl
 
     <div className="gc-tabs" role="tablist" aria-label={text('Banners', '卡池')}>
       {(['banner', 'laws', 'workshop'] as const).map(id => <button key={id} role="tab" aria-selected={banner === id} onClick={() => setBanner(id)}>
-        {id === 'banner' ? text('Summon', '召唤') : id === 'workshop' ? text('Totem pools', '图腾池') : text('Law holders', '执律者')}
+        {id === 'banner' ? text('Summon', '召唤') : id === 'workshop' ? text('Totem display', '图腾展示') : text('Law holders', '执律者')}
       </button>)}
     </div>
 
@@ -153,36 +146,12 @@ export function Gacha({ language, articles, open }: { language: Language; articl
           const t = r.totem, f = familyById(t.family);
           return <li key={`${saved.total + holderLog.total}-${i}`} className={`gc-card tier-${t.tier}`} style={{ '--c': f.colour, '--i': i } as CSSProperties}>
             <span className="gc-glyph" aria-hidden="true">{f.glyph}</span><small>{text('Totem', '图腾')} · {tx(tierById(t.tier).name)}</small><strong>{tx(f.power)}</strong><span className="gc-creature">{tx(f.creature)}</span>
-            <span className="gc-pool-gain">{text(`+${t.depth} power · Pool total ${saved.pools.find(p => p.family === t.family)?.power ?? 0}`, `力量 +${t.depth} · 池内总计 ${saved.pools.find(p => p.family === t.family)?.power ?? 0}`)}</span>
+            <span className="gc-pool-gain">{text(`${t.depth} power · Added to inventory`, `力量 ${t.depth} · 已加入收藏`)}</span>
             <DepthBar depth={t.depth} tx={tx} label={text(`Depth ${t.depth} of 100`, `深度 ${t.depth}/100`)} />
           </li>;
         })}
       </ul>}
-    </section> : banner === 'workshop' ? <section className="gc-banner gc-workshop" role="tabpanel">
-      <header className="gc-mage">
-        <span className="gc-mage-sigil" aria-hidden="true">✧</span>
-        <div><small>{text('THE MAGE’S WORKSHOP', '法师工坊')}</small><h2>{text('One pool for every type.', '每种图腾，共用一个池。')}</h2>
-        <p>{text('Every pull adds its depth to its type’s power pool. Earth 20 + Earth 25 = Earth 45. Different types stay separate; no matching depths or manual merging needed.', '每次抽取的深度直接加入对应类型的力量池。土 20 + 土 25 = 土 45。不同类型各自累积，无需匹配深度或手动合成。')}</p></div>
-      </header>
-      <div className="gc-collection-stats"><span>{text(`${owned} owned`, `持有 ${owned} 个`)}</span><span>{text(`${saved.pools.length} types`, `${saved.pools.length} 种类型`)}</span><span>{text(`Total power: ${saved.pools.reduce((n, p) => n + p.power, 0)}`, `总力量：${saved.pools.reduce((n, p) => n + p.power, 0)}`)}</span></div>
-      {saved.recovered && <p className="gc-warning">{text('Recovered the last 50 pulls available in your old save. Earlier rewards were not stored by the old version.', '已恢复旧存档中保留的最近抽取（最多 50 个）。旧版本未保存更早的奖励。')}</p>}
-
-      <label className="gc-filter">{text('Family', '族群')} <select value={familyFilter} onChange={e => setFamilyFilter(e.target.value)}>
-        <option value="all">{text('All families', '全部族群')}</option>
-        {FAMILIES.map(f => <option key={f.id} value={f.id}>{tx(f.power)}</option>)}
-      </select></label>
-      {!owned && <div className="gc-empty"><h3>{text('Your shelves are waiting.', '收藏架正等待着你。')}</h3><p>{text('Pull a few totems to start your collection. Every reward stays here after you reload.', '抽取一些图腾来开启收藏。刷新页面后，奖励仍会保留在这里。')}</p><button className="games-btn" onClick={() => setBanner('banner')}>{text('Go to the banner', '前往卡池')}</button></div>}
-      <ul className="gc-results gc-inventory">{saved.pools.filter(t => familyFilter === 'all' || t.family === familyFilter).map(t => {
-        const f = familyById(t.family);
-        return <li key={t.family} className="gc-card" style={{ '--c': f.colour } as CSSProperties}>
-          <span className="gc-stock">×{t.count}</span><span className="gc-glyph" aria-hidden="true">{f.glyph}</span><strong>{tx(f.power)}</strong>
-          <span className="gc-depth-num">{text('Pooled power', '池内力量')} <b>{t.power}</b></span>
-          <p className="gc-recipe">{text(`${t.count} totems combined automatically`, `${t.count} 个图腾已自动汇入`)}</p>
-        </li>;
-      })}</ul>
-      {owned > 0 && !saved.pools.some(t => familyFilter === 'all' || t.family === familyFilter) && <p>{text('No totems in this family yet.', '尚未收集到该族群的图腾。')}</p>}
-      <p className="gc-history">{history(text(`Totems drawn: ${saved.total}`, `已抽图腾：${saved.total}`), reset, saved.total)}</p>
-    </section> : <section className="gc-banner gc-laws" role="tabpanel">
+    </section> : banner === 'workshop' ? <TotemWorkshop saved={saved} language={language} onChange={totems => save({ ...game, totems })} onSummon={() => setBanner('banner')} /> : <section className="gc-banner gc-laws" role="tabpanel">
       <h2 className="gc-sub">{text(`Collection ${holderOwned} / ${pool.length}`, `收藏 ${holderOwned} / ${pool.length}`)}</h2>
       <ul className="gc-collection">{[...pool].sort((a, b) => b.stars - a.stars).map(h => {
         const copies = holderLog.copies[h.slug] || 0, level = upgradeLevel(copies);
@@ -202,6 +171,6 @@ export function Gacha({ language, articles, open }: { language: Language; articl
       <p className="gc-history">{history(text(`Holder pulls: ${holderLog.total}`, `执律者抽取次数：${holderLog.total}`), () => { if (window.confirm(text('Erase holder inventory? Pity is kept.', '清空执律者收藏？保底保留。'))) { setResults([]); save({ ...game, holders: { total: 0, copies: {} } }); } }, holderLog.total)}</p>
     </section>}
 
-    <p className="gc-fine">{text('Star ratings, odds, depth bands, upgrades and power pools are the site’s official game rules (October 2026), kept separate from the world’s lore. Your collection is saved on this browser and device only; clearing browser data erases it.', '星级、概率、深度区间、升级与力量池是本站的正式游戏规则（2026 年 10 月），与世界观设定相互独立。收藏仅保存在当前浏览器与设备中；清除浏览器数据会删除收藏。')}</p>
+    <p className="gc-fine">{text('Star ratings, odds, depth bands, upgrades and totem displays are the site’s official game rules (October 2026), kept separate from the world’s lore. Your collection is saved on this browser and device only; clearing browser data erases it.', '星级、概率、深度区间、升级与图腾展示是本站的正式游戏规则（2026 年 10 月），与世界观设定相互独立。收藏仅保存在当前浏览器与设备中；清除浏览器数据会删除收藏。')}</p>
   </div>;
 }
