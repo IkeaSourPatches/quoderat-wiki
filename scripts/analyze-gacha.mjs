@@ -12,7 +12,7 @@ const LABELS = BASE_RATES.map(r => r.label), BASE = BASE_RATES.map(r => r.chance
 const SMALL = 15, sum = a => a.reduce((x, y) => x + y, 0);
 
 // Parametric outcome table. boost5=false: a forced S+ cannot raise 5★ odds. small=false: no 15-pull guarantee.
-function design({ base5 = .001, start = 65, step = .06, hard = 80, boost5 = true, small = true }) {
+function design({ base5 = .006, start = 54, step = .01, hard = 80, boost5 = true, small = true }) {
   const q = n => n >= hard ? 1 : Math.min(1, base5 + Math.max(0, n - start) * step);
   const table = (b, s) => {
     const qq = q(b + 1);
@@ -87,12 +87,12 @@ console.log('\nS+ guarantee effect on 5★:'); for (const [k, v] of Object.entri
 
 // 3. Candidate designs (base rate, ramp start = first boosted pull, hard pity, featured chance)
 const candidates = [
-  ['A current', { base5: .001, start: 65, hard: 80 }, .5], ['B Genshin-like', { base5: .006, start: 73, hard: 90 }, .5],
-  ['C 0.6% ramp 61 hard 75', { base5: .006, start: 60, hard: 75 }, .5], ['D as C with 75/25', { base5: .006, start: 60, hard: 75 }, .75],
-  ['E 0.8% ramp 51 hard 65', { base5: .008, start: 50, hard: 65 }, .5], ['F as E with 75/25', { base5: .008, start: 50, hard: 65 }, .75],
-  ['G 1% ramp 41 hard 55', { base5: .01, start: 40, hard: 55 }, .5],
-  ['ramp +3/pull from 66, hard 90', { start: 65, step: .03, hard: 90 }, .5], ['ramp +2/pull from 71, hard 100', { start: 70, step: .02, hard: 100 }, .5],
-  ['no ramp, hard 100', { start: 1e9, step: 0, hard: 100 }, .5],
+  ['Current: 0.6%, +1/pull from 55, hard 80', {}, .5], ['A previous: 0.1%, +6/pull from 66', { base5: .001, start: 65, step: .06, hard: 80 }, .5], ['B Genshin-like', { base5: .006, start: 73, step: .06, hard: 90 }, .5],
+  ['C 0.6% ramp 61 hard 75', { base5: .006, start: 60, step: .06, hard: 75 }, .5], ['D as C with 75/25', { base5: .006, start: 60, step: .06, hard: 75 }, .75],
+  ['E 0.8% ramp 51 hard 65', { base5: .008, start: 50, step: .06, hard: 65 }, .5], ['F as E with 75/25', { base5: .008, start: 50, step: .06, hard: 65 }, .75],
+  ['G 1% ramp 41 hard 55', { base5: .01, start: 40, step: .06, hard: 55 }, .5],
+  ['ramp +3/pull from 66, hard 90', { base5: .001, start: 65, step: .03, hard: 90 }, .5], ['ramp +2/pull from 71, hard 100', { base5: .001, start: 70, step: .02, hard: 100 }, .5],
+  ['no ramp, hard 100', { base5: .001, start: 1e9, step: 0, hard: 100 }, .5],
 ];
 out.candidates = candidates.map(([name, o, f]) => ({ name, params: { ...o, featuredChance: f }, ...summary(exact(design(o)).first, f) }));
 console.log('\nCandidates:  5★ mean | featured <=10  <=30  <=50  median  p90  p99  max  mean');

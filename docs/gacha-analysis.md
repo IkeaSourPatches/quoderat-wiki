@@ -4,6 +4,8 @@ Evidence for tuning the banner. Every number here comes from `node scripts/analy
 
 **Method.** Rates and distributions are exact for single pulls: the script follows the probability of every pity state (big counter 0–79 × small counter 0–14) instead of sampling. It calls the production `outcomeTable`. The what-if designs use a copy of the rules with adjustable settings, and the script first checks that this copy matches production in all 1,200 states. Collection costs are a seeded simulation of 1,000 players using the production `rollOutcome`. The exact rates agree with the 10-million-draw simulation in `gacha-simulation.json` to two decimal places. Ten-pull figures come from that simulation.
 
+> **Sections 1–5 describe the rules before tuning** (5★ 0.1% to pull 65, +6 points a pull from 66). **Section 6 is the tuning that was applied.** `gacha-analysis.json` always holds the current rules; the previous rules stay in it as candidate A.
+
 ## 1. Effective rates (single pulls)
 
 | Result | Base | Effective |
@@ -64,4 +66,42 @@ Rows that only change the ramp (+3% per pull from 66 with a guarantee at 90, +2%
 
 **Takeaway.** Under the current rules, almost no one gets lucky early: 0.5% within 10 pulls and 1.8% within 30. Nearly everyone gets the featured holder at the same few pulls, so getting it never feels like luck. Raising the base rate to 0.6–0.8% creates real lucky pulls (3–6% within 10, 10–19% within 30). Starting the ramp earlier and moving the guarantee to match shortens the wait for the unlucky half.
 
-None of these designs is applied yet. Changing the rules also means updating the boundary checks in `check-gacha.mjs`, re-running `simulate-gacha.mjs`, and then re-running this script.
+Design C was chosen as the starting point, then adjusted; see section 6. Changing the rules also means updating the boundary checks in `check-gacha.mjs`, re-running `simulate-gacha.mjs`, and then re-running this script.
+## 6. Applied tuning (October 2026)
+
+**Brief:** design C as the base, with the featured median at 70 and the guarantee kept at 80. The guarantee should decide a 5★ rarely, but sometimes, so the ramp should not be steep.
+
+**Search.** With a 0.6% base rate and the guarantee at 80, every ramp start and step was tried (start 51–76, step 1–8 points). Only two settings give a featured median of exactly 70 while making the guarantee rare but real: +1 point a pull from 55, where 1.04% of 5★ reach the guarantee, and +1.5 points a pull from 59, where 0.49% do. The first was chosen: it is the gentler ramp and the one that reaches 80 more often.
+
+**Rules now.** 5★ is 0.6% for pulls 1–54, then rises 1 point a pull (55 = 1.6%, 66 = 12.6%, 79 = 25.6%), and is certain at 80. B moves from 75% to 74.5% so the base table still adds up to 100%. Everything else is unchanged: the S+ guarantees, the 50/50 and its guarantee, and the 160-pull worst case.
+
+| Measure (exact, single pulls) | Before | After |
+| --- | ---: | ---: |
+| Effective 5★ rate | 1.50% | 1.91% |
+| Average pulls per 5★ | 66.8 | 52.4 |
+| Median pulls per 5★ | 69 | 61 |
+| 5★ within 10 pulls | about 1% | 5.8% |
+| 5★ decided by the pull-80 guarantee | about 0% | 1.05% |
+| Featured within 10 pulls | 0.5% | 3.0% |
+| Featured within 30 pulls | 1.8% | 10.4% |
+| Featured within 50 pulls | 3.0% | 17.6% |
+| **Featured median** | 75 | **70** |
+| Featured 90th / 99th percentile | 142 / 146 | 130 / 145 |
+| Featured average | 100.3 | 78.6 |
+| S+ rate | 13.41% | 13.62% |
+
+Where the first 5★ lands now: 32.5% before the ramp (pulls 1–54), 66.5% during it (55–79) and 1.05% at the guarantee.
+
+| Collection cost (1,000 players) | Before (median) | After (median) |
+| --- | ---: | ---: |
+| Featured 5★ to +6 | 697 | 540 |
+| All five 5★ | 1,413 | 1,108 |
+| All five 4★ | 1,309 | 1,314 |
+| One specific 4★ to +6 | 4,188 | 4,363 |
+| All 16 holders | 1,811 | 1,612 |
+
+4★ costs are unchanged within simulation noise, so they stay a long-term goal as intended.
+
+**Side effect.** Ten-pulls now give a slightly higher 5★ rate than singles (1.948% vs 1.909% in the 10-million-draw simulation). A forced S+ slot multiplies the 5★ chance by about ten, and with the higher base rate that boost is no longer negligible. The difference is about 2% of the rate. It shortens the featured average only from 78.4 to 77.0 pulls.
+
+Simulation (`gacha-simulation.json`) and exact results agree: the featured average is 78.45 simulated against 78.59 exact for singles.

@@ -16,8 +16,9 @@ assert.equal(legacy.pools[0].power,1000);assert.ok(legacy.recovered);
 for(const raw of ['{','{}',JSON.stringify({...saved,pools:[{family:'bad',count:1,power:20}]}),JSON.stringify({...saved,pools:[{family:'earth',count:-1,power:20}]})]) assert.throws(()=>decodeCollection(raw));
 console.log('Verified type-only pooling, depth addition, separate types, persistence, both save migrations and corrupt saves.');
 const { emptyPity, pullMixed, rollOutcome, outcomeTable, fiveStarChance, isRare, CURRENT_BANNER, validateBanner, HOLDERS, BASE_RATES } = pool;
-assert.equal(fiveStarChance(65), .001);
-assert.ok(Math.abs(fiveStarChance(66)-.061)<1e-12);
+assert.equal(fiveStarChance(54), .006);
+assert.ok(Math.abs(fiveStarChance(55)-.016)<1e-12);
+assert.ok(Math.abs(fiveStarChance(79)-.256)<1e-12);
 assert.equal(fiveStarChance(80),1);
 assert.deepEqual(outcomeTable(emptyPity()).map(x=>Math.round(x*10000)),BASE_RATES.map(x=>Math.round(x.chance*10000)));
 for(let big=0;big<80;big++)for(let small=0;small<15;small++)for(let pos=1;pos<=10;pos++) {
@@ -30,8 +31,8 @@ for(let big=0;big<80;big++)for(let small=0;small<15;small++)for(let pos=1;pos<=1
   if(big===79)assert.equal(draw.index,0);
   assert.ok(draw.state.small<15&&draw.state.big<80);
 }
-assert.ok(Math.abs(outcomeTable({big:65,small:14,featuredGuaranteed:false})[0]-.396)<.001);
-assert.ok(Math.abs(outcomeTable({big:78,small:14,featuredGuaranteed:false})[0]-.982)<.001);
+assert.ok(Math.abs(outcomeTable({big:65,small:14,featuredGuaranteed:false})[0]-.5914)<.001);
+assert.ok(Math.abs(outcomeTable({big:78,small:14,featuredGuaranteed:false})[0]-.7755)<.001);
 let state=emptyPity();
 for(let i=1;i<=15;i++){ const d=pullMixed(1,()=>.999999,undefined,state); state=d.state;assert.equal(isRare(d.rewards[0]),i===15); }
 const ten=pullMixed(10,()=>.999999);

@@ -133,9 +133,9 @@ export const pullHolders = (count: number, rng: Rng = Math.random, pool: readonl
 export const RARE_CHANCE = .1;
 export const PITY_LIMIT = 15;
 export const BASE_RATES = [
-  { label: '5★', chance: .001 }, { label: '4★', chance: .0065 },
+  { label: '5★', chance: .006 }, { label: '4★', chance: .0065 },
   { label: 'SS', chance: .015 }, { label: '3★', chance: .0425 },
-  { label: 'S', chance: .035 }, { label: 'A', chance: .15 }, { label: 'B', chance: .75 },
+  { label: 'S', chance: .035 }, { label: 'A', chance: .15 }, { label: 'B', chance: .745 },
 ] as const;
 export type PityState = { small: number; big: number; featuredGuaranteed: boolean };
 export const emptyPity = (): PityState => ({ small: 0, big: 0, featuredGuaranteed: false });
@@ -159,14 +159,16 @@ export function validateBanner(banner: BannerConfig, pool: readonly HolderRating
 }
 export type MixedReward = { kind: 'holder'; rating: HolderRating } | { kind: 'totem'; totem: Totem };
 export const isRare = (r: MixedReward) => r.kind === 'holder' || r.totem.tier === 'elite' || r.totem.tier === 'epic';
+// 5★ ramp, tuned in docs/gacha-analysis.md: featured median 70, and about 1 in 100 5★ reach the guarantee.
+export const FIVE_BASE = .006, RAMP_FROM = 55, RAMP_STEP = .01, HARD_PITY = 80;
 export function fiveStarChance(upcoming: number) {
   if (!Number.isInteger(upcoming) || upcoming < 1 || upcoming > 80) throw new Error('Invalid pull number');
-  return upcoming === 80 ? 1 : .001 + Math.max(0, upcoming - 65) * .06;
+  return upcoming === HARD_PITY ? 1 : FIVE_BASE + Math.max(0, upcoming - RAMP_FROM + 1) * RAMP_STEP;
 }
 export function outcomeTable(state: PityState, batchForced = false): number[] {
   validatePity(state);
   const q = fiveStarChance(state.big + 1);
-  const weights = BASE_RATES.map((r, i) => i === 0 ? q : (1 - q) * r.chance / .999);
+  const weights = BASE_RATES.map((r, i) => i === 0 ? q : (1 - q) * r.chance / (1 - BASE_RATES[0].chance));
   if (state.small === 14 || batchForced) { weights[5] = 0; weights[6] = 0; }
   const sum = weights.reduce((a, b) => a + b, 0);
   return weights.map(w => w / sum);
