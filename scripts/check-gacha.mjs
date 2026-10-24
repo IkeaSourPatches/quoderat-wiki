@@ -1,10 +1,6 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import ts from 'typescript';
-const url = s => `data:text/javascript;base64,${Buffer.from(s).toString('base64')}`;
-const compile = path => ts.transpileModule(readFileSync(new URL(path, import.meta.url), 'utf8'), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext } }).outputText;
-const pool = url(compile('../src/gacha/pool.ts'));
-const { emptyCollection, decodeCollection, addPulls } = await import(url(compile('../src/gacha/collection.ts').replace("'./pool'", JSON.stringify(pool))));
+import { pool, collection, save, seeded } from './gacha-modules.mjs';
+const { emptyCollection, decodeCollection, addPulls } = collection;
 const earth = { family: 'earth', tier: 'common', depth: 20 };
 let saved = addPulls(emptyCollection(), [earth, {...earth, depth:25}, {...earth,family:'water'}]);
 assert.deepEqual(saved.pools,[{family:'earth',count:2,power:45},{family:'water',count:1,power:20}]);
@@ -19,28 +15,54 @@ const legacy=decodeCollection(JSON.stringify({total:100,recent:Array(50).fill(ea
 assert.equal(legacy.pools[0].power,1000);assert.ok(legacy.recovered);
 for(const raw of ['{','{}',JSON.stringify({...saved,pools:[{family:'bad',count:1,power:20}]}),JSON.stringify({...saved,pools:[{family:'earth',count:-1,power:20}]})]) assert.throws(()=>decodeCollection(raw));
 console.log('Verified type-only pooling, depth addition, separate types, persistence, both save migrations and corrupt saves.');
-const { pullMixed, isRare, TIERS } = await import(pool);
-assert.deepEqual(TIERS.map(t=>t.chance),[.75,.15,.07,.03]);
-const ten = pullMixed(10,()=>.99);
-assert.equal(ten.rewards.length,10);
-assert.ok(ten.rewards.slice(0,9).every(r=>!isRare(r)));
-assert.equal(ten.rewards[9].totem.tier,'epic');
-assert.equal(ten.misses,0);
-let misses=0;const singles=[];
-for(let i=0;i<10;i++){const draw=pullMixed(1,()=>.99,undefined,misses);misses=draw.misses;singles.push(...draw.rewards);}
-assert.deepEqual(singles,ten.rewards,'single pulls and batches share the same guarantee');
-assert.equal(pullMixed(1,()=>0,undefined,8).misses,0,'natural rare resets the guarantee');
-assert.ok(isRare(pullMixed(1,()=>.99,[],9).rewards[0]),'empty holder pool still guarantees rare totems');
-const hundred=pullMixed(100,()=>.99).rewards;
-for(let i=0;i<=90;i++)assert.ok(hundred.slice(i,i+10).some(isRare));
-const pending={...emptyCollection(),misses:9};
-assert.equal(decodeCollection(JSON.stringify(pending)).misses,9);
-assert.throws(()=>decodeCollection(JSON.stringify({...pending,misses:10})));
-const oldElite=decodeCollection(JSON.stringify({version:3,total:1,recent:[{family:'earth',tier:'elite',depth:39}],pools:[{family:'earth',count:1,power:39}]}));
-assert.equal(oldElite.recent[0].tier,'epic');assert.equal(oldElite.pools[0].power,39);assert.equal(oldElite.misses,0);
-console.log('Verified epic tiers, guarantee across batches/singles, reset, persistence, legacy elite migration and empty-pool fallback.');
-const { STAR_ODDS, RARE_CHANCE } = await import(pool);
-assert.deepEqual(TIERS.map(t=>t.name.en),['B','A','S','SS']);
-assert.deepEqual(STAR_ODDS.map(t=>Math.round(RARE_CHANCE * .5 * t.chance * 10000) / 100),[.1,.65,4.25]);
-assert.deepEqual(TIERS.map(t=>Math.round(t.chance * (['elite','epic'].includes(t.id) ? .5 : 1) * 10000) / 100),[75,15,3.5,1.5]);
-console.log('Verified B/A/S/SS labels and the exact seven base outcome rates.');
+const { emptyPity, pullMixed, rollOutcome, outcomeTable, fiveStarChance, isRare, CURRENT_BANNER, validateBanner, HOLDERS, BASE_RATES } = pool;
+assert.equal(fiveStarChance(65), .001);
+assert.ok(Math.abs(fiveStarChance(66)-.061)<1e-12);
+assert.equal(fiveStarChance(80),1);
+assert.deepEqual(outcomeTable(emptyPity()).map(x=>Math.round(x*10000)),BASE_RATES.map(x=>Math.round(x.chance*10000)));
+for(let big=0;big<80;big++)for(let small=0;small<15;small++)for(let pos=1;pos<=10;pos++) {
+  const state={big,small,featuredGuaranteed:false};
+  const table=outcomeTable(state,pos===10);
+  assert.ok(Math.abs(table.reduce((a,b)=>a+b,0)-1)<1e-12);
+  assert.ok(table.every(x=>x>=0&&x<=1));
+  const draw=rollOutcome(state,pos===10,()=>.999999);
+  if(small===14||pos===10)assert.ok(draw.index<5);
+  if(big===79)assert.equal(draw.index,0);
+  assert.ok(draw.state.small<15&&draw.state.big<80);
+}
+assert.ok(Math.abs(outcomeTable({big:65,small:14,featuredGuaranteed:false})[0]-.396)<.001);
+assert.ok(Math.abs(outcomeTable({big:78,small:14,featuredGuaranteed:false})[0]-.982)<.001);
+let state=emptyPity();
+for(let i=1;i<=15;i++){ const d=pullMixed(1,()=>.999999,undefined,state); state=d.state;assert.equal(isRare(d.rewards[0]),i===15); }
+const ten=pullMixed(10,()=>.999999);
+assert.equal(ten.rewards.length,10);assert.ok(ten.rewards.slice(0,9).every(r=>!isRare(r)));assert.ok(isRare(ten.rewards[9]));
+assert.equal(pullMixed(10,()=>.999999,undefined,{big:0,small:5,featuredGuaranteed:false}).rewards.length,10);
+const seq=(...values)=>()=>{assert.ok(values.length);return values.shift();};
+let d=rollOutcome({big:79,small:14,featuredGuaranteed:false},true,seq(.99,.99));
+assert.deepEqual(d.state,{big:0,small:0,featuredGuaranteed:true});assert.equal(d.featured,false);
+d=rollOutcome({...d.state,big:79},false,seq(.99));assert.equal(d.featured,true);assert.equal(d.state.featuredGuaranteed,false);
+d=rollOutcome({big:10,small:0,featuredGuaranteed:true},false,()=>.02);
+assert.equal(d.index,2);assert.deepEqual(d.state,{big:11,small:0,featuredGuaranteed:true});
+// 5-star at slot four must reset the ramp for slot five, not after the entire batch.
+const mid=pullMixed(10,()=>.999999,undefined,{big:76,small:0,featuredGuaranteed:false});
+assert.equal(mid.rewards[3].rating.stars,5);assert.equal(mid.state.big,6);
+// Worst-case random stream loses first 50/50, then takes both hard ceilings.
+state=emptyPity();let featuredAt=0;
+for(let i=1;i<=160;i++){const d=pullMixed(1,()=>.999999,undefined,state);state=d.state;if(d.rewards[0].kind==='holder'&&d.rewards[0].rating.slug===CURRENT_BANNER.featured){featuredAt=i;break;}}
+assert.equal(featuredAt,160);
+const newBanner={...CURRENT_BANNER,featured:'tertia',pastFeatured:['ensa']};
+const carried=pullMixed(1,()=>.999999,undefined,{big:79,small:14,featuredGuaranteed:true},newBanner);
+assert.equal(carried.rewards[0].rating.slug,'tertia');assert.deepEqual(carried.state,emptyPity());
+assert.throws(()=>validateBanner(CURRENT_BANNER,[]));
+assert.equal(validateBanner({...CURRENT_BANNER,pastFeatured:CURRENT_BANNER.permanent}).off.length,4);
+assert.throws(()=>pullMixed(2));
+const migratedSave=save.loadSave(null,JSON.stringify({...emptyCollection(),misses:9}),JSON.stringify({total:2,copies:{ensa:2}}));
+assert.deepEqual(migratedSave.pity,{big:0,small:9,featuredGuaranteed:false});assert.equal(migratedSave.holders.copies.ensa,2);
+const next=save.applyDraw(migratedSave,ten.rewards,ten.state);
+assert.deepEqual(save.loadSave(JSON.stringify(next),null,null),next);
+assert.throws(()=>save.loadSave('{',null,null));
+assert.throws(()=>save.loadSave(null,null,JSON.stringify({total:1,copies:{ensa:-1}})));
+assert.throws(()=>save.loadSave(JSON.stringify({...next,pity:{...next.pity,big:80}}),null,null));
+let r=seeded(2026);state=emptyPity();
+for(let i=0;i<1000;i++){const d=pullMixed(10,r,HOLDERS,state);assert.ok(d.rewards.some(isRare));state=d.state;}
+console.log('Verified 12,000 state/slot combinations, 15-pull rolling pity, batch protection, ramp boundaries, UP, 160 ceiling, carryover, unified save and migrations.');

@@ -50,3 +50,6 @@ The first workshop consumed three copies with identical type and depth to produc
 
 ### Retired: separate holder and totem banners
 Replaced by one mixed summon banner with independent per-draw reward types. The dedicated reveal stage currently uses a short sigil animation; a richer cinematic or character-specific reveal can replace it later without changing saves.
+
+### Retired: ten-pull rolling rare guarantee
+The first mixed banner had a single 10% rare chance (holder 50%, S 35%, SS 15% within it) and forced a rare after nine misses. Replaced by the S+ / 5★ / featured pity system in `docs/gacha-pity.md`. The code is in checkpoint 6bf462d.

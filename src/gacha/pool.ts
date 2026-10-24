@@ -129,28 +129,80 @@ export function pullHolder(rng: Rng = Math.random, pool: readonly HolderRating[]
 export const pullHolders = (count: number, rng: Rng = Math.random, pool: readonly HolderRating[] = HOLDERS) =>
   Array.from({ length: count }, () => pullHolder(rng, pool));
 
-// The rare bucket is shared by holders, elite and epic totems.
-export const RARE_CHANCE = 0.1;
-export const PITY_LIMIT = 10;
+// One outcome table is shared by normal pulls and both guarantees.
+export const RARE_CHANCE = .1;
+export const PITY_LIMIT = 15;
+export const BASE_RATES = [
+  { label: '5★', chance: .001 }, { label: '4★', chance: .0065 },
+  { label: 'SS', chance: .015 }, { label: '3★', chance: .0425 },
+  { label: 'S', chance: .035 }, { label: 'A', chance: .15 }, { label: 'B', chance: .75 },
+] as const;
+export type PityState = { small: number; big: number; featuredGuaranteed: boolean };
+export const emptyPity = (): PityState => ({ small: 0, big: 0, featuredGuaranteed: false });
+export function validatePity(p: PityState) {
+  if (!p || !Number.isInteger(p.small) || p.small < 0 || p.small >= 15 ||
+      !Number.isInteger(p.big) || p.big < 0 || p.big >= 80 || typeof p.featuredGuaranteed !== 'boolean')
+    throw new Error('Invalid pity state');
+}
+export type BannerConfig = { featured: string; permanent: readonly string[]; pastFeatured: readonly string[] };
+export const CURRENT_BANNER: BannerConfig = {
+  featured: 'ensa',
+  permanent: ['the-spear-and-shield', 'tertia', 'the-open-question', 'ilar-hesabu'],
+  pastFeatured: [],
+};
+export function validateBanner(banner: BannerConfig, pool: readonly HolderRating[] = HOLDERS) {
+  const five = (slug: string) => pool.find(h => h.slug === slug && h.stars === 5);
+  const off = [...new Set([...banner.permanent, ...banner.pastFeatured])].filter(s => s !== banner.featured);
+  if (!five(banner.featured) || !off.length || off.some(s => !five(s)) ||
+      !pool.some(h => h.stars === 3) || !pool.some(h => h.stars === 4)) throw new Error('Incomplete banner roster');
+  return { featured: five(banner.featured)!, off: off.map(s => five(s)!) };
+}
 export type MixedReward = { kind: 'holder'; rating: HolderRating } | { kind: 'totem'; totem: Totem };
 export const isRare = (r: MixedReward) => r.kind === 'holder' || r.totem.tier === 'elite' || r.totem.tier === 'epic';
+export function fiveStarChance(upcoming: number) {
+  if (!Number.isInteger(upcoming) || upcoming < 1 || upcoming > 80) throw new Error('Invalid pull number');
+  return upcoming === 80 ? 1 : .001 + Math.max(0, upcoming - 65) * .06;
+}
+export function outcomeTable(state: PityState, batchForced = false): number[] {
+  validatePity(state);
+  const q = fiveStarChance(state.big + 1);
+  const weights = BASE_RATES.map((r, i) => i === 0 ? q : (1 - q) * r.chance / .999);
+  if (state.small === 14 || batchForced) { weights[5] = 0; weights[6] = 0; }
+  const sum = weights.reduce((a, b) => a + b, 0);
+  return weights.map(w => w / sum);
+}
+// Also used by the simulation: outcome selection and state transitions have one implementation.
+export function rollOutcome(state: PityState, batchForced: boolean, rng: Rng = Math.random) {
+  const table = outcomeTable(state, batchForced);
+  let roll = rng(), index = table.reduce((last, w, i) => w > 0 ? i : last, 0);
+  for (let i = 0; i < table.length; i++) { roll -= table[i]; if (roll < 0) { index = i; break; } }
+  let featured = false, guaranteed = state.featuredGuaranteed;
+  if (index === 0) { featured = guaranteed || rng() < .5; guaranteed = !featured; }
+  return { index, featured, state: { small: index < 5 ? 0 : state.small + 1, big: index === 0 ? 0 : state.big + 1, featuredGuaranteed: guaranteed } };
+}
 function totemOfTier(tier: Tier, rng: Rng): Totem {
   const family = pickWeighted(FAMILIES, f => f.weight, rng);
   return { family: family.id, tier: tier.id, depth: tier.depth[0] + Math.floor(rng() * (tier.depth[1] - tier.depth[0] + 1)) };
 }
-export function pullMixed(count: number, rng: Rng = Math.random, pool: readonly HolderRating[] = HOLDERS, misses = 0): { rewards: MixedReward[]; misses: number } {
-  if (!Number.isInteger(count) || count < 0 || !Number.isInteger(misses) || misses < 0 || misses >= PITY_LIMIT) throw new Error('Invalid draw state');
+export function pullMixed(count: number, rng: Rng = Math.random, pool: readonly HolderRating[] = HOLDERS,
+  initial: PityState = emptyPity(), banner: BannerConfig = CURRENT_BANNER) {
+  if (count !== 1 && count !== 10) throw new Error('Draw one or ten at a time');
+  validatePity(initial);
+  const roster = validateBanner(banner, pool);
   const rewards: MixedReward[] = [];
+  let state = { ...initial }, batchHasRare = false;
   for (let i = 0; i < count; i++) {
-    const rare = misses === PITY_LIMIT - 1 || rng() < RARE_CHANCE;
+    const draw = rollOutcome(state, count === 10 && i === 9 && !batchHasRare, rng);
+    state = draw.state;
     let reward: MixedReward;
-    if (rare && pool.length && rng() < .5) reward = { kind: 'holder', rating: pullHolder(rng, pool) };
+    if (draw.index === 0) reward = { kind: 'holder', rating: draw.featured ? roster.featured : pickWeighted(roster.off, () => 1, rng) };
+    else if (draw.index === 1 || draw.index === 3) reward = { kind: 'holder', rating: pickWeighted(pool.filter(h => h.stars === (draw.index === 1 ? 4 : 3)), () => 1, rng) };
     else {
-      const tiers = TIERS.filter(t => rare ? t.id === 'elite' || t.id === 'epic' : t.id === 'common' || t.id === 'strong');
-      reward = { kind: 'totem', totem: totemOfTier(pickWeighted(tiers, t => t.chance, rng), rng) };
+      const tier = ({ 2: 'epic', 4: 'elite', 5: 'strong', 6: 'common' } as Record<number, TierId>)[draw.index];
+      reward = { kind: 'totem', totem: totemOfTier(tierById(tier), rng) };
     }
-    misses = isRare(reward) ? 0 : misses + 1;
+    batchHasRare ||= isRare(reward);
     rewards.push(reward);
   }
-  return { rewards, misses };
+  return { rewards, state };
 }

@@ -194,16 +194,22 @@ Design ideas that are not built yet, or that were replaced, are kept in `ideas.m
 
 Each totem type has one locally saved power pool. Pulls add their depth directly: Earth 20 plus Earth 25 gives Earth power 45 and a count of two. Types stay separate. Pool totals are a game score, not a single totem’s lore depth, so they have no 39-point cap. Pull cards show the contribution and the pool total after the batch.
 
-`src/gacha/collection.ts` validates saves and accumulates rewards. Version 3 uses the existing `quoderat-gacha-totems` localStorage key. Version 2 inventories migrate by summing depth × count for each type; previously consumed copies are not recreated. Older recent-only saves recover only the pulls they retained. Law-holder saves are separate and unchanged.
+`src/gacha/collection.ts` validates saves and accumulates rewards. Totems, law holders and pity are now saved together under `quoderat-gacha-save-v1` (`src/gacha/save.ts`). On first load the old `quoderat-gacha-totems` and `quoderat-gacha-holders` keys are read and migrated, and are left in place untouched. Version 2 totem inventories migrate by summing depth × count for each type; previously consumed copies are not recreated. Older recent-only saves recover only the pulls they retained.
 
 No account or server is involved: each browser origin has its own collection, and clearing browser data removes it. Run `node scripts/check-gacha.mjs` to check pooling, persistence, migrations and malformed data.
 
 ### Shared summon banner
 
-The Summon tab draws holders and totems together. A normal draw has a 10% shared rare chance (holder, elite or epic); nine consecutive non-rare results force the next rare. The counter is saved with the totem collection and shared across single and ten-pulls. Any rare resets it. Old saves start at zero misses; resetting the totem collection resets the counter.
+The Summon tab draws holders and totems together from one outcome table: 5★ 0.1%, 4★ 0.65%, SS 1.5%, 3★ 4.25%, S 3.5%, A 15%, B 75%. Every holder, S and SS counts as S+.
 
-Totem tier weights are 75/15/7/3. The ordinary bucket splits common/strong 75:15; the rare bucket splits holder/elite/epic 50:35:15. Overall base rates are common 75%, strong 15%, holder 5%, elite 3.5%, epic 1.5%, before the guarantee raises the effective rare rate. Without available holder pages, the rare bucket splits elite/epic 7:3. Depth bands: common 20–25, strong 26–30, elite 31–35, epic 36–39. Old elite entries at 36–39 migrate to epic without changing stored power.
+- **S+ guarantee:** 14 non-S+ draws in a row force S+ on the 15th, and every ten-pull's last slot is S+ if the first nine had none.
+- **5★ guarantee:** 5★ stays at 0.1% to pull 65, rises 6 points a pull from 66, and is certain at 80.
+- **Featured holder:** each 5★ is a 50/50 for the featured holder (Ensa on the first banner). Losing it guarantees the next 5★ is featured, so the worst case from zero is 160 pulls.
 
-Rewards update the existing holder and totem saves immediately, before the 1.6-second skippable reveal. Reduced-motion users see results immediately. The reserved reveal stage is independent of the result grid. The other tabs are collection views, not separate banners.
+Counters and the featured guarantee carry across banners and visits; resetting an inventory keeps them. Full rules, the rollback checkpoint and simulated effective rates are in `docs/gacha-pity.md`. `node scripts/simulate-gacha.mjs` regenerates the rates; `node scripts/check-gacha.mjs` checks the rules.
+
+Depth bands: common 20–25, strong 26–30, elite 31–35, epic 36–39. Old elite entries at 36–39 migrate to epic without changing stored power.
+
+Rewards and pity are written to the save together, immediately, before the 1.6-second skippable reveal. Reduced-motion users see results immediately. The reserved reveal stage is independent of the result grid. The other tabs are collection views, not separate banners.
 
 Display ranks for totems are **B / A / S / SS** (formerly common / strong / elite / epic); internal save IDs are retained for compatibility. Base outcome rates are 5★ 0.1%, 4★ 0.65%, SS 1.5%, 3★ 4.25%, S 3.5%, A 15%, B 75%. The shared rare guarantee includes every holder plus S and SS.

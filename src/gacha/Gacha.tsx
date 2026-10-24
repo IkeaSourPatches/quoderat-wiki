@@ -2,23 +2,13 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { Article } from '../api';
 import { emblems } from '../emblems';
 import type { Language } from '../i18n';
-import { DEPTH_LANDMARKS, FAMILIES, HOLDERS, MAX_UPGRADE, STAR_ODDS, TIERS, RARE_CHANCE, PITY_LIMIT, pullMixed, upgradeLevel, type HolderRating, familyById,  tierById, type Text, type Totem } from './pool';
-import { STORAGE_KEY, addPulls, decodeCollection, emptyCollection, type Collection } from './collection';
+import { DEPTH_LANDMARKS, FAMILIES, HOLDERS, MAX_UPGRADE, TIERS, BASE_RATES, CURRENT_BANNER, outcomeTable, validateBanner, PITY_LIMIT, pullMixed, upgradeLevel, type HolderRating, familyById,  tierById, type Text, type Totem } from './pool';
+import { STORAGE_KEY, emptyCollection } from './collection';
+import { SAVE_KEY, loadSave, emptySave, applyDraw, type GachaSave } from './save';
 import '../game/games.css';
 import './gacha.css';
+import effectiveRates from './effective-rates.json';
 
-// Law holders and totems have separate local saves; totem depth accumulates by type.
-
-function useStored<T>(key: string, empty: T, valid: (value: any) => boolean) {
-  const [value, setValue] = useState<T>(() => {
-    try { const saved = JSON.parse(localStorage.getItem(key) || 'null'); if (saved && valid(saved)) return saved as T; } catch { /* Start fresh. */ }
-    return empty;
-  });
-  const save = (next: T) => { setValue(next); try { localStorage.setItem(key, JSON.stringify(next)); } catch { /* Memory only. */ } };
-  return [value, save] as const;
-}
-
-type HolderLog = { total: number; copies: Record<string, number> };
 type HolderResult = { rating: HolderRating; copies: number };
 const percent = (chance: number) => `${+(chance * 100).toFixed(2)}%`;
 
@@ -49,22 +39,23 @@ export function Gacha({ language, articles, open }: { language: Language; articl
     return () => window.clearTimeout(timer);
   }, [revealing]);
   const [initial] = useState(() => {
-    try { return { saved: decodeCollection(localStorage.getItem(STORAGE_KEY)), failed: false }; }
-    catch { return { saved: emptyCollection(), failed: true }; }
+    try { return { save: loadSave(localStorage.getItem(SAVE_KEY), localStorage.getItem(STORAGE_KEY), localStorage.getItem('quoderat-gacha-holders')), failed: false }; }
+    catch { return { save: emptySave(), failed: true }; }
   });
-  const [saved, setSaved] = useState<Collection>(initial.saved);
-  const [storageFailed, setStorageFailed] = useState(initial.failed);
+  const [game, setGame] = useState<GachaSave>(initial.save);
+  const saved = game.totems, holderLog = game.holders;
+  const [storageFailed, setStorageFailed] = useState(false);
   const [familyFilter, setFamilyFilter] = useState('all');
-  const save = (next: Collection) => {
-    setSaved(next);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); setStorageFailed(false); }
-    catch { setStorageFailed(true); }
+  const save = (next: GachaSave) => {
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify(next)); setStorageFailed(false); }
+    catch { setStorageFailed(true); return false; }
+    setGame(next); return true;
   };
   const owned = saved.pools.reduce((sum, t) => sum + t.count, 0);
 
   const reset = () => {
-    if (!window.confirm(text('Erase your entire collection and pull history on this browser?', '清空本浏览器中的全部收藏与抽取记录？'))) return;
-    setResults([]); save(emptyCollection());
+    if (!window.confirm(text('Erase your totem inventory? Pity counters are kept.', '清空图腾收藏？保底计数将保留。'))) return;
+    setResults([]); save({ ...game, totems: emptyCollection() });
   };
   // Only holders whose character page exists can be pulled, so names never go missing.
   const pages = new Map(articles.map(a => [a.slug, a]));
@@ -73,22 +64,21 @@ export function Gacha({ language, articles, open }: { language: Language; articl
   const lawOf = (slug: string) => pages.get(slug)?.stats['Held law'] ?? '';
   const stars = (n: number) => <StarRow n={n} label={text(`${n} stars`, `${n} 星`)} />;
 
-  const [holderLog, saveHolders] = useStored<HolderLog>('quoderat-gacha-holders', { total: 0, copies: {} }, v => typeof v.total === 'number' && typeof v.copies === 'object');
-
-
+  let rosterReady = true;
+  try { validateBanner(CURRENT_BANNER, pool); } catch { rosterReady = false; }
+  const blocked = initial.failed || !rosterReady;
   const pull = (count: number) => {
-    if (drawing.current) return;
+    if (drawing.current || blocked) return;
     drawing.current = true;
-    const copies = { ...holderLog.copies };
-    const draw = pullMixed(count, Math.random, pool, saved.misses);
-    const got = draw.rewards;
-    const totems = got.flatMap(r => r.kind === 'totem' ? [r.totem] : []);
-    const rewards = got.map(r => r.kind === 'totem' ? r : { ...r, copies: copies[r.rating.slug] = (copies[r.rating.slug] || 0) + 1 });
-    save({ ...addPulls(saved, totems), misses: draw.misses });
-    saveHolders({ total: holderLog.total + got.length - totems.length, copies });
-    setResults(rewards);
-    const animate = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    setRevealing(animate); drawing.current = animate;
+    try {
+      const draw = pullMixed(count, Math.random, pool, game.pity);
+      const next = applyDraw(game, draw.rewards, draw.state);
+      if (!save(next)) { drawing.current = false; return; }
+      const copies = { ...holderLog.copies };
+      setResults(draw.rewards.map(r => r.kind === 'totem' ? r : { ...r, copies: copies[r.rating.slug] = (copies[r.rating.slug] || 0) + 1 }));
+      const animate = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      setRevealing(animate); drawing.current = animate;
+    } catch { drawing.current = false; setStorageFailed(true); }
   };
   const finishReveal = () => { setRevealing(false); drawing.current = false; };
   const holderOwned = pool.filter(h => holderLog.copies[h.slug]).length;
@@ -109,29 +99,43 @@ export function Gacha({ language, articles, open }: { language: Language; articl
       </button>)}
     </div>
 
-    {storageFailed && <p className="gc-warning" role="alert">{text('Local storage could not be read or saved. Your current collection may only last for this visit.', '无法读取或保存本地数据。当前收藏可能仅在本次访问中保留。')}</p>}
+    {initial.failed && <p className="gc-warning" role="alert">{text('Your save could not be read. Drawing is paused to protect it; no saved data has been overwritten.', '无法读取存档。为保护数据，抽取已暂停，原数据未被覆盖。')}</p>}
+    {!rosterReady && <p className="gc-warning" role="alert">{text('The banner roster is incomplete. Please wait for the character pages to load.', '卡池名单尚未完整加载，请等待人物页面加载。')}</p>}
+    {storageFailed && <p className="gc-warning" role="alert">{text('Could not save this action. Your previous collection and pity are unchanged.', '此次操作未能保存，原收藏与保底计数未变。')}</p>}
     {banner === 'banner' ? <section className="gc-banner gc-summon" role="tabpanel">
       <div className={`gc-reveal-stage${revealing ? ' revealing' : ''}`} aria-busy={revealing}>
         <div className="gc-summon-orbit" aria-hidden="true"><span>✧</span></div>
-        <small>{text('ONE WORLD · ONE BANNER', '同一世界 · 同一卡池')}</small>
-        <h2>{revealing ? text('Something is taking shape…', '某种力量正在成形……') : text('What will answer?', '谁将回应？')}</h2>
+        <small>{text('FEATURED 5★ · ONE SHARED BANNER', '当期 5★ · 混合卡池')}</small>
+        <h2>{revealing ? text('Something is taking shape…', '某种力量正在成形……') : nameOf(CURRENT_BANNER.featured)}</h2>
         <p role="status">{revealing ? text('Your rewards are already in your collection.', '奖励已存入你的收藏。') : text('Law holders and totems share every draw.', '每次抽取都可能获得执律者或图腾。')}</p>
         {revealing && <button className="games-btn quiet" onClick={finishReveal}>{text('Skip animation', '跳过动画')}</button>}
       </div>
       <div className="gc-actions">
-        <button className="games-btn" disabled={revealing} onClick={() => pull(1)}>{text('Pull ×1', '抽取 ×1')}</button>
-        <button className="games-btn quiet" disabled={revealing} onClick={() => pull(10)}>{text('Pull ×10', '抽取 ×10')}</button>
+        <button className="games-btn" disabled={revealing || blocked} onClick={() => pull(1)}>{text('Pull ×1', '抽取 ×1')}</button>
+        <button className="games-btn quiet" disabled={revealing || blocked} onClick={() => pull(10)}>{text('Pull ×10', '抽取 ×10')}</button>
       </div>
-      <p className="gc-history">{text(`${percent(RARE_CHANCE)} rare chance: holder, S or SS. Guaranteed within ${PITY_LIMIT - saved.misses} more pulls.`, `${percent(RARE_CHANCE)} 稀有概率：执律者、S 或 SS。最多再抽 ${PITY_LIMIT - saved.misses} 次必出。`)}</p>
-      <p className="gc-guarantee">{text('Singles and ten-pulls share the guarantee. Any rare reward resets it.', '单抽与十连共用保底。获得任意稀有奖励后重新计数。')}</p>
-      <details className="gc-banner-odds"><summary>{text('Rates & guarantee', '概率与保底')}</summary>
-        <table className="gc-rate-table"><caption>{text('Base rates per draw, before the guarantee', '每次抽取的基础概率（保底前）')}</caption>
+      <div className="gc-pity-counters" aria-live="polite">
+        <div><small>{text('S+ guarantee', 'S+ 保底')}</small><strong>{game.pity.small} / 15</strong><span>{text(`Within ${PITY_LIMIT - game.pity.small} pulls`, `最多再抽 ${PITY_LIMIT - game.pity.small} 次`)}</span></div>
+        <div><small>{text('5★ guarantee', '5★ 保底')}</small><strong>{game.pity.big} / 80</strong><span>{text(`Next single: ${percent(outcomeTable(game.pity)[0])} 5★`, `下次单抽：${percent(outcomeTable(game.pity)[0])} 5★`)}</span></div>
+        <div><small>{text('Next 5★', '下一个 5★')}</small><strong>{game.pity.featuredGuaranteed ? text('Featured guaranteed', '必为当期角色') : '50 / 50'}</strong><span>{nameOf(CURRENT_BANNER.featured)}</span></div>
+      </div>
+      <p className="gc-guarantee">{text('Every ten-pull includes S+. All holders, S and SS count as S+.', '每次十连至少获得一个 S+。所有执律者、S 与 SS 均计入 S+。')}</p>
+      <details className="gc-banner-odds"><summary>{text('Rates & guarantees', '概率与保底')}</summary>
+        <table className="gc-rate-table"><caption>{text('Base rates before guarantees', '保底前的基础概率')}</caption>
           <thead><tr><th>{text('Outcome', '结果')}</th><th>{text('Chance', '概率')}</th></tr></thead>
-          <tbody>{(pool.length ? [['5★', .001], ['4★', .0065], ['SS', .015], ['3★', .0425], ['S', .035], ['A', .15], ['B', .75]] : [['SS', .03], ['S', .07], ['A', .15], ['B', .75]]).map(([label, chance]) => <tr key={label}><td>{label}</td><td>{percent(Number(chance))}</td></tr>)}</tbody>
+          <tbody>{BASE_RATES.map(r => <tr key={r.label}><td>{r.label}</td><td>{percent(r.chance)}</td></tr>)}</tbody>
         </table>
-        <p>{text('After nine non-rare pulls, the next is rare. Within a rare draw: 50% holder, 35% S, 15% SS. The guarantee raises the effective rare rate above 10%.', '连续九次未出稀有后，下次必出。稀有奖励内部：执律者 50%、S 35%、SS 15%。保底会使实际稀有获得率高于 10%。')}</p>
-        <p>{text('Totem tier weights: 75 / 15 / 7 / 3. B and A fill the normal bucket; S and SS share the totem side of the rare bucket.', '图腾分级权重：75 / 15 / 7 / 3。B 与 A 分配普通池，S 与 SS 分配稀有池的图腾部分。')}</p>
-        <p>{text('Holder star odds', '执律者星级概率')}: {STAR_ODDS.map(o => `${o.stars}★ ${percent(o.chance)}`).join(' · ')}</p>
+        <p>{text('After 14 consecutive non-S+ results, pull 15 guarantees S+. If the first nine results of a ten-pull contain no S+, its tenth guarantees S+. Both protections can trigger together, producing one reward.', '连续 14 抽未出 S+，第 15 抽必出。十连前九抽未出 S+，第十抽必出。两种保底同时触发时仅获得一个奖励。')}</p>
+        <p>{text('5★ stays at 0.1% through pull 65, then adds 6 percentage points per pull: 66 = 6.1%, 79 = 84.1%, 80 = 100%. Other tiers scale proportionally. Forced S+ removes A/B and renormalizes all remaining tiers, including 5★ (pull 66 becomes about 39.6%).', '5★ 前 65 抽为 0.1%，此后每抽增加 6 个百分点：第 66 抽 6.1%、第 79 抽 84.1%、第 80 抽 100%。其他等级按比例缩放。S+ 保底移除 A/B，再对包括 5★ 在内的剩余等级归一化（第 66 抽约为 39.6%）。')}</p>
+        <p>{text('Every 5★ has a 50% featured chance. An off-banner 5★ guarantees the next 5★ is featured. All 5★ reset both counters; other S+ reset only the small counter. Lower results never consume the featured guarantee.', '每个 5★ 有 50% 概率为当期角色。抽到非当期 5★ 后，下个 5★ 必为当期。5★ 重置大小保底；其他 S+ 仅重置小保底。较低等级不会消耗当期保底。')}</p>
+        <p>{text('Counters and the featured guarantee carry across banners and sessions; the ten-pull tracker belongs only to its batch. Old collections are preserved; new 5★ pity starts at zero because old saves did not record it. Resetting an inventory keeps pity.', '大小保底与当期保证跨卡池、跨访问保留；十连追踪仅限本次十连。旧收藏保留，旧版本未记录的 5★ 保底从零开始。清空收藏不会清空保底。')}</p>
+        <p>{text('Off-banner 5★ (equally likely): ', '非当期 5★（等概率）：')}{[...new Set([...CURRENT_BANNER.permanent, ...CURRENT_BANNER.pastFeatured])].filter(s => s !== CURRENT_BANNER.featured).map(nameOf).join(' · ')}</p>
+        <p>{text('Featured from zero pity: minimum 1, maximum 160 pulls. Effective rates include guarantees and depend on single versus ten-pull play.', '零保底起抽：当期角色最少 1 抽、最多 160 抽。实际概率包含保底，随单抽或十连方式变化。')}</p>
+        <table className="gc-rate-table"><caption>{text('Simulated effective rates · 10 million pulls per mode', '模拟实际概率 · 每种方式 1,000 万抽')}</caption>
+          <thead><tr><th>{text('Mode', '方式')}</th><th>5★</th><th>S+</th></tr></thead>
+          <tbody>{(['singles', 'tens', 'mixed'] as const).map(mode => <tr key={mode}><td>{mode === 'singles' ? text('Singles', '单抽') : mode === 'tens' ? text('Ten-pulls', '十连') : text('Alternating ×1 / ×10', '交替单抽与十连')}</td><td>{effectiveRates[mode].five.toFixed(3)}%</td><td>{effectiveRates[mode].rare.toFixed(3)}%</td></tr>)}</tbody>
+        </table>
+        <p>{text(`Featured: 1 minimum / approximately ${effectiveRates.singles.featured.toFixed(1)} pulls on average with singles, ${effectiveRates.tens.featured.toFixed(1)} with ten-pulls / 160 maximum. These are simulated intervals between featured rewards, not a promise for an individual session.`, `当期角色：最少 1 抽 / 单抽平均约 ${effectiveRates.singles.featured.toFixed(1)} 抽、十连平均约 ${effectiveRates.tens.featured.toFixed(1)} 抽 / 最多 160 抽。这是两次当期奖励间隔的模拟值，并非单次游玩的承诺。`)}</p>
         <p>{TIERS.map(t => `${tx(t.name)} ${t.depth[0]}–${t.depth[1]}`).join(' · ')}</p>
       </details>
       {!revealing && results.length > 0 && <ul className={`gc-results${results.length === 1 ? ' single' : ''}`} aria-live="polite">
@@ -195,7 +199,7 @@ export function Gacha({ language, articles, open }: { language: Language; articl
           </span>}
         </li>;
       })}</ul>
-      <p className="gc-history">{history(text(`Holder pulls: ${holderLog.total}`, `执律者抽取次数：${holderLog.total}`), () => { setResults([]); saveHolders({ total: 0, copies: {} }); }, holderLog.total)}</p>
+      <p className="gc-history">{history(text(`Holder pulls: ${holderLog.total}`, `执律者抽取次数：${holderLog.total}`), () => { if (window.confirm(text('Erase holder inventory? Pity is kept.', '清空执律者收藏？保底保留。'))) { setResults([]); save({ ...game, holders: { total: 0, copies: {} } }); } }, holderLog.total)}</p>
     </section>}
 
     <p className="gc-fine">{text('Star ratings, odds, depth bands, upgrades and power pools are site game mechanics, not canon. Your collection is saved on this browser and device only; clearing browser data erases it.', '星级、概率、深度区间、升级与力量池是网站游戏机制，并非正典。收藏仅保存在当前浏览器与设备中；清除浏览器数据会删除收藏。')}</p>

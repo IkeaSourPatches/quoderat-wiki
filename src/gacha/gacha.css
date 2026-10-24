@@ -99,3 +99,10 @@
 .gc-guarantee{text-align:center;font-size:12px;line-height:1.6;color:#b5c5b7;margin:8px 0 0}
 
 .gc-rate-table{width:100%;max-width:420px;border-collapse:collapse;margin:12px 0;color:#e0d8bf}.gc-rate-table caption{text-align:left;color:#adbeaf;margin-bottom:10px}.gc-rate-table th,.gc-rate-table td{text-align:left;padding:7px 12px;border-bottom:1px solid #c9b48225}.gc-rate-table th:last-child,.gc-rate-table td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+
+.gc-pity-counters { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 24px 0 16px; border: 1px solid #c9b48233; background: #c9b48233; }
+.gc-pity-counters > div { display: flex; flex-direction: column; gap: 8px; padding: 20px; background: #142822; }
+.gc-pity-counters small { color: #a3b5a8; letter-spacing: .08em; text-transform: uppercase; }
+.gc-pity-counters strong { color: #c9b482; font-size: 1.1rem; }
+.gc-pity-counters span { font-size: .8rem; line-height: 1.5; }
+@media (max-width: 600px) { .gc-pity-counters { grid-template-columns: 1fr; } }
