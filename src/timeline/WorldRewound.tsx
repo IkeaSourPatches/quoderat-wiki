@@ -7,7 +7,7 @@ import type { Language } from '../i18n';
 import { createEngine, dwell, type Engine, type Move, type Refs } from './fx';
 import {
   ACT_NUMERALS, APEX, AXIOM_ORIGIN, CREATURES, ELEMENT_COLOR, FEUD, H, ILAR, KIND_NAMES, KINGDOM_OF, LAW, MINOR, NC, ORIGO_TOWNS, REGION, S, STOPS, T, TIP, TOWNS, W,
-  actName, creatureAt, fate, lawStates, myth, parseTimeline, present, rng, splitActs, type Creature, type Floor, type Kind, type L, type P,
+  actName, creatureAt, fate, lawStates, myth, parseTimeline, present, relatedSlugs, rng, splitActs, type Creature, type Floor, type Kind, type L, type P,
 } from './world';
 import './timeline.css';
 
@@ -223,7 +223,7 @@ function FeudBody({ body, act }: { body: string; act: number }) {
   </div>;
 }
 
-export function WorldRewound({ language, article }: { language: Language; article: Article }) {
+export function WorldRewound({ language, article, articles }: { language: Language; article: Article; articles: Article[] }) {
   const t = (l: L) => l[language];
   const { preface, floors } = useMemo(() => parseTimeline(article.body), [article.body]);
   const [stop, setStop] = useState(0);
@@ -238,6 +238,7 @@ export function WorldRewound({ language, article }: { language: Language; articl
   const view = useRef<HTMLDivElement | null>(null);
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const track = useRef<HTMLDivElement | null>(null);
+  const fullText = useRef<HTMLDetailsElement | null>(null);
   const stopRef = useRef(0);
   const rewindTimer = useRef(0);
 
@@ -323,6 +324,7 @@ export function WorldRewound({ language, article }: { language: Language; articl
     const name = moment.act === undefined ? floor?.title : actName(splitActs(floor?.body ?? '').acts[moment.act] ?? '');
     return `${floor?.numeral ?? ''} · ${name}`;
   };
+  const related = relatedSlugs(selected).flatMap(slug => articles.filter(entry => entry.slug === slug));
   const thumb = drag ?? pct(stop);
   const playLabel = playing ? t(T.pause) : stop === LAST ? t(T.again) : t(T.play);
 
@@ -365,6 +367,17 @@ export function WorldRewound({ language, article }: { language: Language; articl
             {inspectKeys.map(key => <option key={key} value={key}>{tipFor(key, stop, floors, language)?.title}</option>)}
           </select>
           {shownTip && <div className="wr-inspect-body">{shownTip.caption && <small>{shownTip.caption}</small>}<p>{shownTip.body}</p></div>}
+          <nav className="wr-related" aria-label={t(T.readMore)}>
+            <small>{t(T.readMore)}</small>
+            {related.map(entry => <a key={entry.slug} href={`#${entry.slug}`} onClick={entry.slug === 'timeline' ? e => {
+              e.preventDefault();
+              if (fullText.current) {
+                fullText.current.open = true;
+                fullText.current.querySelector('summary')?.focus();
+                fullText.current.scrollIntoView({ block: 'start' });
+              }
+            } : undefined}>{entry.slug === 'timeline' ? t(T.fullText) : entry.title}<span aria-hidden="true"> ↗</span></a>)}
+          </nav>
         </section>
       </div>
 
@@ -379,7 +392,7 @@ export function WorldRewound({ language, article }: { language: Language; articl
       </aside>
     </div>
 
-    <details className="wr-full">
+    <details className="wr-full" ref={fullText}>
       <summary>{t(T.fullText)}</summary>
       {floors.map((fl, i) => <section key={i}><h3><span>{fl.numeral}</span>{fl.title}</h3><FloorBody body={fl.body} /></section>)}
     </details>

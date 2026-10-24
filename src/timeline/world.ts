@@ -94,6 +94,7 @@ export const T = {
   act: { en: 'Act {n} of 4', zh: '第{n}幕，共四幕' },
   hint: { en: 'Select something in the scene, or explore it below.', zh: '选择场景中的事物，或在下方查看详情。' },
   hintTouch: { en: 'Tap something in the scene, or explore it below.', zh: '轻点场景中的事物，或在下方查看详情。' },
+  readMore: { en: 'Read more', zh: '延伸阅读' },
   inspect: { en: 'Explore the scene', zh: '探索场景' },
   fullText: { en: 'Read the whole timeline', zh: '阅读完整时间线' },
   adaptation: { en: 'The scene illustrates the text. Its shapes are not a map.', zh: '场景只是文字的图解，其中的形状并非地图。' },
@@ -231,4 +232,26 @@ export const CAMERA: { at: P; zoom: number }[] = [
 export function rng(seed: number) {
   let s = seed % 2147483647 || 1;
   return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
+}
+
+// Related archive entries for each inspectable subject. Locations are described
+// in the timeline itself; the view opens that text instead of inventing pages.
+export function relatedSlugs(key: string): string[] {
+  const [kind, id] = key.split(':');
+  if (kind === 'creature') {
+    const creature = CREATURES.find(c => c.id === id);
+    const pages: Record<string, string> = { dragon: 'dragons', unicorn: 'unicorns-life-and-healing', phoenix: 'phoenixes-renewal', kitsune: 'kitsune-illusion-and-concealment', troll: 'trolls-the-body' };
+    return creature ? [pages[creature.kind], 'how-creatures-work'].filter(Boolean) : [];
+  }
+  const pages: Record<string, string[]> = {
+    all: ['the-app-and-the-law-of-all-laws', 'the-test'],
+    number: ['number-and-sets', 'ilar-hesabu'], sets: ['number-and-sets', 'ensa'],
+    nc: ['the-law-of-non-contradiction', 'the-spear-and-shield'],
+    minor: ['law-holders', 'the-test'], dynasty: ['tertia', 'ordinary-people-and-the-climb'],
+    kingdom: ['ordinary-people-and-the-climb'], empire: ['ordinary-people-and-the-climb'],
+    elite: ['how-creatures-work', 'ordinary-people-and-the-climb'],
+    ilar: ['ilar-hesabu', 'ersetu'], town: ['ordinary-people-and-the-climb', 'how-creatures-work'],
+    llama: ['timeline'], origo: ['timeline'], range: ['timeline'], peak: ['timeline'],
+  };
+  return pages[kind] ?? [];
 }
