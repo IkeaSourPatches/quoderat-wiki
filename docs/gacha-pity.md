@@ -1,5 +1,7 @@
 # Gacha pity and featured banner
 
+**Status: official site rules as of October 2026.** The tuning record is in `gacha-analysis.md`.
+
 Rollback checkpoint: `6bf462d` (mixed gacha before this system). New saves use `quoderat-gacha-save-v1`; old `quoderat-gacha-totems` and `quoderat-gacha-holders` keys are left intact. Reverting code restores the pre-migration inventory, not rewards earned afterward. Export browser storage before switching implementations if those rewards matter.
 
 ## Rules

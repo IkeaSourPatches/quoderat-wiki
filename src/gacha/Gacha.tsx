@@ -202,6 +202,6 @@ export function Gacha({ language, articles, open }: { language: Language; articl
       <p className="gc-history">{history(text(`Holder pulls: ${holderLog.total}`, `执律者抽取次数：${holderLog.total}`), () => { if (window.confirm(text('Erase holder inventory? Pity is kept.', '清空执律者收藏？保底保留。'))) { setResults([]); save({ ...game, holders: { total: 0, copies: {} } }); } }, holderLog.total)}</p>
     </section>}
 
-    <p className="gc-fine">{text('Star ratings, odds, depth bands, upgrades and power pools are site game mechanics, not canon. Your collection is saved on this browser and device only; clearing browser data erases it.', '星级、概率、深度区间、升级与力量池是网站游戏机制，并非正典。收藏仅保存在当前浏览器与设备中；清除浏览器数据会删除收藏。')}</p>
+    <p className="gc-fine">{text('Star ratings, odds, depth bands, upgrades and power pools are the site’s official game rules (October 2026), kept separate from the world’s lore. Your collection is saved on this browser and device only; clearing browser data erases it.', '星级、概率、深度区间、升级与力量池是本站的正式游戏规则（2026 年 10 月），与世界观设定相互独立。收藏仅保存在当前浏览器与设备中；清除浏览器数据会删除收藏。')}</p>
   </div>;
 }
