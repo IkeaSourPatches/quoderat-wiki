@@ -2,12 +2,12 @@ import { FAMILIES, TIERS, type Totem } from './pool';
 
 export const STORAGE_KEY = 'quoderat-gacha-totems';
 export type Pool = { family: string; count: number; power: number };
-export type Collection = { version: 3; total: number; recent: Totem[]; pools: Pool[]; recovered: boolean };
-export const emptyCollection = (): Collection => ({ version: 3, total: 0, recent: [], pools: [], recovered: false });
+export type Collection = { version: 3; misses: number; total: number; recent: Totem[]; pools: Pool[]; recovered: boolean };
+export const emptyCollection = (): Collection => ({ version: 3, misses: 0, total: 0, recent: [], pools: [], recovered: false });
 const integer = (n: unknown): n is number => Number.isSafeInteger(n) && (n as number) >= 0;
 const familyValid = (id: unknown) => FAMILIES.some(f => f.id === id);
 const valid = (t: any): t is Totem => !!t && familyValid(t.family)
-  && TIERS.some(r => r.id === t.tier && integer(t.depth) && t.depth >= r.depth[0] && t.depth <= r.depth[1]);
+  && TIERS.some(r => r.id === t.tier && integer(t.depth) && t.depth >= r.depth[0] && t.depth <= (r.id === 'elite' ? 39 : r.depth[1]));
 
 function combine(pools: Pool[]): Pool[] {
   const map = new Map<string, Pool>();
@@ -26,7 +26,8 @@ export function decodeCollection(raw: string | null): Collection {
   if (!raw) return emptyCollection();
   const v = JSON.parse(raw);
   if (!v || !integer(v.total) || !Array.isArray(v.recent) || !v.recent.every(valid)) throw new Error('Invalid save');
-  const base = { ...emptyCollection(), total: v.total, recent: v.recent.slice(0, 50), recovered: v.recovered === true };
+  if (v.misses !== undefined && (!integer(v.misses) || v.misses > 9)) throw new Error('Invalid guarantee counter');
+  const base = { ...emptyCollection(), misses: v.misses ?? 0, total: v.total, recent: v.recent.slice(0, 50).map((t: Totem) => t.tier === 'elite' && t.depth >= 36 ? { ...t, tier: 'epic' as const } : t), recovered: v.recovered === true };
   if (v.version === undefined) return { ...base, pools: fromTotems(v.recent), recovered: v.total > v.recent.length };
   if (v.version === 2) {
     if (!Array.isArray(v.stacks) || !v.stacks.every((t: any) => t && integer(t.count) && t.count > 0 && valid(t))) throw new Error('Invalid stacks');

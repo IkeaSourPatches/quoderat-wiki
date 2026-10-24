@@ -36,15 +36,16 @@ export const FAMILIES: TotemFamily[] = [
   { id: 'body', power: { en: 'The body', zh: '躯体' }, creature: { en: 'Trolls', zh: '巨魔' }, note: { en: 'Rarer: most troll power is locked in stone', zh: '更稀有：巨魔的力量大多封锁在石中' }, glyph: '■', colour: '#8e8f86', weight: 0.5 },
 ];
 
-export type TierId = 'common' | 'strong' | 'elite';
+export type TierId = 'common' | 'strong' | 'elite' | 'epic';
 export type Tier = { id: TierId; name: Text; depth: [number, number]; chance: number };
 
 // PROVISIONAL odds and depth bands. Canon fixes only the order (stronger is rarer), the
 // typical band (20-30) and a ceiling below a hybrid's 40, so elite totems stay under 40.
 export const TIERS: Tier[] = [
-  { id: 'common', name: { en: 'Common', zh: '常见' }, depth: [20, 25], chance: 0.75 },
-  { id: 'strong', name: { en: 'Strong', zh: '强力' }, depth: [26, 30], chance: 0.21 },
-  { id: 'elite', name: { en: 'Elite', zh: '精英' }, depth: [31, 39], chance: 0.04 },
+  { id: 'common', name: { en: 'B', zh: 'B' }, depth: [20, 25], chance: 0.75 },
+  { id: 'strong', name: { en: 'A', zh: 'A' }, depth: [26, 30], chance: 0.15 },
+  { id: 'elite', name: { en: 'S', zh: 'S' }, depth: [31, 35], chance: 0.07 },
+  { id: 'epic', name: { en: 'SS', zh: 'SS' }, depth: [36, 39], chance: 0.03 },
 ];
 
 /** Canon depth landmarks, drawn on every totem's depth bar for scale. */
@@ -127,3 +128,29 @@ export function pullHolder(rng: Rng = Math.random, pool: readonly HolderRating[]
 
 export const pullHolders = (count: number, rng: Rng = Math.random, pool: readonly HolderRating[] = HOLDERS) =>
   Array.from({ length: count }, () => pullHolder(rng, pool));
+
+// The rare bucket is shared by holders, elite and epic totems.
+export const RARE_CHANCE = 0.1;
+export const PITY_LIMIT = 10;
+export type MixedReward = { kind: 'holder'; rating: HolderRating } | { kind: 'totem'; totem: Totem };
+export const isRare = (r: MixedReward) => r.kind === 'holder' || r.totem.tier === 'elite' || r.totem.tier === 'epic';
+function totemOfTier(tier: Tier, rng: Rng): Totem {
+  const family = pickWeighted(FAMILIES, f => f.weight, rng);
+  return { family: family.id, tier: tier.id, depth: tier.depth[0] + Math.floor(rng() * (tier.depth[1] - tier.depth[0] + 1)) };
+}
+export function pullMixed(count: number, rng: Rng = Math.random, pool: readonly HolderRating[] = HOLDERS, misses = 0): { rewards: MixedReward[]; misses: number } {
+  if (!Number.isInteger(count) || count < 0 || !Number.isInteger(misses) || misses < 0 || misses >= PITY_LIMIT) throw new Error('Invalid draw state');
+  const rewards: MixedReward[] = [];
+  for (let i = 0; i < count; i++) {
+    const rare = misses === PITY_LIMIT - 1 || rng() < RARE_CHANCE;
+    let reward: MixedReward;
+    if (rare && pool.length && rng() < .5) reward = { kind: 'holder', rating: pullHolder(rng, pool) };
+    else {
+      const tiers = TIERS.filter(t => rare ? t.id === 'elite' || t.id === 'epic' : t.id === 'common' || t.id === 'strong');
+      reward = { kind: 'totem', totem: totemOfTier(pickWeighted(tiers, t => t.chance, rng), rng) };
+    }
+    misses = isRare(reward) ? 0 : misses + 1;
+    rewards.push(reward);
+  }
+  return { rewards, misses };
+}

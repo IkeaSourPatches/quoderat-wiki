@@ -47,3 +47,6 @@ Vera, the Witness Beneath, holds the Law of Superposition. The game had you read
 
 ### Retired: matching-depth totem merging
 The first workshop consumed three copies with identical type and depth to produce one at +1 depth (maximum 39). Replaced by automatic type-only pools: every pull adds its depth to that type’s power total.
+
+### Retired: separate holder and totem banners
+Replaced by one mixed summon banner with independent per-draw reward types. The dedicated reveal stage currently uses a short sigil animation; a richer cinematic or character-specific reveal can replace it later without changing saves.

@@ -19,3 +19,28 @@ const legacy=decodeCollection(JSON.stringify({total:100,recent:Array(50).fill(ea
 assert.equal(legacy.pools[0].power,1000);assert.ok(legacy.recovered);
 for(const raw of ['{','{}',JSON.stringify({...saved,pools:[{family:'bad',count:1,power:20}]}),JSON.stringify({...saved,pools:[{family:'earth',count:-1,power:20}]})]) assert.throws(()=>decodeCollection(raw));
 console.log('Verified type-only pooling, depth addition, separate types, persistence, both save migrations and corrupt saves.');
+const { pullMixed, isRare, TIERS } = await import(pool);
+assert.deepEqual(TIERS.map(t=>t.chance),[.75,.15,.07,.03]);
+const ten = pullMixed(10,()=>.99);
+assert.equal(ten.rewards.length,10);
+assert.ok(ten.rewards.slice(0,9).every(r=>!isRare(r)));
+assert.equal(ten.rewards[9].totem.tier,'epic');
+assert.equal(ten.misses,0);
+let misses=0;const singles=[];
+for(let i=0;i<10;i++){const draw=pullMixed(1,()=>.99,undefined,misses);misses=draw.misses;singles.push(...draw.rewards);}
+assert.deepEqual(singles,ten.rewards,'single pulls and batches share the same guarantee');
+assert.equal(pullMixed(1,()=>0,undefined,8).misses,0,'natural rare resets the guarantee');
+assert.ok(isRare(pullMixed(1,()=>.99,[],9).rewards[0]),'empty holder pool still guarantees rare totems');
+const hundred=pullMixed(100,()=>.99).rewards;
+for(let i=0;i<=90;i++)assert.ok(hundred.slice(i,i+10).some(isRare));
+const pending={...emptyCollection(),misses:9};
+assert.equal(decodeCollection(JSON.stringify(pending)).misses,9);
+assert.throws(()=>decodeCollection(JSON.stringify({...pending,misses:10})));
+const oldElite=decodeCollection(JSON.stringify({version:3,total:1,recent:[{family:'earth',tier:'elite',depth:39}],pools:[{family:'earth',count:1,power:39}]}));
+assert.equal(oldElite.recent[0].tier,'epic');assert.equal(oldElite.pools[0].power,39);assert.equal(oldElite.misses,0);
+console.log('Verified epic tiers, guarantee across batches/singles, reset, persistence, legacy elite migration and empty-pool fallback.');
+const { STAR_ODDS, RARE_CHANCE } = await import(pool);
+assert.deepEqual(TIERS.map(t=>t.name.en),['B','A','S','SS']);
+assert.deepEqual(STAR_ODDS.map(t=>Math.round(RARE_CHANCE * .5 * t.chance * 10000) / 100),[.1,.65,4.25]);
+assert.deepEqual(TIERS.map(t=>Math.round(t.chance * (['elite','epic'].includes(t.id) ? .5 : 1) * 10000) / 100),[75,15,3.5,1.5]);
+console.log('Verified B/A/S/SS labels and the exact seven base outcome rates.');

@@ -85,3 +85,17 @@
 .gc-pips i.on{background:#c9b482}
 
 .gc-pool-gain{font-size:12px;line-height:1.5;color:#e1cf9f;border-top:1px solid #c9b48233;padding-top:8px;margin-top:6px}
+
+/* Dedicated reveal stage: its fixed space can host richer animation later. */
+.gc-reveal-stage{position:relative;isolation:isolate;overflow:hidden;min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 20px;margin-bottom:24px;border:1px solid #c9b48244;border-radius:8px;background:radial-gradient(ellipse at 50% 35%,#49624b55,transparent 65%),linear-gradient(155deg,#11241f,#101710)}
+.gc-reveal-stage small{color:#c9b482;letter-spacing:2px;font-size:10px}.gc-reveal-stage h2{font:400 clamp(26px,4vw,42px)/1.2 'STIX Two Text',Georgia,serif;margin:12px 0}.gc-reveal-stage p{color:#b5c5b7;font-size:14px;line-height:1.6;margin:0 0 18px}
+.gc-summon-orbit{display:grid;place-items:center;width:110px;height:110px;border:1px solid #c9b48266;border-radius:50%;margin-bottom:22px;box-shadow:0 0 0 12px #c9b48208,0 0 0 24px #c9b48205;color:#e4c887}
+.gc-summon-orbit span{font-size:65px;line-height:1}.revealing .gc-summon-orbit{animation:gc-orbit 1.6s ease-in-out infinite}.revealing{background:radial-gradient(ellipse at 50% 35%,#a08b4755,transparent 65%),#101c17}
+.gc-banner-odds{margin:18px 0 24px;color:#adbeaf;font-size:13px;line-height:1.6}.gc-banner-odds summary{cursor:pointer;color:#c9b482;padding:8px 0}.gc-banner-odds p{margin:5px 0}
+@keyframes gc-orbit{0%{transform:scale(.85) rotate(0deg);box-shadow:0 0 0 12px #c9b48208,0 0 40px #c9b48211}65%{transform:scale(1.12) rotate(160deg);box-shadow:0 0 0 24px #c9b48208,0 0 80px #c9b48266}100%{transform:scale(.85) rotate(360deg)}}
+@media(max-width:560px){.gc-reveal-stage{min-height:300px;padding:24px 12px}.gc-reveal-stage h2{font-size:28px}}
+@media(prefers-reduced-motion:reduce){.revealing .gc-summon-orbit{animation:none}}
+.gc-card.tier-epic{border-color:#c69ee4;border-top-color:var(--c);background:linear-gradient(155deg,#38304b,#1d3329);box-shadow:0 0 22px #b38cde25}.gc-card.tier-epic small{color:#d7b7f0}
+.gc-guarantee{text-align:center;font-size:12px;line-height:1.6;color:#b5c5b7;margin:8px 0 0}
+
+.gc-rate-table{width:100%;max-width:420px;border-collapse:collapse;margin:12px 0;color:#e0d8bf}.gc-rate-table caption{text-align:left;color:#adbeaf;margin-bottom:10px}.gc-rate-table th,.gc-rate-table td{text-align:left;padding:7px 12px;border-bottom:1px solid #c9b48225}.gc-rate-table th:last-child,.gc-rate-table td:last-child{text-align:right;font-variant-numeric:tabular-nums}

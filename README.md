@@ -197,3 +197,13 @@ Each totem type has one locally saved power pool. Pulls add their depth directly
 `src/gacha/collection.ts` validates saves and accumulates rewards. Version 3 uses the existing `quoderat-gacha-totems` localStorage key. Version 2 inventories migrate by summing depth × count for each type; previously consumed copies are not recreated. Older recent-only saves recover only the pulls they retained. Law-holder saves are separate and unchanged.
 
 No account or server is involved: each browser origin has its own collection, and clearing browser data removes it. Run `node scripts/check-gacha.mjs` to check pooling, persistence, migrations and malformed data.
+
+### Shared summon banner
+
+The Summon tab draws holders and totems together. A normal draw has a 10% shared rare chance (holder, elite or epic); nine consecutive non-rare results force the next rare. The counter is saved with the totem collection and shared across single and ten-pulls. Any rare resets it. Old saves start at zero misses; resetting the totem collection resets the counter.
+
+Totem tier weights are 75/15/7/3. The ordinary bucket splits common/strong 75:15; the rare bucket splits holder/elite/epic 50:35:15. Overall base rates are common 75%, strong 15%, holder 5%, elite 3.5%, epic 1.5%, before the guarantee raises the effective rare rate. Without available holder pages, the rare bucket splits elite/epic 7:3. Depth bands: common 20–25, strong 26–30, elite 31–35, epic 36–39. Old elite entries at 36–39 migrate to epic without changing stored power.
+
+Rewards update the existing holder and totem saves immediately, before the 1.6-second skippable reveal. Reduced-motion users see results immediately. The reserved reveal stage is independent of the result grid. The other tabs are collection views, not separate banners.
+
+Display ranks for totems are **B / A / S / SS** (formerly common / strong / elite / epic); internal save IDs are retained for compatibility. Base outcome rates are 5★ 0.1%, 4★ 0.65%, SS 1.5%, 3★ 4.25%, S 3.5%, A 15%, B 75%. The shared rare guarantee includes every holder plus S and SS.
