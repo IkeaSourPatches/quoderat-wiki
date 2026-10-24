@@ -190,13 +190,15 @@ Run `node scripts/check-game.mjs` to check map solvability, adjacency and save d
 Design ideas that are not built yet, or that were replaced, are kept in `ideas.md`, with pointers to any code that exists for them.
 
 
-## Gacha totem pools
+## Gacha totem display and workshop
 
-Each totem type has one locally saved power pool. Pulls add their depth directly: Earth 20 plus Earth 25 gives Earth power 45 and a count of two. Types stay separate. Pool totals are a game score, not a single totem’s lore depth, so they have no 39-point cap. Pull cards show the contribution and the pool total after the batch.
+The Totem display tab has eight equipment slots and an inventory automatically grouped by type and rank. Each stack shows quantity, per-copy power range and equipped/available counts; select a stack to choose an individual copy. Stacking is only a display change and never consumes items or adds power. Choose a slot and an item to equip it. Replacing or unequipping keeps the old item in inventory. One item cannot occupy two slots; multiple items of the same type are allowed.
 
-`src/gacha/collection.ts` validates saves and accumulates rewards. Totems, law holders and pity are now saved together under `quoderat-gacha-save-v1` (`src/gacha/save.ts`). On first load the old `quoderat-gacha-totems` and `quoderat-gacha-holders` keys are read and migrated, and are left in place untouched. Version 2 totem inventories migrate by summing depth × count for each type; previously consumed copies are not recreated. Older recent-only saves recover only the pulls they retained.
+Manual rank upgrades require the same type and rank: **10 B → A, 20 A → S, 30 S → SS**. SS cannot upgrade. The selected item becomes the higher rank at its minimum power (26/31/36) and keeps its equipped slot. Other equipped items are excluded; the preview lists the lowest-power unequipped ingredients that will be consumed. Raw powers never add together. Discard requires inline confirmation. Inventory actions preserve pity and holder copies.
 
-No account or server is involved: each browser origin has its own collection, and clearing browser data removes it. Run `node scripts/check-gacha.mjs` to check pooling, persistence, migrations and malformed data.
+The ranked rules start fresh using `quoderat-gacha-ranked-v1`. On loading gacha, the previous unified/standalone gacha save keys are removed as explicitly requested by the owner. Existing inventory, slots, holders and pity reset; later reloads preserve ranked progress. Language, bookmarks and other minigames are not gacha data and remain untouched. `src/gacha/collection.ts` owns recipes, validation and slot references; `TotemWorkshop.tsx` renders the bilingual controls.
+
+Each browser origin has its own collection; clearing browser data erases it. Run `node scripts/check-gacha.mjs` for inventory, migration, slot, merge, discard, and pity checks.
 
 ### Shared summon banner
 
