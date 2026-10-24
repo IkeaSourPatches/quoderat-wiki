@@ -31,8 +31,8 @@ for(let big=0;big<80;big++)for(let small=0;small<15;small++)for(let pos=1;pos<=1
   if(big===79)assert.equal(draw.index,0);
   assert.ok(draw.state.small<15&&draw.state.big<80);
 }
-assert.ok(Math.abs(outcomeTable({big:65,small:14,featuredGuaranteed:false})[0]-.5914)<.001);
-assert.ok(Math.abs(outcomeTable({big:78,small:14,featuredGuaranteed:false})[0]-.7755)<.001);
+assert.ok(Math.abs(outcomeTable({big:65,small:14,featuredGuaranteed:false})[0]-.5680)<.001);
+assert.ok(Math.abs(outcomeTable({big:78,small:14,featuredGuaranteed:false})[0]-.7583)<.001);
 let state=emptyPity();
 for(let i=1;i<=15;i++){ const d=pullMixed(1,()=>.999999,undefined,state); state=d.state;assert.equal(isRare(d.rewards[0]),i===15); }
 const ten=pullMixed(10,()=>.999999);

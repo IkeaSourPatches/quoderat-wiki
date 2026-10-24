@@ -200,7 +200,7 @@ No account or server is involved: each browser origin has its own collection, an
 
 ### Shared summon banner
 
-The Summon tab draws holders and totems together from one outcome table: 5★ 0.6%, 4★ 0.65%, SS 1.5%, 3★ 4.25%, S 3.5%, A 15%, B 74.5%. Every holder, S and SS counts as S+.
+The Summon tab draws holders and totems together from one outcome table: 5★ 0.6%, 4★ 0.65%, SS 1.5%, 3★ 4.25%, S 4.5%, A 18.5%, B 70%. Every holder, S and SS counts as S+.
 
 - **S+ guarantee:** 14 non-S+ draws in a row force S+ on the 15th, and every ten-pull's last slot is S+ if the first nine had none.
 - **5★ guarantee:** 5★ stays at 0.6% to pull 54, rises 1 point a pull from 55, and is certain at 80. The featured median is 70 pulls, and about 1 in 100 5★ come from the guarantee (`docs/gacha-analysis.md`).
@@ -212,4 +212,4 @@ Depth bands: common 20–25, strong 26–30, elite 31–35, epic 36–39. Old el
 
 Rewards and pity are written to the save together, immediately, before the 1.6-second skippable reveal. Reduced-motion users see results immediately. The reserved reveal stage is independent of the result grid. The other tabs are collection views, not separate banners.
 
-Display ranks for totems are **B / A / S / SS** (formerly common / strong / elite / epic); internal save IDs are retained for compatibility. Base outcome rates are 5★ 0.6%, 4★ 0.65%, SS 1.5%, 3★ 4.25%, S 3.5%, A 15%, B 74.5%. The shared rare guarantee includes every holder plus S and SS.
+Display ranks for totems are **B / A / S / SS** (formerly common / strong / elite / epic); internal save IDs are retained for compatibility. Base outcome rates are 5★ 0.6%, 4★ 0.65%, SS 1.5%, 3★ 4.25%, S 4.5%, A 18.5%, B 70%. The shared rare guarantee includes every holder plus S and SS.

@@ -105,3 +105,22 @@ Where the first 5★ lands now: 32.5% before the ramp (pulls 1–54), 66.5% duri
 **Side effect.** Ten-pulls now give a slightly higher 5★ rate than singles (1.948% vs 1.909% in the 10-million-draw simulation). A forced S+ slot multiplies the 5★ chance by about ten, and with the higher base rate that boost is no longer negligible. The difference is about 2% of the rate. It shortens the featured average only from 78.4 to 77.0 pulls.
 
 Simulation (`gacha-simulation.json`) and exact results agree: the featured average is 78.45 simulated against 78.59 exact for singles.
+
+## 7. Lower-tier rate change (October 2026)
+
+**Brief:** make pulls feel less dry by moving weight from B to A and S. The first proposal was S 5% / A 18% / B 70%. It cut the time between S+ results from 7.3 to 6.8 pulls, but it made S totems clearly more common than 3★ holders (5.7% vs 4.8% effective) and moved the featured median to 71. **Applied instead: S 4.5% / A 18.5% / B 70%**, with the ramp unchanged.
+
+| Exact, single pulls | Before (S 3.5 / A 15 / B 74.5) | After (S 4.5 / A 18.5 / B 70) |
+| --- | ---: | ---: |
+| One S+ every… | 7.34 pulls | 6.95 pulls |
+| S+ rate | 13.62% | 14.39% |
+| S+ that came from the 15-pull guarantee | 18.1% | 15.4% |
+| Effective S totem / 3★ holder | 4.14% / 5.03% | 5.16% / 4.87% |
+| Effective 4★ holder | 0.77% | 0.75% |
+| Effective 5★ | 1.91% | 1.89% |
+| **Featured median** | 70 | **70** |
+| Featured within 30 pulls | 10.4% | 10.2% |
+| Featured average | 78.6 | 79.2 |
+| Featured 90th percentile | 130 | 131 |
+
+Holders become about 3% rarer. The 15-pull guarantee picks among all S+ results in proportion to their rates, so a larger S share means fewer forced slots become holders. Collection medians (1,000 players): featured to +6 is 549, all 16 holders 1,637, and one specific 4★ to +6 4,493.

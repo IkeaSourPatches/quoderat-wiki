@@ -135,7 +135,7 @@ export const PITY_LIMIT = 15;
 export const BASE_RATES = [
   { label: '5★', chance: .006 }, { label: '4★', chance: .0065 },
   { label: 'SS', chance: .015 }, { label: '3★', chance: .0425 },
-  { label: 'S', chance: .035 }, { label: 'A', chance: .15 }, { label: 'B', chance: .745 },
+  { label: 'S', chance: .045 }, { label: 'A', chance: .185 }, { label: 'B', chance: .70 },
 ] as const;
 export type PityState = { small: number; big: number; featuredGuaranteed: boolean };
 export const emptyPity = (): PityState => ({ small: 0, big: 0, featuredGuaranteed: false });
