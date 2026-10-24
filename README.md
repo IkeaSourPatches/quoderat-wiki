@@ -188,3 +188,28 @@ Run `node scripts/check-game.mjs` to check map solvability, adjacency and save d
 ## Ideas
 
 Design ideas that are not built yet, or that were replaced, are kept in `ideas.md`, with pointers to any code that exists for them.
+
+
+## Gacha totem pools
+
+Each totem type has one locally saved power pool. Pulls add their depth directly: Earth 20 plus Earth 25 gives Earth power 45 and a count of two. Types stay separate. Pool totals are a game score, not a single totem’s lore depth, so they have no 39-point cap. Pull cards show the contribution and the pool total after the batch.
+
+`src/gacha/collection.ts` validates saves and accumulates rewards. Totems, law holders and pity are now saved together under `quoderat-gacha-save-v1` (`src/gacha/save.ts`). On first load the old `quoderat-gacha-totems` and `quoderat-gacha-holders` keys are read and migrated, and are left in place untouched. Version 2 totem inventories migrate by summing depth × count for each type; previously consumed copies are not recreated. Older recent-only saves recover only the pulls they retained.
+
+No account or server is involved: each browser origin has its own collection, and clearing browser data removes it. Run `node scripts/check-gacha.mjs` to check pooling, persistence, migrations and malformed data.
+
+### Shared summon banner
+
+The Summon tab draws holders and totems together from one outcome table: 5★ 0.1%, 4★ 0.65%, SS 1.5%, 3★ 4.25%, S 3.5%, A 15%, B 75%. Every holder, S and SS counts as S+.
+
+- **S+ guarantee:** 14 non-S+ draws in a row force S+ on the 15th, and every ten-pull's last slot is S+ if the first nine had none.
+- **5★ guarantee:** 5★ stays at 0.1% to pull 65, rises 6 points a pull from 66, and is certain at 80.
+- **Featured holder:** each 5★ is a 50/50 for the featured holder (Ensa on the first banner). Losing it guarantees the next 5★ is featured, so the worst case from zero is 160 pulls.
+
+Counters and the featured guarantee carry across banners and visits; resetting an inventory keeps them. Full rules, the rollback checkpoint and simulated effective rates are in `docs/gacha-pity.md`. `node scripts/simulate-gacha.mjs` regenerates the rates; `node scripts/check-gacha.mjs` checks the rules.
+
+Depth bands: common 20–25, strong 26–30, elite 31–35, epic 36–39. Old elite entries at 36–39 migrate to epic without changing stored power.
+
+Rewards and pity are written to the save together, immediately, before the 1.6-second skippable reveal. Reduced-motion users see results immediately. The reserved reveal stage is independent of the result grid. The other tabs are collection views, not separate banners.
+
+Display ranks for totems are **B / A / S / SS** (formerly common / strong / elite / epic); internal save IDs are retained for compatibility. Base outcome rates are 5★ 0.1%, 4★ 0.65%, SS 1.5%, 3★ 4.25%, S 3.5%, A 15%, B 75%. The shared rare guarantee includes every holder plus S and SS.

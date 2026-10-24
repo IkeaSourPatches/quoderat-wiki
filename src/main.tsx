@@ -6,6 +6,8 @@ import { AxiomMachine } from './game/AxiomMachine';
 import { KeepItFlat } from './game/KeepItFlat';
 import { SpearShieldCourt } from './game/SpearShieldCourt';
 import { GameShelf } from './game/GameShelf';
+import { Gacha } from './gacha/Gacha';
+import { emblems } from './emblems';
 import { LoreHome } from './LoreHome';
 import { WorldRewound } from './timeline/WorldRewound';
 // =============================================================================
@@ -47,6 +49,7 @@ import {
   Globe2, // Icon for the "World & laws" category.
   Scale, // Icon for "The pantheon" category.
   Gamepad2,
+  Sparkles, // Icon for the gacha page.
   Users, // Icon for the "Characters" category.
   Flame, // Icon for the "Creatures" category.
   Bookmark, // Icon for saved pages and the save toggle.
@@ -111,14 +114,6 @@ const categories = [
   { name: "Timeline", icon: ScrollText },
 ]; // End of the categories array.
 
-// Decorative law emblems identify characters without inventing canonical appearances.
-const emblems: Record<string, string> = {
-  kalyan: '⊞', sai: '◈', akhil: '…', zaid: '⚘', vera: '≋',
-  ersetu: '◇', imaq: '≈', salkhi: '↝', illapa: 'ϟ',
-  'ilar-hesabu': 'ℕ', ensa: '∈', tertia: '∨', 'the-spear-and-shield': '¬',
-  'the-open-question': '?', 'voss-halloran': 'Σ', 'rudolf-ludwig': 'Δ',
-  rushd: '→', 'aldous-vane': '⋮', 'lian-xiu': '⇌', 'mattias-krane': '◎',
-};
 
 // Display notation, not additional canon. Social-law formulas are visual summaries.
 // Incompleteness assumes a consistent, effectively axiomatized arithmetic theory T.
@@ -362,6 +357,7 @@ function App() {
 
         <button className={`nav-item ${slug === 'characters' || article?.category === 'Characters' ? 'active' : ''}`} onClick={() => browse('Characters')}><Users size={18}/>{t('Characters')}<span>{characterList.length}</span></button>
         <button className={`nav-item ${slug.startsWith('play') ? 'active' : ''}`} onClick={() => navigate('play')}><Gamepad2 size={18}/>{language === 'zh' ? '游玩' : 'Play'}</button>
+          <button className={`nav-item ${slug === 'gacha' ? 'active' : ''}`} onClick={() => navigate('gacha')}><Sparkles size={18}/>{language === 'zh' ? '抽卡' : 'Gacha'}</button>
         <button className={`nav-item ${loreActive ? 'active' : ''}`} onClick={() => navigate('lore')}><BookOpen size={18}/>{t('Lore')}<span>↗</span></button>
         {loreActive && <div className="lore-subnav">
           <p className="nav-label">{t('LORE SECTIONS')}</p>
@@ -417,7 +413,7 @@ function App() {
           </button>
 
           {/* Breadcrumb showing "Archive" plus the active category. */}
-          <div className="breadcrumb">Quoderat <ChevronRight size={13} /> {(slug === "home" ? (language === "zh" ? "世界首页" : "The world") : slug.startsWith("play") ? (language === "zh" ? "游玩" : "Play") : slug === "lore" ? t("Lore") : slug === "suggestions" ? (language === "zh" ? "提问与建议" : "Questions & suggestions") : t(article?.category || category))}</div>
+          <div className="breadcrumb">Quoderat <ChevronRight size={13} /> {(slug === "home" ? (language === "zh" ? "世界首页" : "The world") : slug.startsWith("play") ? (language === "zh" ? "游玩" : "Play") : slug === "gacha" ? (language === "zh" ? "抽卡" : "Gacha") : slug === "lore" ? t("Lore") : slug === "suggestions" ? (language === "zh" ? "提问与建议" : "Questions & suggestions") : t(article?.category || category))}</div>
 
           {/* Search input wrapped with its icon and clear button. */}
           <div className="search-wrap">
@@ -475,7 +471,7 @@ function App() {
           <div className={`page ${!article || (slug === "timeline" && !query) ? "catalogue-page" : "reading-page"}`}>
             {/* Main column: either an article reader or the entry list. */}
             <main>
-              {slug === "play" && !query ? <GameShelf language={language} open={navigate}/> : slug === "play/sai" && !query ? <SaiGame language={language} open={navigate}/> : slug === "play/axiom" && !query ? <AxiomMachine language={language} open={navigate}/> : slug === "play/flat" && !query ? <KeepItFlat language={language} open={navigate}/> : slug === "play/court" && !query ? <SpearShieldCourt language={language} open={navigate}/> : slug === "suggestions" && !query ? <SuggestionBox language={language}/> : slug === "home" && !query ? <WorldHome language={language} articles={articles} open={navigate} browse={browse} emblems={emblems} lawExpressions={lawExpressions}/> : slug === "lore" && !query ? <LoreHome language={language} articles={articles} browse={browse}/> : slug === "timeline" && !query && article ? <WorldRewound language={language} article={article} articles={articles}/> : article ? ( // Article view when a slug matches.
+              {slug === "gacha" && !query ? <Gacha language={language} articles={articles} open={navigate}/> : slug === "play" && !query ? <GameShelf language={language} open={navigate}/> : slug === "play/sai" && !query ? <SaiGame language={language} open={navigate}/> : slug === "play/axiom" && !query ? <AxiomMachine language={language} open={navigate}/> : slug === "play/flat" && !query ? <KeepItFlat language={language} open={navigate}/> : slug === "play/court" && !query ? <SpearShieldCourt language={language} open={navigate}/> : slug === "suggestions" && !query ? <SuggestionBox language={language}/> : slug === "home" && !query ? <WorldHome language={language} articles={articles} open={navigate} browse={browse} emblems={emblems} lawExpressions={lawExpressions}/> : slug === "lore" && !query ? <LoreHome language={language} articles={articles} browse={browse}/> : slug === "timeline" && !query && article ? <WorldRewound language={language} article={article} articles={articles}/> : article ? ( // Article view when a slug matches.
                 <>{/* Fragment for the article view. */}
                   {/* Eyebrow line above the title. */}
                   <div className="eyebrow">
