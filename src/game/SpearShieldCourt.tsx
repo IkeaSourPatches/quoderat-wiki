@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { Language } from '../i18n';
 import { cases, type Evidence, type Line, type Mask, type Mood, type T } from './court/cases';
 import './games.css';
+import { gameKeys, ResetProgress } from './progress';
 
 // The Spear and Shield's court. Canon: around the holder of Non-Contradiction,
 // uncertainty collapses, and bluffs are forced to resolve into a single answer.
@@ -10,7 +11,7 @@ import './games.css';
 type Phase = 'intro' | 'testimony' | 'clash' | 'break' | 'resolution' | 'closed';
 type After = 'testimony' | 'back' | 'next' | 'closed' | 'retry' | `reveal:${string}`;
 const PATIENCE = 5;
-const solvedKey = 'quoderat-court-solved';
+const solvedKey = gameKeys.court;
 const loadSolved = (): string[] => { try { const v = JSON.parse(localStorage.getItem(solvedKey) || '[]'); return Array.isArray(v) ? v.filter(x => typeof x === 'string') : []; } catch { return []; } };
 const still = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -177,6 +178,7 @@ export function SpearShieldCourt({ language, open }: { language: Language; open:
       <span className="games-note">{label('Cases are game adaptations, not canon events.', '案件为游戏改编，并非正史事件。')}</span>
       <button className="games-link" onClick={() => open('the-spear-and-shield')}>{label('Read the Spear and Shield’s profile', '阅读矛盾的人物档案')}</button>
       <button className="games-link" onClick={() => open('play')}>{label('All games', '全部游戏')}</button>
+      <ResetProgress language={language} game="court" onReset={() => setSolved([])} />
     </p>
   </div>;
 

@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import bundled from '../../data/sai-puzzles.json';
 import type { Language } from '../i18n';
 import { conflicts, restoreColours, solved, type Puzzle } from './rules';
+import { gameKeys, ResetProgress } from './progress';
 import './game.css';
 
 const puzzles = bundled as Puzzle[];
 const paints = ['#b65e50','#c6a451','#46858a','#8876a5'];
 const apiBase = (import.meta as unknown as {env:Record<string,string>}).env.VITE_API_BASE;
 const api = apiBase ? apiBase.replace(/\/$/, '') : '/api';
-const storageKey = 'quoderat-sai-v1';
+const storageKey = gameKeys.sai;
 function loadProgress(): Record<string, number[]> {
   try { const value = JSON.parse(localStorage.getItem(storageKey) || '{}'); return value && typeof value === 'object' && !Array.isArray(value) ? value : {}; } catch { return {}; }
 }
@@ -55,6 +56,7 @@ export function SaiGame({language, open}: {language:Language;open:(slug:string)=
   },[won,puzzle.id,colours]);
   function commit(next:number[]) {setColours(next);setProgress(old=>({...old,[puzzle.id]:next}));}
   function colourRegion(id:number) {if(colours[id]===paint)return;setHistory(old=>[...old,colours]);commit(colours.map((c,i)=>i===id?paint:c));}
+  function resetProgress() {setProgress({});setColours(Array(puzzle.regions.length).fill(-1));setHistory([]);setVerification('');}
   function selectPuzzle(i:number) {setIndex(i);setColours(restoreColours(progress[puzzles[i].id],puzzles[i].regions.length));setHistory([]);setVerification('');}
   const names = language==='zh'?['朱红','赭金','湖蓝','暮紫']:['Vermilion','Ochre','Teal','Violet'];
   const marks=['/','•','+','—'];
@@ -75,6 +77,6 @@ export function SaiGame({language, open}: {language:Language;open:(slug:string)=
     <div className="sai-speech"><small>{text('SAI / THE BORDER-BAITER','彩 / 诱边人')}</small><p>{won?text('“An excellent demonstration. My advertisement worked perfectly.”','“精彩的示范。我的广告效果完美。”'):collisions.length?text('“Those two are neighbours. A technicality, surely.”','“那两个是邻居。只是个技术细节，对吧。”'):text('“Take your time. Every second is excellent engagement.”','“慢慢来。每一秒都是上好的参与度。”')}</p></div>
     <div className={`game-status ${won?'is-solved':''}`} role="status" aria-live="polite">{won?<><strong>□ Q.E.D.</strong><p>{text('Every border agrees. Map complete.','边界再无冲突，地图完成。')}</p>{puzzle.id==='the-fourth-colour'&&<p>{text('Five regions form an odd cycle: the ring needs three colours. The centre touches them all, so a fourth is unavoidable.','外围五区构成奇环，至少需要三种颜色。中央与五区都共边，因此第四种颜色不可避免。')}</p>}{index<puzzles.length-1?<button className="game-primary" onClick={()=>selectPuzzle(index+1)}>{text('Next puzzle','下一题')} →</button>:<p>{text('You finished this map. Revisit the book to complete any remaining puzzles.','此图已完成。可返回谜题册完成其余谜题。')}</p>} <small>{verification==='verified'?text('Solution verified by the server.','服务器已验证解答。'):verification==='rejected'?text('Server validation disagreed. Your local progress is saved.','服务器验证结果不一致。本地进度已保存。'):text('Checked on this device.','已在本机验证。')}</small></>:<p>{colours.filter(c=>c>=0).length} / {colours.length} {text('painted','已涂色')} · {collisions.length} {text('border conflicts','处边界冲突')}</p>}</div>
     </aside></div>{storageWarning&&<p role="status">{text('Browser storage is unavailable. You can play, but progress will not survive a reload.','浏览器存储不可用，刷新后将无法保留进度。')}</p>}</>}
-    <footer className="game-footnote"><span>{text('Puzzle maps and dialogue are game adaptations, not canonical geography.','谜题地图与对白为游戏改编，并非正式地理设定。')}</span><button onClick={()=>open('sai')}>{text('Meet Sai','认识彩')} ↗</button></footer>
+    <footer className="game-footnote"><span>{text('Puzzle maps and dialogue are game adaptations, not canonical geography.','谜题地图与对白为游戏改编，并非正式地理设定。')}</span><span className="game-footnote-links"><ResetProgress language={language} game="sai" onReset={resetProgress} className=""/><button onClick={()=>open('sai')}>{text('Meet Sai','认识彩')} ↗</button></span></footer>
   </div>;
 }

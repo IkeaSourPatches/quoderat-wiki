@@ -14,3 +14,4 @@
 .puzzle-tabs button{min-width:46px;border-radius:3px;background:#20362b}.puzzle-tabs button:hover{border-color:#cdb885}.puzzle-tabs button[aria-pressed=true]{box-shadow:0 3px 0 #92825c;border-color:#dac99a;background:#e0d1a8}.game-progress button{text-underline-offset:4px}
 @media(max-width:600px){.game-board{padding:16px}.game-board>.paint-options{grid-template-columns:repeat(2,minmax(0,1fr))}.puzzle-map{padding:10px}.board-heading{gap:12px}.board-heading h2{font-size:22px}}
 @media(prefers-reduced-motion:reduce){.paint-options button,.puzzle-map polygon{transition:none}}
+.game-footnote-links{display:flex;gap:20px;align-items:baseline;flex-wrap:wrap}.game-footnote .games-reset{font-size:inherit;color:inherit}

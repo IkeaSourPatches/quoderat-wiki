@@ -1,4 +1,5 @@
 import type { Language } from '../i18n';
+import { ResetProgress } from './progress';
 import './games.css';
 
 // The games shelf: each game is built on one character's law.
@@ -27,5 +28,6 @@ export function GameShelf({ language, open }: { language: Language; open: (slug:
       <Art kind={g.art} />
       <span className="gs-text"><small>{t(g.who)} · {t(g.law)}</small><strong>{t(g.title)}</strong><span>{t(g.blurb)}</span></span>
     </button></li>)}</ul>
+    <p className="games-foot"><ResetProgress language={language} /></p>
   </div>;
 }
