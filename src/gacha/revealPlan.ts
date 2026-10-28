@@ -7,9 +7,14 @@ export type Grade = 0 | 1 | 2 | 3 | 4;
 // Pigments of an illuminated proof, one per grade: chalk, verdigris, lapis, amethyst, gilt.
 export const PIGMENTS = ['#e6e1cc', '#7fd3b6', '#7aa7ff', '#c49dff', '#f6c95f'] as const;
 
-export const gradeOf = (r: MixedReward): Grade => r.kind === 'holder'
-  ? r.rating.stars === 5 ? 4 : r.rating.stars === 4 ? 3 : 2
-  : ({ common: 0, strong: 1, elite: 2, epic: 3 } as const)[r.totem.tier];
+export const gradeOf = (r: MixedReward): Grade =>
+  r.kind === 'holder'
+    ? r.rating.stars === 5
+      ? 4
+      : r.rating.stars === 4
+        ? 3
+        : 2
+    : ({ common: 0, strong: 1, elite: 2, epic: 3 } as const)[r.totem.tier];
 
 /** How many constructions the best reward earns: B and A stop at the triangle. */
 export const stagesFor = (grade: Grade) => (grade < 2 ? 1 : grade) as 1 | 2 | 3 | 4;
@@ -36,6 +41,10 @@ export function revealPlan(rewards: (MixedReward & { copies?: number })[]): Reve
   const grades = rewards.map(gradeOf);
   const top = Math.max(...grades) as Grade;
   const held = rewards.map((r, i) => grades[i] >= 3 || (r.kind === 'holder' && r.copies === 1));
-  const splashOrder = grades.map((g, i) => ({ g, i })).filter(({ i }) => held[i]).sort((a, b) => a.g - b.g || a.i - b.i).map(({ i }) => i);
+  const splashOrder = grades
+    .map((g, i) => ({ g, i }))
+    .filter(({ i }) => held[i])
+    .sort((a, b) => a.g - b.g || a.i - b.i)
+    .map(({ i }) => i);
   return { grades, top, stages: stagesFor(top), held, splashOrder };
 }

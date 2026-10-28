@@ -10,7 +10,7 @@
    own theme toggle still does something honest. `auto` follows the OS.       */
 
 :root,
-html[data-theme="light"] {
+html[data-theme='light'] {
   color-scheme: light;
 
   --q-forest: #16241d;
@@ -72,7 +72,7 @@ html[data-theme="light"] {
   --object-tools-hover-bg: var(--q-green-deep);
 }
 
-html[data-theme="dark"] {
+html[data-theme='dark'] {
   color-scheme: dark;
 
   --q-field-bg: #16241d;
@@ -130,7 +130,7 @@ html[data-theme="dark"] {
 }
 
 @media (prefers-color-scheme: dark) {
-  html[data-theme="auto"] {
+  html[data-theme='auto'] {
     color-scheme: dark;
 
     --q-field-bg: #16241d;
@@ -191,8 +191,7 @@ html[data-theme="dark"] {
 /* --- Type ---------------------------------------------------------------- */
 
 html {
-  --font-family-primary: "Avenir Next", "Segoe UI", system-ui, -apple-system,
-    "Helvetica Neue", Arial, sans-serif;
+  --font-family-primary: 'Avenir Next', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
 }
 
 body {
@@ -208,7 +207,7 @@ body {
 .module caption,
 .inline-group h2,
 .dashboard .module th a {
-  font-family: Georgia, "Songti SC", "Times New Roman", serif;
+  font-family: Georgia, 'Songti SC', 'Times New Roman', serif;
   font-weight: 400;
 }
 
@@ -244,7 +243,9 @@ body {
 
 #quoderat-brand .mark {
   position: relative;
-  font: italic 27px/1 Georgia, serif;
+  font:
+    italic 27px/1 Georgia,
+    serif;
   color: #cbb888;
 }
 
@@ -259,7 +260,7 @@ body {
 #quoderat-brand .name {
   display: flex;
   flex-direction: column;
-  font-family: Georgia, "Songti SC", serif;
+  font-family: Georgia, 'Songti SC', serif;
   font-size: 16px;
   letter-spacing: 2.6px;
   text-transform: uppercase;
@@ -354,7 +355,7 @@ div.breadcrumbs a:hover {
 /* A brass rule above every card caption, like the site's section rules. */
 .dashboard .module h2::before,
 .dashboard .module caption::before {
-  content: "";
+  content: '';
   display: block;
   width: 28px;
   height: 2px;
@@ -403,8 +404,8 @@ div.breadcrumbs a:hover {
 /* --- Buttons and object tools -------------------------------------------- */
 
 .button,
-input[type="submit"],
-input[type="button"],
+input[type='submit'],
+input[type='button'],
 .submit-row input,
 a.button {
   padding: 9px 16px;
@@ -413,25 +414,28 @@ a.button {
   font-size: 12px;
   letter-spacing: 0.4px;
   line-height: 1.4;
-  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .button.default,
-input[type="submit"].default,
+input[type='submit'].default,
 .submit-row input.default {
   border-color: var(--q-brass);
   font-weight: 600;
 }
 
 .button:hover,
-input[type="submit"]:hover,
+input[type='submit']:hover,
 a.button:hover {
   filter: brightness(1.06);
 }
 
 .button:focus-visible,
-input[type="submit"]:focus-visible,
-input[type="button"]:focus-visible,
+input[type='submit']:focus-visible,
+input[type='button']:focus-visible,
 a.button:focus-visible,
 .object-tools a:focus-visible,
 select:focus-visible,
@@ -500,11 +504,11 @@ textarea:focus-visible {
   line-height: 1.6;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="number"],
-input[type="url"],
+input[type='text'],
+input[type='password'],
+input[type='email'],
+input[type='number'],
+input[type='url'],
 textarea,
 select,
 .vTextField {
@@ -521,8 +525,8 @@ textarea {
   line-height: 1.6;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus,
+input[type='text']:focus,
+input[type='password']:focus,
 textarea:focus,
 select:focus {
   border-color: var(--q-brass);
@@ -533,10 +537,10 @@ fieldset.module {
 }
 
 fieldset.module h2 {
-  font-family: Georgia, "Songti SC", serif;
+  font-family: Georgia, 'Songti SC', serif;
 }
 
-textarea[name="body"] {
+textarea[name='body'] {
   font-family: var(--font-family-monospace);
   font-size: 12.5px;
   line-height: 1.7;
@@ -564,7 +568,7 @@ textarea[name="body"] {
   font-size: 13px !important;
 }
 
-#toolbar form input[type="submit"] {
+#toolbar form input[type='submit'] {
   padding: 8px 14px;
 }
 
@@ -767,46 +771,180 @@ body.login .submit-row input {
 
 @media (prefers-reduced-motion: reduce) {
   .button,
-  input[type="submit"],
+  input[type='submit'],
   a.button {
     transition: none;
   }
 }
 
 /* Finish the layout without changing Django's forms or permission controls. */
-#changelist .results { overflow-x: auto; }
-fieldset.module { overflow: visible; }
-.aligned .form-row > div { min-width: 0; }
-textarea { box-sizing: border-box; max-width: 100%; width: min(100%, 850px); }
-.vTextField { box-sizing: border-box; max-width: 100%; }
-.readonly { overflow-wrap: anywhere; }
-.field-message .readonly { white-space: pre-wrap; line-height: 1.8; }
-.aligned label.required { color: var(--body-loud-color); }
-body.login #container { width: min(420px, calc(100% - 32px)); box-sizing: border-box; margin: 10vh auto 32px; }
-body.login .form-row input { box-sizing: border-box; width: 100%; min-height: 42px; }
-body.login #quoderat-brand .name small { color: var(--body-quiet-color); }
-.dashboard #content { max-width: 1480px; box-sizing: border-box; margin: auto; width: 100%; }
-.dashboard #content.colMS { display: grid; grid-template-columns: minmax(0,1fr) 260px; gap: 24px; }
-.dashboard #content > h1 { grid-column: 1 / -1; margin-bottom: 0; }
-.dashboard #content-main { width: auto; float: none; min-width: 0; }
-.dashboard #content-related { width: auto; float: none; margin: 0; padding: 0; background: transparent; }
-.q-welcome { padding: 26px 28px; border: 1px solid var(--border-color); border-left: 3px solid var(--q-brass); background: var(--darkened-bg); border-radius: 5px; margin-bottom: 28px; }
-.q-eyebrow { font-size: 10px; letter-spacing: 2px; color: var(--body-quiet-color); }
-.q-welcome h2 { font-size: 28px; color: var(--body-loud-color); margin: 10px 0; }
-.q-welcome > p:last-child { color: var(--body-quiet-color); margin-bottom: 0; }
-.q-app { margin-bottom: 28px; }
-.q-app > h2 { font: 11px var(--font-family-primary); text-transform: uppercase; letter-spacing: 1.7px; color: var(--body-quiet-color); }
-.q-model-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
-.q-model-card { border: 1px solid var(--border-color); border-radius: 5px; padding: 22px; background: var(--q-field-bg); display: flex; flex-direction: column; }
-.q-model-card h3 { font: 23px Georgia,serif; margin: 0 0 12px; }
-.q-model-card p { margin: 0 0 24px; color: var(--body-quiet-color); line-height: 1.7; }
-.q-card-actions { margin-top: auto; display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid var(--hairline-color); padding-top: 14px; font-size: 12px; }
-#recent-actions-module { padding-bottom: 14px; }
-#recent-actions-module h3, #recent-actions-module p, #recent-actions-module ul { margin-inline: 16px; }
-@media(max-width:1100px) { .dashboard #content.colMS { grid-template-columns: 1fr; } }
-@media(max-width:600px) { .q-model-grid { grid-template-columns: 1fr; } .q-welcome { padding: 20px; } .q-welcome h2 { font-size: 24px; } #user-tools { line-height: 2; } }
+#changelist .results {
+  overflow-x: auto;
+}
+fieldset.module {
+  overflow: visible;
+}
+.aligned .form-row > div {
+  min-width: 0;
+}
+textarea {
+  box-sizing: border-box;
+  max-width: 100%;
+  width: min(100%, 850px);
+}
+.vTextField {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.readonly {
+  overflow-wrap: anywhere;
+}
+.field-message .readonly {
+  white-space: pre-wrap;
+  line-height: 1.8;
+}
+.aligned label.required {
+  color: var(--body-loud-color);
+}
+body.login #container {
+  width: min(420px, calc(100% - 32px));
+  box-sizing: border-box;
+  margin: 10vh auto 32px;
+}
+body.login .form-row input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 42px;
+}
+body.login #quoderat-brand .name small {
+  color: var(--body-quiet-color);
+}
+.dashboard #content {
+  max-width: 1480px;
+  box-sizing: border-box;
+  margin: auto;
+  width: 100%;
+}
+.dashboard #content.colMS {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 24px;
+}
+.dashboard #content > h1 {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+.dashboard #content-main {
+  width: auto;
+  float: none;
+  min-width: 0;
+}
+.dashboard #content-related {
+  width: auto;
+  float: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+.q-welcome {
+  padding: 26px 28px;
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--q-brass);
+  background: var(--darkened-bg);
+  border-radius: 5px;
+  margin-bottom: 28px;
+}
+.q-eyebrow {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--body-quiet-color);
+}
+.q-welcome h2 {
+  font-size: 28px;
+  color: var(--body-loud-color);
+  margin: 10px 0;
+}
+.q-welcome > p:last-child {
+  color: var(--body-quiet-color);
+  margin-bottom: 0;
+}
+.q-app {
+  margin-bottom: 28px;
+}
+.q-app > h2 {
+  font: 11px var(--font-family-primary);
+  text-transform: uppercase;
+  letter-spacing: 1.7px;
+  color: var(--body-quiet-color);
+}
+.q-model-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.q-model-card {
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  padding: 22px;
+  background: var(--q-field-bg);
+  display: flex;
+  flex-direction: column;
+}
+.q-model-card h3 {
+  font:
+    23px Georgia,
+    serif;
+  margin: 0 0 12px;
+}
+.q-model-card p {
+  margin: 0 0 24px;
+  color: var(--body-quiet-color);
+  line-height: 1.7;
+}
+.q-card-actions {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: 1px solid var(--hairline-color);
+  padding-top: 14px;
+  font-size: 12px;
+}
+#recent-actions-module {
+  padding-bottom: 14px;
+}
+#recent-actions-module h3,
+#recent-actions-module p,
+#recent-actions-module ul {
+  margin-inline: 16px;
+}
+@media (max-width: 1100px) {
+  .dashboard #content.colMS {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .q-model-grid {
+    grid-template-columns: 1fr;
+  }
+  .q-welcome {
+    padding: 20px;
+  }
+  .q-welcome h2 {
+    font-size: 24px;
+  }
+  #user-tools {
+    line-height: 2;
+  }
+}
 
-@media(max-width:767px) { .object-tools { margin-top: 0; } }
+@media (max-width: 767px) {
+  .object-tools {
+    margin-top: 0;
+  }
+}
 /* Django's .section link uses header text colours; sidebar captions use paper. */
 #nav-sidebar .module caption a.section:link,
-#nav-sidebar .module caption a.section:visited { color: var(--body-medium-color); }
+#nav-sidebar .module caption a.section:visited {
+  color: var(--body-medium-color);
+}
