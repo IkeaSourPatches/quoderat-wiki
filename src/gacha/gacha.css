@@ -160,3 +160,7 @@
 /* The idle banner shows the first construction every summon starts from. */
 .gc-summon-figure{width:132px;height:132px;margin-bottom:18px;fill:none;stroke:#c9b482;stroke-width:9;stroke-linejoin:round;overflow:visible}
 .gc-summon-figure path:nth-child(-n+2){stroke-opacity:.45;stroke-width:6}
+/* Master reset sits apart from the per-tab resets, under the banner. */
+.gc-master-reset{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:6px 14px;margin:28px 0 0;font-size:14px;color:#a3b5a8}
+.gc-master-reset .games-link{color:#d9a98a;text-decoration-color:#d9a98a66}
+.gc-master-reset .games-link:disabled{opacity:.45;cursor:default}

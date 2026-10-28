@@ -49,6 +49,7 @@ export function Gacha({ language, articles, open }: { language: Language; articl
   const [game, setGame] = useState<GachaSave>(initial.save);
   const saved = game.totems, holderLog = game.holders;
   const [storageFailed, setStorageFailed] = useState(false);
+  const [resetDone, setResetDone] = useState(false);
   const save = (next: GachaSave) => {
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(next)); setStorageFailed(false); }
     catch { setStorageFailed(true); return false; }
@@ -75,6 +76,7 @@ export function Gacha({ language, articles, open }: { language: Language; articl
       const copies = { ...holderLog.copies };
       setResults(draw.rewards.map(r => r.kind === 'totem' ? r : { ...r, copies: copies[r.rating.slug] = (copies[r.rating.slug] || 0) + 1 }));
       setPullId(id => id + 1);
+      setResetDone(false);
       const animate = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       setRevealing(animate); drawing.current = animate;
     } catch { drawing.current = false; setStorageFailed(true); }
@@ -84,6 +86,11 @@ export function Gacha({ language, articles, open }: { language: Language; articl
     requestAnimationFrame(() => { if (!revealOpen.current) opener.current?.focus({ preventScroll: true }); });
   };
   const pullAgain = (count: 1 | 10) => { finishReveal(); pull(count); };
+  // Master reset: every holder, totem, display slot and pity counter, back to a fresh start.
+  const resetAll = () => {
+    if (!window.confirm(text('Reset everything? This erases all law holders, totems, totem displays and pity counters on this browser, and cannot be undone.', '全部重置？这将清空本浏览器中的全部执律者、图腾、图腾展示与保底计数，且无法撤销。'))) return;
+    if (save(emptySave())) { setResults([]); setResetDone(true); }
+  };
   const holderOwned = pool.filter(h => holderLog.copies[h.slug]).length;
   const badge = (copies: number) => copies === 1 ? text('New', '新') : copies - 1 > MAX_UPGRADE ? text('Max', '已满') : `+${upgradeLevel(copies)}`;
   const history = (label: string, reset: () => void, total: number) =>
@@ -183,6 +190,10 @@ export function Gacha({ language, articles, open }: { language: Language; articl
       <p className="gc-history">{history(text(`Holder pulls: ${holderLog.total}`, `执律者抽取次数：${holderLog.total}`), () => { if (window.confirm(text('Erase holder inventory? Pity is kept.', '清空执律者收藏？保底保留。'))) { setResults([]); save({ ...game, holders: { total: 0, copies: {} } }); } }, holderLog.total)}</p>
     </section>}
 
+    <div className="gc-master-reset">
+      <button className="games-link" disabled={revealing || initial.failed} onClick={resetAll}>{text('Reset everything', '全部重置')}</button>
+      <span role="status">{resetDone ? text('Everything was reset. Your next pull starts from zero pity.', '已全部重置。下次抽取从零保底开始。') : ''}</span>
+    </div>
     <p className="gc-fine">{text('Star ratings, odds, depth bands, upgrades and totem displays are the site’s official game rules (October 2026), kept separate from the world’s lore. Your collection is saved on this browser and device only; clearing browser data erases it.', '星级、概率、深度区间、升级与图腾展示是本站的正式游戏规则（2026 年 10 月），与世界观设定相互独立。收藏仅保存在当前浏览器与设备中；清除浏览器数据会删除收藏。')}</p>
   </div>;
 }
