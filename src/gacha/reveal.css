@@ -1,121 +1,778 @@
 /* Summon reveal: a full-screen slate on which the world constructs the rewards.
    Pigments by grade (revealPlan.ts): chalk, verdigris, lapis, amethyst, gilt. */
-.sr{position:fixed;inset:0;z-index:200;overflow:hidden;color:#f1ebd9;cursor:pointer;outline:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;font-family:'Avenir Next','Segoe UI',sans-serif;background:radial-gradient(120% 85% at 50% 45%,#10241c 0%,#08130f 55%,#030806 100%);animation:sr-fade .35s ease-out both}
-.sr::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.1;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.sr::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 50%,#000a 100%)}
-.sr.summary{cursor:default}
-.sr-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.sr :focus-visible{outline:2px solid #f1ebd9;outline-offset:3px}
-.sr-skip{position:absolute;z-index:6;top:max(16px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right));min-height:44px;padding:0 20px;border:1px solid #c9b48255;border-radius:22px;background:#0b1712cc;color:#e9dfc3;font:14px 'Avenir Next','Segoe UI',sans-serif;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.sr-skip:hover{border-color:#c9b482;color:#fff8e6}
-
-/* The proposition being drawn, as Euclid would state it. */
-.sr-caption{position:absolute;z-index:2;left:50%;bottom:max(7vh,60px);width:min(92vw,640px);transform:translateX(-50%);text-align:center;pointer-events:none;font-family:'STIX Two Text',Cambria,Georgia,'Songti SC',serif;animation:sr-rise .55s cubic-bezier(.2,.8,.2,1) both}
-.sr-ref{display:block;margin-bottom:6px;font-size:14px;color:var(--ink)}
-.sr-prop{display:block;font-style:italic;font-size:clamp(16px,2.1vw,20px);line-height:1.45;color:#e9e2cc;text-wrap:balance}
-.sr-qed{display:inline-flex;align-items:center;gap:.45em;font-size:clamp(22px,3vw,30px);letter-spacing:.06em;color:var(--top);text-shadow:0 0 24px color-mix(in srgb,var(--top) 60%,transparent)}
-.sr-qed i{font-style:normal;animation:sr-stamp .5s cubic-bezier(.2,1.6,.4,1) both}
-.sr-hint{position:absolute;z-index:2;left:0;right:0;bottom:max(2.5vh,18px);margin:0;text-align:center;font-size:12px;color:#a3b5a8;pointer-events:none;opacity:0;animation:sr-fade .5s 1.4s forwards}
-
-/* Cards. The li is measured for the deal; .sr-deal flies out; .sr-card-inner turns over. */
-.sr-cards{--cw:clamp(98px,12.4vw,150px);transition:opacity .3s ease-out;position:absolute;z-index:3;left:50%;top:46%;transform:translate(-50%,-50%);display:grid;grid-template-columns:repeat(5,var(--cw));gap:clamp(10px,1.6vw,18px);margin:0;padding:0;list-style:none}
-.sr-cards.single{--cw:clamp(196px,24vw,250px);grid-template-columns:var(--cw)}
-.sr-card{--glow:0px;position:relative;width:var(--cw);aspect-ratio:5/7}
-.sr-card.g1{--glow:8px}.sr-card.g2{--glow:16px}.sr-card.g3{--glow:26px}.sr-card.g4{--glow:36px}
-.sr-deal{position:absolute;inset:0;transition:transform .66s cubic-bezier(.16,.84,.3,1) calc(var(--i) * 45ms),opacity .25s ease-out calc(var(--i) * 45ms + 110ms)}
-.sr.splashing .sr-cards{opacity:0}
-.sr-card.pre .sr-deal{transform:translate(var(--dx),var(--dy)) scale(.16) rotate(var(--rot));opacity:0;transition:none}
-.sr-card-btn{all:unset;box-sizing:border-box;position:absolute;inset:0;display:block;cursor:pointer;perspective:1000px;border-radius:10px}
-.sr-card-btn:focus-visible{outline:2px solid #f1ebd9;outline-offset:4px}
-.flipped .sr-card-btn,.summary .sr-card-btn{cursor:default}
-.sr-card-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .66s cubic-bezier(.3,.7,.2,1)}
-.sr-card.g3 .sr-card-inner,.sr-card.g4 .sr-card-inner{transition-duration:.85s}
-.sr-card.flipped .sr-card-inner{transform:rotateY(180deg)}
-.skipped .sr-card-inner{transition:none}
-.sr-back,.sr-face{position:absolute;inset:0;overflow:hidden;border-radius:10px;-webkit-backface-visibility:hidden;backface-visibility:hidden}
-.sr-back{color:#c9b482;background:linear-gradient(160deg,#173327,#0b1813 72%);border:1px solid #c9b48266;box-shadow:0 0 var(--glow) color-mix(in srgb,var(--pig) 75%,transparent),0 0 calc(var(--glow) / 3) color-mix(in srgb,var(--pig) 90%,transparent),0 10px 24px #0008}
-.sr-card.g0 .sr-back{box-shadow:0 10px 24px #0008}
-.sr-back img,.sr-back svg{display:block;width:100%;height:100%;object-fit:cover}
-.sr-back svg{fill:none;stroke:currentColor;stroke-width:.7}
-.sr-back::before{content:'';position:absolute;inset:5px;border:1px solid #c9b48240;border-radius:6px;box-shadow:inset 0 0 0 3px #0b1813,inset 0 0 0 4px #c9b48222;pointer-events:none}
-.sr-back circle{stroke-opacity:.45}
-.sr-back .tri{stroke:var(--pig);stroke-width:1.1}.sr-back .qed{fill:currentColor;stroke:none;opacity:.7}
-.sr-card.g0 .sr-back .tri{stroke:currentColor}
-.sr-card.armed .sr-card-btn{animation:sr-armed 1.1s ease-in-out infinite}
-.sr-card.armed .sr-back{animation:sr-beacon 1.1s ease-in-out infinite}
-/* Held cards: a point of light runs round the edge. */
-@property --sweep{syntax:'<angle>';inherits:false;initial-value:0deg}
-.sr-card.held:not(.flipped) .sr-back::after{content:'';position:absolute;inset:0;padding:2px;border-radius:inherit;background:conic-gradient(from var(--sweep),transparent 0 62%,color-mix(in srgb,var(--pig) 70%,transparent) 80%,#fff 86%,transparent 93%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:sr-sweep 2.2s linear infinite;pointer-events:none}
-
-.sr-face{transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;text-align:center;padding:14% 8% 9%;gap:4px;border:1px solid color-mix(in srgb,var(--pig) 55%,#c9b48233);background:radial-gradient(120% 70% at 50% 0%,color-mix(in srgb,var(--pig) 20%,transparent),transparent 62%),linear-gradient(170deg,#1b3529,#0d1b15);font-family:'STIX Two Text',Cambria,Georgia,'Songti SC',serif;box-shadow:0 0 calc(var(--glow) * .7) color-mix(in srgb,var(--pig) 45%,transparent),0 10px 24px #0008}
-.sr-face-sigil{display:block;font-size:clamp(34px,4.3vw,52px);line-height:1.1;color:var(--pig);filter:drop-shadow(0 0 10px color-mix(in srgb,var(--pig) 55%,transparent))}
-.sr-face.totem .sr-face-sigil{color:var(--c)}
-.sr-face-text{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;margin-top:8%}
-.sr-rank{color:var(--pig);font-size:12px;letter-spacing:1px;line-height:1}
-.sr-rank.letter{font-size:15px;letter-spacing:.04em}
-.sr-face strong{font-weight:400;font-size:clamp(14px,1.45vw,18px);line-height:1.15;color:#f8f2df;overflow-wrap:anywhere}
-.sr-face small{font-size:12px;font-style:italic;line-height:1.3;color:#b9c6ba}
-.sr-badge{margin-top:auto;padding:2px 9px;border-radius:10px;font:11px 'Avenir Next','Segoe UI',sans-serif;letter-spacing:.03em;background:color-mix(in srgb,var(--pig) 22%,transparent);color:#f1ebd9}
-.sr-badge.new{background:var(--pig);color:#0b1511}
-.sr-card.g4 .sr-face{border-color:var(--pig);outline:1px solid color-mix(in srgb,var(--pig) 45%,transparent);outline-offset:-6px}
-.sr-card.flipped:is(.g2,.g3,.g4) .sr-face::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,#ffffff38 50%,transparent 65%);transform:translateX(-110%);animation:sr-sheen 1.2s .45s ease-out forwards;pointer-events:none}
-.sr-cards.single .sr-face{padding:16% 10% 10%}
-.sr-cards.single .sr-face-sigil{font-size:clamp(64px,8vw,92px)}
-.sr-cards.single .sr-face strong{font-size:24px}
-.sr-cards.single .sr-face small{font-size:14px}
-.sr-cards.single .sr-rank{font-size:15px}
-
-/* Splash: the reward on its own, framed by the construction that summoned it. */
-.sr-splash{position:absolute;inset:0;z-index:5;display:grid;place-items:center;overflow:hidden;cursor:pointer;background:radial-gradient(circle at 50% 44%,color-mix(in srgb,var(--pig) 24%,transparent) 0%,transparent 55%),#030806f2;animation:sr-fade .3s ease-out both}
-.sr-splash.g4::before{content:'';position:absolute;left:50%;top:44%;width:180vmax;height:180vmax;background:repeating-conic-gradient(from 0deg,color-mix(in srgb,var(--pig) 11%,transparent) 0deg 2.5deg,transparent 2.5deg 12deg);-webkit-mask:radial-gradient(circle,#000 0,transparent 40%);mask:radial-gradient(circle,#000 0,transparent 40%);animation:sr-spin 80s linear infinite;pointer-events:none}
-.sr-halo{position:absolute;left:50%;top:44%;width:min(94vmin,860px);height:min(94vmin,860px);overflow:visible;fill:none;stroke:var(--pig);stroke-width:2.2;opacity:.5;animation:sr-spin 120s linear infinite;pointer-events:none}
-.sr-halo path{stroke-dasharray:1;stroke-dashoffset:1;animation:sr-draw 1.3s cubic-bezier(.3,.6,.2,1) forwards;animation-delay:calc(var(--n) * .14s)}
-.sr-splash-body{position:relative;display:flex;flex-direction:column;align-items:center;max-width:min(92vw,760px);margin-top:-5vh;padding:0 16px;text-align:center}
-.sr-splash-sigil{display:block;font-size:clamp(96px,17vmin,170px);line-height:1.1;color:var(--pig);font-family:'STIX Two Text',Cambria,Georgia,serif;animation:sr-sigil .9s cubic-bezier(.2,.9,.2,1) both}
-.sr-splash.totem .sr-splash-sigil{color:var(--c)}
-.sr-splash-rank{margin:16px 0 4px;color:var(--pig);font:clamp(19px,2.4vw,25px)/1 'STIX Two Text',Cambria,Georgia,serif;letter-spacing:.1em}
-.sr-splash-rank span{display:inline-block;animation:sr-stamp .45s cubic-bezier(.2,1.6,.4,1) both;animation-delay:calc(.5s + var(--s) * 90ms)}
-.sr-splash-name{margin:0;font:400 clamp(44px,8vw,92px)/1.04 'STIX Two Text',Cambria,Georgia,'Songti SC',serif;color:#fbf6e6;text-shadow:0 0 42px color-mix(in srgb,var(--pig) 45%,transparent);animation:sr-name 1s .25s cubic-bezier(.2,.8,.2,1) both}
-.sr-splash-sub{margin:10px 0 0;font:italic clamp(18px,2.3vw,24px)/1.4 'STIX Two Text',Cambria,Georgia,'Songti SC',serif;color:#e2dac3;animation:sr-fade .6s .6s both}
-.sr-splash-kind{margin:6px 0 0;font-size:13px;color:#a9bbad;animation:sr-fade .6s .75s both}
-.sr-splash-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:18px 0 0;animation:sr-fade .5s .9s both}
-.sr-splash-tags span{padding:6px 13px;border:1px solid color-mix(in srgb,var(--pig) 60%,transparent);border-radius:15px;font-size:13px;line-height:1.3;color:#f1ebd9}
-.sr-splash-tags .lead{border-color:transparent;background:var(--pig);color:#0b1511}
-.sr-continue{position:absolute;bottom:max(6vh,36px);left:50%;transform:translateX(-50%);min-height:44px;padding:0 24px;border:1px solid #f1ebd955;border-radius:22px;background:#0006;color:#f1ebd9;font:14px 'Avenir Next','Segoe UI',sans-serif;cursor:pointer;animation:sr-fade .4s 1s both}
-.sr-continue:hover{border-color:#f1ebd9}
-
-.sr-actions{position:absolute;z-index:4;left:0;right:0;bottom:max(5vh,26px);display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 16px;cursor:default;animation:sr-fade .45s .15s both}
-.sr-actions p{margin:0;font:italic 15px 'STIX Two Text',Cambria,Georgia,'Songti SC',serif;color:#b9c6ba}
-.sr-actions div{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
-.sr-actions .games-btn{min-height:44px;min-width:140px}
-
-/* Phones: ten cards become two columns of slips that still turn over. */
-@media (max-width:640px){
-  .sr-cards:not(.single){--cw:auto;width:min(94vw,440px);top:47%;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-  .sr-cards:not(.single) .sr-card{width:auto;aspect-ratio:auto;height:clamp(62px,10.4vh,88px)}
-  .sr-cards:not(.single) .sr-face{flex-direction:row;align-items:center;text-align:left;padding:0 10px;gap:10px}
-  .sr-cards:not(.single) .sr-face-sigil{flex:none;width:1.15em;text-align:center;font-size:30px}
-  .sr-cards:not(.single) .sr-face-text{align-items:flex-start;margin:0;gap:1px}
-  .sr-cards:not(.single) .sr-face strong{font-size:15px}
-  .sr-cards:not(.single) .sr-face small{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-  .sr-cards:not(.single) .sr-badge{position:absolute;top:6px;right:6px;margin:0;padding:1px 6px;font-size:10px}
-  .sr-cards:not(.single) .sr-rank{font-size:10px}.sr-cards:not(.single) .sr-rank.letter{font-size:12px}
-  .sr-cards.single{top:44%}
-  .sr-caption{bottom:max(9vh,64px)}
-  .sr-splash-body{margin-top:-6vh}
-  .sr-halo{top:42%}
-  .sr-splash-sigil{font-size:clamp(84px,24vw,120px)}
+.sr {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  overflow: hidden;
+  color: #f1ebd9;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  font-family: 'Avenir Next', 'Segoe UI', sans-serif;
+  background: radial-gradient(120% 85% at 50% 45%, #10241c 0%, #08130f 55%, #030806 100%);
+  animation: sr-fade 0.35s ease-out both;
+}
+.sr::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.1;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.sr::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 45%, transparent 50%, #000a 100%);
+}
+.sr.summary {
+  cursor: default;
+}
+.sr-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.sr :focus-visible {
+  outline: 2px solid #f1ebd9;
+  outline-offset: 3px;
+}
+.sr-skip {
+  position: absolute;
+  z-index: 6;
+  top: max(16px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid #c9b48255;
+  border-radius: 22px;
+  background: #0b1712cc;
+  color: #e9dfc3;
+  font:
+    14px 'Avenir Next',
+    'Segoe UI',
+    sans-serif;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.sr-skip:hover {
+  border-color: #c9b482;
+  color: #fff8e6;
 }
 
-@keyframes sr-fade{from{opacity:0}to{opacity:1}}
-@keyframes sr-rise{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
-@keyframes sr-stamp{0%{opacity:0;transform:scale(2.6)}60%{opacity:1;transform:scale(.88)}100%{opacity:1;transform:scale(1)}}
-@keyframes sr-draw{to{stroke-dashoffset:0}}
-@keyframes sr-spin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
-@keyframes sr-sweep{to{--sweep:360deg}}
-@keyframes sr-sigil{from{opacity:0;transform:scale(.5);filter:blur(12px) drop-shadow(0 0 0 transparent)}to{opacity:1;transform:scale(1);filter:blur(0) drop-shadow(0 0 28px color-mix(in srgb,var(--pig) 70%,transparent))}}
-@keyframes sr-name{from{opacity:0;letter-spacing:.42em;filter:blur(8px)}to{opacity:1;letter-spacing:.01em;filter:blur(0)}}
-@keyframes sr-sheen{to{transform:translateX(110%)}}
-@keyframes sr-armed{50%{transform:translateY(-6px) scale(1.045)}}
-@keyframes sr-beacon{50%{box-shadow:0 0 calc(var(--glow) * 1.8) color-mix(in srgb,var(--pig) 95%,transparent),0 0 calc(var(--glow) / 2) var(--pig),0 10px 24px #0008}}
-@media (prefers-reduced-motion:reduce){.sr,.sr *,.sr *::before,.sr *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+/* The proposition being drawn, as Euclid would state it. */
+.sr-caption {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: max(7vh, 60px);
+  width: min(92vw, 640px);
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+  font-family: 'STIX Two Text', Cambria, Georgia, 'Songti SC', serif;
+  animation: sr-rise 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.sr-ref {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: var(--ink);
+}
+.sr-prop {
+  display: block;
+  font-style: italic;
+  font-size: clamp(16px, 2.1vw, 20px);
+  line-height: 1.45;
+  color: #e9e2cc;
+  text-wrap: balance;
+}
+.sr-qed {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  font-size: clamp(22px, 3vw, 30px);
+  letter-spacing: 0.06em;
+  color: var(--top);
+  text-shadow: 0 0 24px color-mix(in srgb, var(--top) 60%, transparent);
+}
+.sr-qed i {
+  font-style: normal;
+  animation: sr-stamp 0.5s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+.sr-hint {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: max(2.5vh, 18px);
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+  color: #a3b5a8;
+  pointer-events: none;
+  opacity: 0;
+  animation: sr-fade 0.5s 1.4s forwards;
+}
+
+/* Cards. The li is measured for the deal; .sr-deal flies out; .sr-card-inner turns over. */
+.sr-cards {
+  --cw: clamp(98px, 12.4vw, 150px);
+  transition: opacity 0.3s ease-out;
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(5, var(--cw));
+  gap: clamp(10px, 1.6vw, 18px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sr-cards.single {
+  --cw: clamp(196px, 24vw, 250px);
+  grid-template-columns: var(--cw);
+}
+.sr-card {
+  --glow: 0px;
+  position: relative;
+  width: var(--cw);
+  aspect-ratio: 5/7;
+}
+.sr-card.g1 {
+  --glow: 8px;
+}
+.sr-card.g2 {
+  --glow: 16px;
+}
+.sr-card.g3 {
+  --glow: 26px;
+}
+.sr-card.g4 {
+  --glow: 36px;
+}
+.sr-deal {
+  position: absolute;
+  inset: 0;
+  transition:
+    transform 0.66s cubic-bezier(0.16, 0.84, 0.3, 1) calc(var(--i) * 45ms),
+    opacity 0.25s ease-out calc(var(--i) * 45ms + 110ms);
+}
+.sr.splashing .sr-cards {
+  opacity: 0;
+}
+.sr-card.pre .sr-deal {
+  transform: translate(var(--dx), var(--dy)) scale(0.16) rotate(var(--rot));
+  opacity: 0;
+  transition: none;
+}
+.sr-card-btn {
+  all: unset;
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0;
+  display: block;
+  cursor: pointer;
+  perspective: 1000px;
+  border-radius: 10px;
+}
+.sr-card-btn:focus-visible {
+  outline: 2px solid #f1ebd9;
+  outline-offset: 4px;
+}
+.flipped .sr-card-btn,
+.summary .sr-card-btn {
+  cursor: default;
+}
+.sr-card-inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.66s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+.sr-card.g3 .sr-card-inner,
+.sr-card.g4 .sr-card-inner {
+  transition-duration: 0.85s;
+}
+.sr-card.flipped .sr-card-inner {
+  transform: rotateY(180deg);
+}
+.skipped .sr-card-inner {
+  transition: none;
+}
+.sr-back,
+.sr-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.sr-back {
+  color: #c9b482;
+  background: linear-gradient(160deg, #173327, #0b1813 72%);
+  border: 1px solid #c9b48266;
+  box-shadow:
+    0 0 var(--glow) color-mix(in srgb, var(--pig) 75%, transparent),
+    0 0 calc(var(--glow) / 3) color-mix(in srgb, var(--pig) 90%, transparent),
+    0 10px 24px #0008;
+}
+.sr-card.g0 .sr-back {
+  box-shadow: 0 10px 24px #0008;
+}
+.sr-back img,
+.sr-back svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sr-back svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.7;
+}
+.sr-back::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid #c9b48240;
+  border-radius: 6px;
+  box-shadow:
+    inset 0 0 0 3px #0b1813,
+    inset 0 0 0 4px #c9b48222;
+  pointer-events: none;
+}
+.sr-back circle {
+  stroke-opacity: 0.45;
+}
+.sr-back .tri {
+  stroke: var(--pig);
+  stroke-width: 1.1;
+}
+.sr-back .qed {
+  fill: currentColor;
+  stroke: none;
+  opacity: 0.7;
+}
+.sr-card.g0 .sr-back .tri {
+  stroke: currentColor;
+}
+.sr-card.armed .sr-card-btn {
+  animation: sr-armed 1.1s ease-in-out infinite;
+}
+.sr-card.armed .sr-back {
+  animation: sr-beacon 1.1s ease-in-out infinite;
+}
+/* Held cards: a point of light runs round the edge. */
+@property --sweep {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+.sr-card.held:not(.flipped) .sr-back::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--sweep),
+    transparent 0 62%,
+    color-mix(in srgb, var(--pig) 70%, transparent) 80%,
+    #fff 86%,
+    transparent 93%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: sr-sweep 2.2s linear infinite;
+  pointer-events: none;
+}
+
+.sr-face {
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 14% 8% 9%;
+  gap: 4px;
+  border: 1px solid color-mix(in srgb, var(--pig) 55%, #c9b48233);
+  background:
+    radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--pig) 20%, transparent), transparent 62%),
+    linear-gradient(170deg, #1b3529, #0d1b15);
+  font-family: 'STIX Two Text', Cambria, Georgia, 'Songti SC', serif;
+  box-shadow:
+    0 0 calc(var(--glow) * 0.7) color-mix(in srgb, var(--pig) 45%, transparent),
+    0 10px 24px #0008;
+}
+.sr-face-sigil {
+  display: block;
+  font-size: clamp(34px, 4.3vw, 52px);
+  line-height: 1.1;
+  color: var(--pig);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--pig) 55%, transparent));
+}
+.sr-face.totem .sr-face-sigil {
+  color: var(--c);
+}
+.sr-face-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 0;
+  margin-top: 8%;
+}
+.sr-rank {
+  color: var(--pig);
+  font-size: 12px;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+.sr-rank.letter {
+  font-size: 15px;
+  letter-spacing: 0.04em;
+}
+.sr-face strong {
+  font-weight: 400;
+  font-size: clamp(14px, 1.45vw, 18px);
+  line-height: 1.15;
+  color: #f8f2df;
+  overflow-wrap: anywhere;
+}
+.sr-face small {
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.3;
+  color: #b9c6ba;
+}
+.sr-badge {
+  margin-top: auto;
+  padding: 2px 9px;
+  border-radius: 10px;
+  font:
+    11px 'Avenir Next',
+    'Segoe UI',
+    sans-serif;
+  letter-spacing: 0.03em;
+  background: color-mix(in srgb, var(--pig) 22%, transparent);
+  color: #f1ebd9;
+}
+.sr-badge.new {
+  background: var(--pig);
+  color: #0b1511;
+}
+.sr-card.g4 .sr-face {
+  border-color: var(--pig);
+  outline: 1px solid color-mix(in srgb, var(--pig) 45%, transparent);
+  outline-offset: -6px;
+}
+.sr-card.flipped:is(.g2, .g3, .g4) .sr-face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, #ffffff38 50%, transparent 65%);
+  transform: translateX(-110%);
+  animation: sr-sheen 1.2s 0.45s ease-out forwards;
+  pointer-events: none;
+}
+.sr-cards.single .sr-face {
+  padding: 16% 10% 10%;
+}
+.sr-cards.single .sr-face-sigil {
+  font-size: clamp(64px, 8vw, 92px);
+}
+.sr-cards.single .sr-face strong {
+  font-size: 24px;
+}
+.sr-cards.single .sr-face small {
+  font-size: 14px;
+}
+.sr-cards.single .sr-rank {
+  font-size: 15px;
+}
+
+/* Splash: the reward on its own, framed by the construction that summoned it. */
+.sr-splash {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  background:
+    radial-gradient(circle at 50% 44%, color-mix(in srgb, var(--pig) 24%, transparent) 0%, transparent 55%), #030806f2;
+  animation: sr-fade 0.3s ease-out both;
+}
+.sr-splash.g4::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: 180vmax;
+  height: 180vmax;
+  background: repeating-conic-gradient(
+    from 0deg,
+    color-mix(in srgb, var(--pig) 11%, transparent) 0deg 2.5deg,
+    transparent 2.5deg 12deg
+  );
+  -webkit-mask: radial-gradient(circle, #000 0, transparent 40%);
+  mask: radial-gradient(circle, #000 0, transparent 40%);
+  animation: sr-spin 80s linear infinite;
+  pointer-events: none;
+}
+.sr-halo {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: min(94vmin, 860px);
+  height: min(94vmin, 860px);
+  overflow: visible;
+  fill: none;
+  stroke: var(--pig);
+  stroke-width: 2.2;
+  opacity: 0.5;
+  animation: sr-spin 120s linear infinite;
+  pointer-events: none;
+}
+.sr-halo path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sr-draw 1.3s cubic-bezier(0.3, 0.6, 0.2, 1) forwards;
+  animation-delay: calc(var(--n) * 0.14s);
+}
+.sr-splash-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: min(92vw, 760px);
+  margin-top: -5vh;
+  padding: 0 16px;
+  text-align: center;
+}
+.sr-splash-sigil {
+  display: block;
+  font-size: clamp(96px, 17vmin, 170px);
+  line-height: 1.1;
+  color: var(--pig);
+  font-family: 'STIX Two Text', Cambria, Georgia, serif;
+  animation: sr-sigil 0.9s cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+.sr-splash.totem .sr-splash-sigil {
+  color: var(--c);
+}
+.sr-splash-rank {
+  margin: 16px 0 4px;
+  color: var(--pig);
+  font:
+    clamp(19px, 2.4vw, 25px)/1 'STIX Two Text',
+    Cambria,
+    Georgia,
+    serif;
+  letter-spacing: 0.1em;
+}
+.sr-splash-rank span {
+  display: inline-block;
+  animation: sr-stamp 0.45s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+  animation-delay: calc(0.5s + var(--s) * 90ms);
+}
+.sr-splash-name {
+  margin: 0;
+  font:
+    400 clamp(44px, 8vw, 92px)/1.04 'STIX Two Text',
+    Cambria,
+    Georgia,
+    'Songti SC',
+    serif;
+  color: #fbf6e6;
+  text-shadow: 0 0 42px color-mix(in srgb, var(--pig) 45%, transparent);
+  animation: sr-name 1s 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.sr-splash-sub {
+  margin: 10px 0 0;
+  font:
+    italic clamp(18px, 2.3vw, 24px)/1.4 'STIX Two Text',
+    Cambria,
+    Georgia,
+    'Songti SC',
+    serif;
+  color: #e2dac3;
+  animation: sr-fade 0.6s 0.6s both;
+}
+.sr-splash-kind {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #a9bbad;
+  animation: sr-fade 0.6s 0.75s both;
+}
+.sr-splash-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 18px 0 0;
+  animation: sr-fade 0.5s 0.9s both;
+}
+.sr-splash-tags span {
+  padding: 6px 13px;
+  border: 1px solid color-mix(in srgb, var(--pig) 60%, transparent);
+  border-radius: 15px;
+  font-size: 13px;
+  line-height: 1.3;
+  color: #f1ebd9;
+}
+.sr-splash-tags .lead {
+  border-color: transparent;
+  background: var(--pig);
+  color: #0b1511;
+}
+.sr-continue {
+  position: absolute;
+  bottom: max(6vh, 36px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-height: 44px;
+  padding: 0 24px;
+  border: 1px solid #f1ebd955;
+  border-radius: 22px;
+  background: #0006;
+  color: #f1ebd9;
+  font:
+    14px 'Avenir Next',
+    'Segoe UI',
+    sans-serif;
+  cursor: pointer;
+  animation: sr-fade 0.4s 1s both;
+}
+.sr-continue:hover {
+  border-color: #f1ebd9;
+}
+
+.sr-actions {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  bottom: max(5vh, 26px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  cursor: default;
+  animation: sr-fade 0.45s 0.15s both;
+}
+.sr-actions p {
+  margin: 0;
+  font:
+    italic 15px 'STIX Two Text',
+    Cambria,
+    Georgia,
+    'Songti SC',
+    serif;
+  color: #b9c6ba;
+}
+.sr-actions div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+.sr-actions .games-btn {
+  min-height: 44px;
+  min-width: 140px;
+}
+
+/* Phones: ten cards become two columns of slips that still turn over. */
+@media (max-width: 640px) {
+  .sr-cards:not(.single) {
+    --cw: auto;
+    width: min(94vw, 440px);
+    top: 47%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+  .sr-cards:not(.single) .sr-card {
+    width: auto;
+    aspect-ratio: auto;
+    height: clamp(62px, 10.4vh, 88px);
+  }
+  .sr-cards:not(.single) .sr-face {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    padding: 0 10px;
+    gap: 10px;
+  }
+  .sr-cards:not(.single) .sr-face-sigil {
+    flex: none;
+    width: 1.15em;
+    text-align: center;
+    font-size: 30px;
+  }
+  .sr-cards:not(.single) .sr-face-text {
+    align-items: flex-start;
+    margin: 0;
+    gap: 1px;
+  }
+  .sr-cards:not(.single) .sr-face strong {
+    font-size: 15px;
+  }
+  .sr-cards:not(.single) .sr-face small {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  .sr-cards:not(.single) .sr-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    margin: 0;
+    padding: 1px 6px;
+    font-size: 10px;
+  }
+  .sr-cards:not(.single) .sr-rank {
+    font-size: 10px;
+  }
+  .sr-cards:not(.single) .sr-rank.letter {
+    font-size: 12px;
+  }
+  .sr-cards.single {
+    top: 44%;
+  }
+  .sr-caption {
+    bottom: max(9vh, 64px);
+  }
+  .sr-splash-body {
+    margin-top: -6vh;
+  }
+  .sr-halo {
+    top: 42%;
+  }
+  .sr-splash-sigil {
+    font-size: clamp(84px, 24vw, 120px);
+  }
+}
+
+@keyframes sr-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes sr-rise {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+@keyframes sr-stamp {
+  0% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.88);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes sr-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes sr-spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@keyframes sr-sweep {
+  to {
+    --sweep: 360deg;
+  }
+}
+@keyframes sr-sigil {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+    filter: blur(12px) drop-shadow(0 0 0 transparent);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0) drop-shadow(0 0 28px color-mix(in srgb, var(--pig) 70%, transparent));
+  }
+}
+@keyframes sr-name {
+  from {
+    opacity: 0;
+    letter-spacing: 0.42em;
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0.01em;
+    filter: blur(0);
+  }
+}
+@keyframes sr-sheen {
+  to {
+    transform: translateX(110%);
+  }
+}
+@keyframes sr-armed {
+  50% {
+    transform: translateY(-6px) scale(1.045);
+  }
+}
+@keyframes sr-beacon {
+  50% {
+    box-shadow:
+      0 0 calc(var(--glow) * 1.8) color-mix(in srgb, var(--pig) 95%, transparent),
+      0 0 calc(var(--glow) / 2) var(--pig),
+      0 10px 24px #0008;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sr,
+  .sr *,
+  .sr *::before,
+  .sr *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

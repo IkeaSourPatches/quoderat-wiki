@@ -1,0 +1,9 @@
+line-length = 120
+extend-exclude = ["backend/wiki/migrations"]
+
+[lint]
+# Real errors (pyflakes, syntax) plus import sorting, which `make format` doesn't fix.
+select = ["E4", "E7", "E9", "F", "I"]
+
+[format]
+quote-style = "single"

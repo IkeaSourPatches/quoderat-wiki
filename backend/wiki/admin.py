@@ -1,5 +1,6 @@
 """Admin authoring. Appearance is themed by templates/admin/base_site.html and
 wiki/static/wiki/admin-theme.css; this module only arranges the screens."""
+
 from django.contrib import admin
 
 from .models import Article, Suggestion
@@ -22,26 +23,38 @@ class ArticleAdmin(admin.ModelAdmin):
     list_per_page = 50
     readonly_fields = ('updated_at',)
     fieldsets = (
-        ('Identity', {
-            'fields': ('title', 'slug', 'category', 'source'),
-            'description': 'Slugs are public URLs: bookmarks point at them, '
-                           'so rename one only when you also mean to break links.',
-        }),
-        ('Content', {
-            'fields': ('body', 'translations'),
-            'description': 'Markdown source. The frontend renders it with '
-                           'GitHub-style tables and never executes raw HTML. '
-                           'Translations hold the same keys as the English fields.',
-        }),
-        ('Attributes', {
-            'fields': ('stats',),
-            'description': 'Character dossiers only: a JSON object of text values, '
-                           'for example {"Held law": "Number"}.',
-        }),
-        ('History', {
-            'fields': ('updated_at',),
-            'classes': ('collapse',),
-        }),
+        (
+            'Identity',
+            {
+                'fields': ('title', 'slug', 'category', 'source'),
+                'description': 'Slugs are public URLs: bookmarks point at them, '
+                'so rename one only when you also mean to break links.',
+            },
+        ),
+        (
+            'Content',
+            {
+                'fields': ('body', 'translations'),
+                'description': 'Markdown source. The frontend renders it with '
+                'GitHub-style tables and never executes raw HTML. '
+                'Translations hold the same keys as the English fields.',
+            },
+        ),
+        (
+            'Attributes',
+            {
+                'fields': ('stats',),
+                'description': 'Character dossiers only: a JSON object of text values, '
+                'for example {"Held law": "Number"}.',
+            },
+        ),
+        (
+            'History',
+            {
+                'fields': ('updated_at',),
+                'classes': ('collapse',),
+            },
+        ),
     )
 
 
@@ -59,10 +72,13 @@ class SuggestionAdmin(admin.ModelAdmin):
     readonly_fields = ('name', 'message', 'created_at')
     actions = ('mark_reviewed', 'mark_unreviewed')
     fieldsets = (
-        ('Letter', {
-            'fields': ('name', 'message', 'created_at'),
-            'description': 'Submitted through the public form. Read-only here.',
-        }),
+        (
+            'Letter',
+            {
+                'fields': ('name', 'message', 'created_at'),
+                'description': 'Submitted through the public form. Read-only here.',
+            },
+        ),
         ('Triage', {'fields': ('reviewed',)}),
     )
 
