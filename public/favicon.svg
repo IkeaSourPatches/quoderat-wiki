@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#111e19"/>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="11.5"
+        fill="none" stroke="#c9b482" stroke-opacity=".2"/>
+  <g fill="#d2bc86">
+    <path fill-rule="evenodd" d="
+      M35 12
+      C24 12 17 21 14 33
+      C11 45 17 52 27 52
+      C38 52 45 42 47 30
+      C49 19 45 12 35 12Z
+      M34 19
+      C39 19 41 23 39 31
+      C37 40 33 45 28 45
+      C23 45 21 41 23 33
+      C25 24 29 19 34 19Z"/>
+    <path d="
+      M27 36
+      C33 36 37 42 41 46
+      C45 50 48 51 52 49
+      L50 55
+      C44 58 39 54 35 49
+      L24 39Z"/>
+  </g>
+  <path d="M52 7Q53.5 11.5 58 13Q53.5 14.5 52 19Q50.5 14.5 46 13Q50.5 11.5 52 7Z"
+        fill="#f1ebd9"/>
+</svg>
