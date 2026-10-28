@@ -1,6 +1,6 @@
 Tab 1
 Quoderat: The Pantheon
-Oct 18, 2026 · @Zhiyuan Ji
+Oct 18, 2026
 How the Pantheon Is Ranked
 Scope determines power, and power determines status, so the most powerful people in the world are the holders of the broadest laws. The Law of All Laws is vacant, so the top tier begins just below it.
 Laws are not limited to STEM. Social laws also count, but STEM laws come first here because they are easier to rank and objectively powerful.
@@ -217,7 +217,7 @@ To settle
 * ☐ Settled: discovering a parent law only kills the holder beneath it if it exposes a failure in their law (as relativity did to Newton). Otherwise the old law is demoted to a sublaw and its holder lives.
 中文
 证毕：众神
-2026年10月18日 · @Zhiyuan Ji
+2026年10月18日
 众神如何排位
 范围决定力量，力量决定地位，因此世界上最有权势的人，是那些执掌最广法则的人。万法之法空缺，所以顶层从它之下开始。
 法则并不限于理工科。社会法则同样算数，但这里先列出理工科法则，因为它们更容易排位，而且客观上更强大。

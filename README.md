@@ -1,6 +1,6 @@
 # Quoderat — The Living Archive
 
-A portable learning project: **React + TypeScript (TSX) + MUI + Vite** in the browser, **Django + SQLite** on your server. The 45 entries — 20 characters, 8 pantheon, 9 creatures, 7 world and laws, 1 timeline — are taken from Gordon Ji's four bilingual Quoderat source documents and the Chinese terminology sheet. Pantheon and Creatures were verified against Google Drive on 22 October 2026 and the other snapshots on 20 October 2026; original source files are not modified.
+A portable learning project: **React + TypeScript (TSX) + MUI + Vite** in the browser, **Django + SQLite** on your server. The 45 entries — 20 characters, 8 pantheon, 9 creatures, 7 world and laws, 1 timeline — are taken from the author's four bilingual Quoderat source documents and the Chinese terminology sheet. Pantheon and Creatures were verified against Google Drive on 22 October 2026 and the other snapshots on 20 October 2026; original source files are not modified.
 
 ## Run the frontend
 
@@ -233,3 +233,7 @@ The figure then closes (Q.E.D.), collapses and bursts, dealing the cards face do
 Artwork is optional. SVGs saved in `src/gacha/art/` under the names in its README replace the compass, the card back and the glyph emblems of holders and totems; `docs/gacha-art-prompts.md` has a ChatGPT prompt for each file. Without them, everything is drawn in code.
 
 Display ranks for totems are **B / A / S / SS** (formerly common / strong / elite / epic); internal save IDs are retained for compatibility. Base outcome rates are 5★ 0.6%, 4★ 0.65%, SS 1.5%, 3★ 4.25%, S 4.5%, A 18.5%, B 70%. The shared rare guarantee includes every holder plus S and SS.
+
+## License
+
+The code is MIT-licensed (`LICENSE`). The Quoderat world (its lore, characters, story text and art) is all rights reserved (`CONTENT-LICENSE.md`).

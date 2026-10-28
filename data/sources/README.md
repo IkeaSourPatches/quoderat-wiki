@@ -2,14 +2,14 @@
 
 Pantheon and Creatures refreshed from Google Drive on 22 October 2026 (Singapore date). Other snapshots were retrieved on 20 October 2026. These are readable text snapshots of the complete text returned by the connector, not original Google Docs formatting or live-synced files.
 
-Drive folder: https://drive.google.com/drive/folders/1pMzl9GnEbEVEBGy0b5KXJsRHUMx3TFHs
+The originals are private Google Docs in the author's "Quoderat" Drive folder. Their links are deliberately kept out of this public repository; with the Google Drive connector, search Drive for the folder or the document titles below.
 
-- [Quoderat Worldbuilding Notes.md](Quoderat%20Worldbuilding%20Notes.md) — https://docs.google.com/document/d/1LB-tAYISwuRN58pt2WcQ55nt0vVqJCNy0FHAfwl8Od4/edit
-- [Quoderat The Pantheon.md](Quoderat%20The%20Pantheon.md) — https://docs.google.com/document/d/12obiW4dw2Y8N8LxTAfKoRRfMl803cA8-NkCxTebVnVQ/edit
-- [Quoderat Creatures.md](Quoderat%20Creatures.md) — https://docs.google.com/document/d/1QEtDMqKNmblm9j__qSfuhwuBkw9ktIGMGQLuL-4kSJM/edit
-- [Quoderat Timeline.md](Quoderat%20Timeline.md) — https://docs.google.com/document/d/14sWeDpx2eXS_FTsayO0d283KnJG6TgbbZCN2L7RUQ1M/edit
+- [Quoderat Worldbuilding Notes.md](Quoderat%20Worldbuilding%20Notes.md)
+- [Quoderat The Pantheon.md](Quoderat%20The%20Pantheon.md)
+- [Quoderat Creatures.md](Quoderat%20Creatures.md)
+- [Quoderat Timeline.md](Quoderat%20Timeline.md)
 
 Google Drive is the upstream source. To refresh, read the folder and fetch the current documents using the Google Drive connector, update these snapshots, and record the new retrieval date. Do not claim these copies are current beyond their retrieval date without checking Drive.
 
 
-- 中文术语表 — https://docs.google.com/document/d/1nH7wuczpn1qI4qS3H5uj5q6gTOfXZmg6ajpsJdJfvuk/edit
+- 中文术语表

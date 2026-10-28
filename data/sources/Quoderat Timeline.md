@@ -1,6 +1,6 @@
 English
 Quoderat: Timeline
-Oct 19, 2026 · @Zhiyuan Ji
+Oct 19, 2026
 How to Read the Tower
 Quoderat's history is an upside-down tower. You enter at the bottom, in the oldest age, and each floor up is a later event, until the top floor reaches the present. Floors are separated by events, not by fixed spans of time, and only world-changing events get a floor.
 The Floors
@@ -36,7 +36,7 @@ Floor VI: The Present
 Mortals live on both Llama and Origo. The Law of All Laws is vacant and the Axiom sits on every wrist; no one has ever scored a point. The kitsune sell cloaks to anyone who can pay. Most dragons seek coexistence, while the earth tribe quietly shelters Ilar Hesabu.
 中文
 证毕：时间线
-2026年10月19日 · @Zhiyuan Ji
+2026年10月19日
 如何阅读这座塔
 证毕的历史是一座倒置的塔。你从底层进入，那里是最古老的时代；每向上一层，便是更晚发生的事件，直到顶层抵达当下。楼层以事件划分，而非固定的时间跨度，只有改变世界的事件才能占据一层。
 楼层
