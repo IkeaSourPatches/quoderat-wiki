@@ -1,6 +1,6 @@
 Tab 1
 Quoderat: Creatures
-Oct 19, 2026 · @Zhiyuan Ji
+Oct 19, 2026
 How Creatures Work
 Each family of physical power once belonged to one kind of mythical creature. Law holders hunted all of them out of greed, hoping to take the power, but laws and physical powers are mutually exclusive, and the power was released into the world instead. The world now hands it out to mortals as totems: the slain creatures' power, soaked into the world and condensed back out.
 * Survivors keep innate power. It doesn't come from totems and is far deeper than anything a mortal holds.
@@ -60,7 +60,7 @@ Half-creatures, half-elves among them. Possible but rare, much as a mortal holdi
 * Elves: where they fit is still undecided.
 中文
 证毕：神兽
-2026年10月19日 · @Zhiyuan Ji
+2026年10月19日
 神兽如何运作
 每一族物理之力都曾属于一种神兽。执律者出于贪婪猎杀了所有神兽，妄图夺取力量，但法则与物理之力互不相容，力量反而被释放到了世界之中。如今，世界以图腾的形式把力量分发给凡人：那是被杀神兽的力量，渗入世界后又被重新凝聚。
 * 幸存者保有天生的力量。它并非来自图腾，远比任何凡人所拥有的更深厚。

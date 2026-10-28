@@ -70,6 +70,8 @@ def load(name, lang='en'):
     lines = (zh if lang == 'zh' else en).splitlines()
     while lines and lines[0] in ('Tab 1', 'English'):
         lines.pop(0)
+    # Drive adds an author byline after the date ("Oct 19, 2026 · @Name"); keep the date, drop the name.
+    lines = [re.sub(r' · @[^·]+$', '', line) for line in lines]
     return Lines(lines, name, lang)
 
 

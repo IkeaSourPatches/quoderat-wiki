@@ -1,6 +1,6 @@
 Tab 1
 Quoderat: Worldbuilding Notes
-Oct 17, 2026 · @Zhiyuan Ji
+Oct 17, 2026
 Premise
 Quoderat (from quod erat demonstrandum, "which was to be demonstrated") is a traditional fantasy world of wizards, magic and dragons where power determines status. It is a standalone project, separate from Jorange, set in a world that is not Earth; real history serves only as inspiration. Dungeons have been dropped because they don't fit.
 Law Holders
@@ -56,7 +56,7 @@ Open Questions
 * ☐ Where is the Axiom's server, given anyone can build a bracelet from the open instructions?
 中文
 证毕：世界观笔记
-2026年10月17日 · @Zhiyuan Ji
+2026年10月17日
 前提
 证毕（取自拉丁语 quod erat demonstrandum，意为"证明完毕"）是一个传统奇幻世界，有巫师、魔法与龙，力量决定地位。它是一个独立项目，与 Jorange 无关，设定在一个并非地球的世界里；现实历史仅作灵感。地下城已被删去，因为它们与世界观不符。
 执律者
