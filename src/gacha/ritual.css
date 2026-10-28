@@ -1,0 +1,28 @@
+.gc-ritual { position:relative; isolation:isolate; overflow:hidden; text-align:center; padding:28px 16px 16px; margin-bottom:24px; border:1px solid #c9b48255; border-radius:8px; background:radial-gradient(ellipse at 50% 47%,#31534377,transparent 65%),#0b1713; }
+.gc-ritual::before { content:''; position:absolute; inset:0; z-index:-1; opacity:.18; background-image:radial-gradient(#d2bd85 1px,transparent 1px); background-size:31px 31px; mask-image:radial-gradient(ellipse,black,transparent 75%); }
+.gc-ritual > small { color:#d2bd85; font-size:10px; letter-spacing:.22em; }
+.gc-ritual h2 { font:400 clamp(26px,4vw,38px)/1.2 'STIX Two Text',Georgia,serif; color:#f1ebd9; margin:10px 0; }
+.gc-ritual-instruction { color:#b5c5b7; font-size:14px; min-height:2.8em; margin:0; line-height:1.5; }
+.gc-ritual-diagram { position:relative; width:min(100%,380px); aspect-ratio:1; margin:0 auto; touch-action:none; user-select:none; }
+.gc-ritual-svg { width:100%; height:100%; overflow:visible; fill:none; stroke:#c9b482; stroke-width:1; }
+.ritual-outer { opacity:.3; }.ritual-ticks { opacity:.45; stroke-width:3; }.ritual-inner { opacity:.25; stroke-dasharray:80 12; transform-origin:center; animation:ritual-orbit 60s linear infinite; }.ritual-outline { opacity:.15; }
+.seal-path { opacity:.13; transition:opacity .25s,filter .25s; }.seal-path.lit { opacity:1; stroke:#f1d99b; filter:drop-shadow(0 0 5px #e9c878aa); }
+.gc-seal { position:absolute; transform:translate(-50%,-50%); width:50px; height:50px; border-radius:50%; border:1px solid #bcad7f77; background:#12271f; color:#a3b5a8; font:26px Georgia,serif; cursor:pointer; transition:background .2s,box-shadow .2s,color .2s; }
+.gc-seal.lit { color:#fff0bb; border-color:#e6ce8d; background:#4d4828; box-shadow:0 0 24px #e6ce8d66,inset 0 0 12px #e6ce8d22; }
+.gc-seal:hover { border-color:#fff0bb; }.gc-seal:focus-visible,.gc-ritual-core:focus-visible { outline:2px solid #fff0bb; outline-offset:6px; }
+.gc-ritual-core { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) rotate(45deg); width:95px; height:95px; border:1px solid #c9b48255; background:#14261f; color:#7d8e7e; display:flex; align-items:center; justify-content:center; flex-direction:column; cursor:pointer; }
+.gc-ritual-core > * { transform:rotate(-45deg); }.gc-ritual-core > span { font:40px/1 Georgia,serif; }.gc-ritual-core small { font-size:10px; letter-spacing:.1em; }.gc-ritual-core:disabled { cursor:default; }
+.ready .gc-ritual-core { color:#ffe8a7; border-color:#e6ce8d; box-shadow:0 0 36px #e6ce8d44,inset 0 0 20px #e6ce8d22; animation:ritual-breathe 1.5s ease-in-out infinite; }
+.ritual-ray { opacity:0; stroke:var(--ritual-colour); stroke-width:2; }
+.released .ritual-ray { animation:ritual-ray 1s ease-out both; animation-delay:calc(var(--ray) * 8ms); }
+.released .gc-ritual-diagram { filter:drop-shadow(0 0 14px var(--ritual-colour)); transition:filter .3s; }
+.released .gc-ritual-core { background:var(--ritual-colour); color:#142019; box-shadow:0 0 70px var(--ritual-colour); animation:none; }
+.gc-ritual-drops { display:flex; gap:10px; justify-content:center; min-height:20px; margin:4px 0 16px; }
+.gc-ritual-drops span { width:10px; height:10px; transform:rotate(45deg); border:1px solid #c9b48255; background:#21382b; }
+.released .gc-ritual-drops span { background:var(--drop-colour); border-color:var(--drop-colour); box-shadow:0 0 14px var(--drop-colour); transition:background .3s,box-shadow .3s; transition-delay:calc(var(--drop) * 45ms); }
+.gc-ritual-note { font-size:11px; color:#8eaa97; margin:12px 0 0; }.gc-ritual-skip { font-size:13px; }
+@keyframes ritual-orbit { to { transform:rotate(360deg); } }
+@keyframes ritual-breathe { 50% { box-shadow:0 0 50px #e6ce8d77,inset 0 0 28px #e6ce8d33; } }
+@keyframes ritual-ray { 0% { opacity:0; stroke-dasharray:0 90; } 35% { opacity:.8; } 100% { opacity:0; stroke-dasharray:90 0; } }
+@media(max-width:480px) { .gc-ritual { padding-inline:8px; }.gc-seal { width:44px;height:44px; }.gc-ritual-core { width:74px;height:74px; }.gc-ritual-drops { gap:8px; } }
+@media(prefers-reduced-motion:reduce) { .gc-ritual *, .gc-ritual *::before { animation:none!important; transition:none!important; } }

@@ -59,3 +59,6 @@ Every new reward previously merged immediately into a family total. Replaced by 
 
 ### Retired: additive totem merging
 Adding power made ranks irrelevant. Replaced with same-type, same-rank recipes: 10 B to A, 20 A to S, 30 S to SS. Upgrades start at the new rank's minimum power. Owner authorized wiping previous gacha data for the new rules.
+
+### Retired: the four-seal summon ritual
+Before the ruler-and-compass reveal, a summon opened a ritual: drag through or tap four seals (∀ ∃ ⇒ ∴), then press a Q.E.D. core to release rays in the best reward's colour. It asked for five clicks before anything happened, then showed the rewards below the fold of the page. It was never committed; the files are still on disk as `src/gacha/SummonRitual.tsx` and `src/gacha/ritual.css`, no longer imported.

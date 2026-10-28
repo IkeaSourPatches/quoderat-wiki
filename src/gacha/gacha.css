@@ -152,3 +152,11 @@
 .gc-stack-count { padding: 3px 8px; border: 1px solid #c9b48266; border-radius: 12px; color: #f1ebd9; font-size: 14px; }
 .gc-copy-picker { display: grid; gap: 8px; color: #c9b482; font-size: 14px; margin: 16px 0; }
 .gc-copy-picker select { min-width: 0; width: 100%; padding: 12px; color: #f1ebd9; background: #1d3329; border: 1px solid #c9b48255; border-radius: 4px; font: inherit; }
+
+/* Optional SVG art (src/gacha/art): one-colour files are drawn as masks in the current text colour. */
+.gc-sigil-art{display:inline-block;width:1em;height:1em;background:currentColor;-webkit-mask:var(--art) center/contain no-repeat;mask:var(--art) center/contain no-repeat}
+.gc-glyph.gc-sigil-art{width:28px;height:28px}
+.gc-collection .gc-glyph.gc-sigil-art{width:24px;height:24px}
+/* The idle banner shows the first construction every summon starts from. */
+.gc-summon-figure{width:132px;height:132px;margin-bottom:18px;fill:none;stroke:#c9b482;stroke-width:9;stroke-linejoin:round;overflow:visible}
+.gc-summon-figure path:nth-child(-n+2){stroke-opacity:.45;stroke-width:6}
