@@ -5,7 +5,7 @@ import { SaiGame } from './game/SaiGame';
 import { AxiomMachine } from './game/AxiomMachine';
 import { KeepItFlat } from './game/KeepItFlat';
 import { SpearShieldCourt } from './game/SpearShieldCourt';
-import { GameShelf } from './game/GameShelf';
+import { GameShelf, games } from './game/GameShelf';
 import { Gacha } from './gacha/Gacha';
 import { emblems } from './emblems';
 import { LoreHome } from './LoreHome';
@@ -153,7 +153,6 @@ function App() {
   const articles = rawArticles.map((entry) => localizeArticle(entry, language));
   useEffect(() => {
     document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
-    document.title = language === 'zh' ? '证毕 — 一个力量源于法则的世界' : 'Quoderat — A World of Living Laws';
     try { localStorage.setItem('quoderat-language', language); } catch { /* Preference still works in memory. */ }
   }, [language]);
 
@@ -229,6 +228,19 @@ function App() {
   const article = articles.find((a) => a.slug === slug);
   const characterList = articles.filter(a => a.category === 'Characters');
   const characterIndex = characterList.findIndex(a => a.slug === slug);
+  // The tab title follows the page, e.g. "Ensa — Quoderat" or "抽卡 — 证毕"; the home page keeps the full name.
+  useEffect(() => {
+    const zh = language === 'zh', search = query.trim(), game = games.find(g => g.slug === slug);
+    const page = search ? (zh ? `搜索：${search}` : `Search: ${search}`)
+      : slug === 'home' || !rawArticles.length ? ''
+      : game ? game.title[zh ? 1 : 0]
+      : slug === 'play' ? (zh ? '游玩' : 'Play')
+      : slug === 'gacha' ? (zh ? '抽卡' : 'Gacha')
+      : slug === 'lore' ? t('Lore')
+      : slug === 'suggestions' ? (zh ? '提问与建议' : 'Questions & suggestions')
+      : article ? article.title : t(category);
+    document.title = page ? `${page} — ${zh ? '证毕' : 'Quoderat'}` : zh ? '证毕 — 一个力量源于法则的世界' : 'Quoderat — A World of Living Laws';
+  }, [language, slug, query, article?.title, category, rawArticles.length]);
   const loreActive = slug === 'lore' || slug.startsWith('lore/') || (!!article && article.category !== 'Characters');
 
   // Articles that satisfy both the category filter and the search query.

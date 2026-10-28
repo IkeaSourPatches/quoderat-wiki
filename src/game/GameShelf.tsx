@@ -3,7 +3,7 @@ import { ResetProgress } from './progress';
 import './games.css';
 
 // The games shelf: each game is built on one character's law.
-const games = [
+export const games = [
   { slug: 'play/sai', who: ['Sai', '彩'], law: ['Four Color Theorem', '四色定理'], title: ['Sai’s map', '彩的地图'], blurb: ['Sai has botched a four-colour map on purpose. Fix it so no neighbours match.', '彩故意把一张四色地图涂错了。修好它，让相邻区域颜色各不相同。'], art: 'map' },
   { slug: 'play/flat', who: ['Aldous Vane', '奥尔德斯·维恩'], law: ['Iron Law of Oligarchy', '寡头铁律'], title: ['Keep it flat', '保持扁平'], blurb: ['Keep a commune equal while the floor tilts. Those with time drift to the dais; the busy drift out the door.', '在倾斜的地板上让公社保持平等。有时间的人漂向讲台，忙碌的人漂向门口。'], art: 'hall' },
   { slug: 'play/court', who: ['The Spear and Shield', '矛盾'], law: ['Law of Non-Contradiction', '不矛盾律'], title: ['The Spear and Shield’s court', '矛盾的法庭'], blurb: ['Cross-examine witnesses and present the evidence their story contradicts. Near him, a lie can’t hold.', '盘问证人，出示与其说法相矛盾的证据。在他身边，谎言无法立足。'], art: 'court' },
