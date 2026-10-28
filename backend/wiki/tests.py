@@ -1,5 +1,6 @@
+from django.core.cache import cache
 from django.core.management import call_command
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from .models import Article
 
@@ -93,10 +94,6 @@ class ProxyCsrfTests(TestCase):
             HTTP_ORIGIN='https://untrusted.example',
         )
         self.assertEqual(response.status_code, 403)
-
-
-from django.core.cache import cache
-from django.test import override_settings
 
 
 @override_settings(SUGGESTION_LIMIT_PER_IP_HOUR=2, SUGGESTION_LIMIT_PER_DAY=3)

@@ -99,7 +99,7 @@ def find(lines, heading):
         if norm(line) == target:
             return i
     tab = 'Chinese' if getattr(lines, 'lang', 'en') == 'zh' else 'English'
-    close = difflib.get_close_matches(heading, [l.strip() for l in lines if l.strip()], n=3, cutoff=0.5)
+    close = difflib.get_close_matches(heading, [line.strip() for line in lines if line.strip()], n=3, cutoff=0.5)
     hint = f' Closest lines: {close}.' if close else ''
     raise SystemExit(
         f'import-lore: heading {heading!r} not found in the {tab} tab of '

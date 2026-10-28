@@ -1,8 +1,14 @@
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_GET
+import json
+import time
 
-from .models import Article
+from django.conf import settings
+from django.core.cache import cache
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
+from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_GET, require_http_methods
+
+from .models import Article, Suggestion
 
 FIELDS = ('slug', 'title', 'category', 'body', 'source', 'stats', 'translations')
 
@@ -22,15 +28,6 @@ def article_detail(request, slug):
 
 
 # GET issues a CSRF token; POST accepts feedback without exposing other submissions.
-import json
-import time
-
-from django.conf import settings
-from django.core.cache import cache
-from django.middleware.csrf import get_token
-from django.views.decorators.http import require_http_methods
-
-from .models import Suggestion
 
 
 def client_ip(request):
