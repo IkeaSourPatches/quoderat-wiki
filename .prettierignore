@@ -1,0 +1,12 @@
+# Canon snapshots and generated wiki content keep their source formatting.
+data/
+*.md
+dist/
+node_modules/
+.venv/
+package-lock.json
+# Django templates use {% %} tags that Prettier cannot parse.
+backend/templates/
+# Generated output and Codex settings.
+docs/gacha-analysis.json
+.openai/
