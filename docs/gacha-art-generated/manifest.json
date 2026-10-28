@@ -1,0 +1,174 @@
+[
+  {
+    "file": "src/gacha/art-staged/holders/the-spear-and-shield.svg",
+    "sheet": 1,
+    "quadrant": "top-left",
+    "bytes": 2681
+  },
+  {
+    "file": "src/gacha/art-staged/holders/tertia.svg",
+    "sheet": 1,
+    "quadrant": "top-right",
+    "bytes": 3680
+  },
+  {
+    "file": "src/gacha/art-staged/holders/the-open-question.svg",
+    "sheet": 1,
+    "quadrant": "bottom-left",
+    "bytes": 5000
+  },
+  {
+    "file": "src/gacha/art-staged/holders/ilar-hesabu.svg",
+    "sheet": 1,
+    "quadrant": "bottom-right",
+    "bytes": 2252
+  },
+  {
+    "file": "src/gacha/art-staged/holders/ensa.svg",
+    "sheet": 2,
+    "quadrant": "top-left",
+    "bytes": 1656
+  },
+  {
+    "file": "src/gacha/art-staged/holders/voss-halloran.svg",
+    "sheet": 2,
+    "quadrant": "top-right",
+    "bytes": 2372
+  },
+  {
+    "file": "src/gacha/art-staged/holders/rudolf-ludwig.svg",
+    "sheet": 2,
+    "quadrant": "bottom-left",
+    "bytes": 2411
+  },
+  {
+    "file": "src/gacha/art-staged/holders/rushd.svg",
+    "sheet": 2,
+    "quadrant": "bottom-right",
+    "bytes": 1381
+  },
+  {
+    "file": "src/gacha/art-staged/holders/lian-xiu.svg",
+    "sheet": 3,
+    "quadrant": "top-left",
+    "bytes": 928
+  },
+  {
+    "file": "src/gacha/art-staged/holders/akhil.svg",
+    "sheet": 3,
+    "quadrant": "top-right",
+    "bytes": 1508
+  },
+  {
+    "file": "src/gacha/art-staged/holders/aldous-vane.svg",
+    "sheet": 3,
+    "quadrant": "bottom-left",
+    "bytes": 4062
+  },
+  {
+    "file": "src/gacha/art-staged/holders/mattias-krane.svg",
+    "sheet": 3,
+    "quadrant": "bottom-right",
+    "bytes": 1414
+  },
+  {
+    "file": "src/gacha/art-staged/holders/zaid.svg",
+    "sheet": 4,
+    "quadrant": "top-left",
+    "bytes": 2304
+  },
+  {
+    "file": "src/gacha/art-staged/holders/vera.svg",
+    "sheet": 4,
+    "quadrant": "top-right",
+    "bytes": 7294
+  },
+  {
+    "file": "src/gacha/art-staged/holders/kalyan.svg",
+    "sheet": 4,
+    "quadrant": "bottom-left",
+    "bytes": 1866
+  },
+  {
+    "file": "src/gacha/art-staged/holders/sai.svg",
+    "sheet": 4,
+    "quadrant": "bottom-right",
+    "bytes": 5064
+  },
+  {
+    "file": "src/gacha/art-staged/totems/earth.svg",
+    "sheet": 5,
+    "quadrant": "top-left",
+    "bytes": 6587
+  },
+  {
+    "file": "src/gacha/art-staged/totems/water.svg",
+    "sheet": 5,
+    "quadrant": "top-right",
+    "bytes": 5248
+  },
+  {
+    "file": "src/gacha/art-staged/totems/air.svg",
+    "sheet": 5,
+    "quadrant": "bottom-left",
+    "bytes": 5296
+  },
+  {
+    "file": "src/gacha/art-staged/totems/plasma.svg",
+    "sheet": 5,
+    "quadrant": "bottom-right",
+    "bytes": 4401
+  },
+  {
+    "file": "src/gacha/art-staged/totems/life.svg",
+    "sheet": 6,
+    "quadrant": "top-left",
+    "bytes": 3662
+  },
+  {
+    "file": "src/gacha/art-staged/totems/renewal.svg",
+    "sheet": 6,
+    "quadrant": "top-right",
+    "bytes": 3955
+  },
+  {
+    "file": "src/gacha/art-staged/totems/illusion.svg",
+    "sheet": 6,
+    "quadrant": "bottom-left",
+    "bytes": 5036
+  },
+  {
+    "file": "src/gacha/art-staged/totems/body.svg",
+    "sheet": 6,
+    "quadrant": "bottom-right",
+    "bytes": 6406
+  },
+  {
+    "file": "src/gacha/art-staged/compass/head.svg",
+    "sheet": 7,
+    "quadrant": "top-left",
+    "method": "Geometric SVG reconstruction from generated design; exact brief dimensions and palette.",
+    "bytes": 1023
+  },
+  {
+    "file": "src/gacha/art-staged/compass/leg-needle.svg",
+    "sheet": 7,
+    "quadrant": "top-right",
+    "method": "Geometric SVG reconstruction from generated design; exact brief dimensions and palette.",
+    "bytes": 579
+  },
+  {
+    "file": "src/gacha/art-staged/compass/leg-pencil.svg",
+    "sheet": 7,
+    "quadrant": "bottom-left",
+    "method": "Geometric SVG reconstruction from generated design; exact brief dimensions and palette.",
+    "bytes": 800
+  },
+  {
+    "file": "src/gacha/art-staged/card-back.svg",
+    "sheet": 7,
+    "quadrant": "bottom-right",
+    "method": "Geometric SVG reconstruction from generated design; exact brief dimensions and palette.",
+    "bytes": 1460
+  }
+]

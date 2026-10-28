@@ -88,6 +88,7 @@ npm run build                          # tsc --noEmit, then the Vite production 
 node scripts/check-localization.mjs    # bilingual data contract and timeline text, Node 22.18+
 node scripts/check-timeline.mjs        # reduced motion, visibility, animation cleanup
 node scripts/check-game.mjs            # Sai's puzzles, the court cases, Keep it flat
+node scripts/check-reveal.mjs          # summon reveal: exact figures, honest telegraph, canvas cleanup
 python backend/manage.py check
 python backend/manage.py test wiki
 ```
@@ -212,6 +213,23 @@ Counters and the featured guarantee carry across banners and visits; resetting a
 
 Depth bands: common 20–25, strong 26–30, elite 31–35, epic 36–39. Old elite entries at 36–39 migrate to epic without changing stored power.
 
-Rewards and pity are written to the save together, immediately, before the 1.6-second skippable reveal. Reduced-motion users see results immediately. The reserved reveal stage is independent of the result grid. The other tabs are collection views, not separate banners.
+Rewards and pity are written to the save together, immediately, before the reveal opens. The reveal only decides how they are shown and never changes odds. The other tabs are collection views, not separate banners.
+
+### Summon reveal
+
+Every summon is drawn with ruler and compass on a full-screen slate, and the construction keeps going only while the batch is good enough to earn it, so how far the figure goes is an honest telegraph of the best reward:
+
+| Best reward | The figure reaches | Ink |
+|---|---|---|
+| B or A | Euclid I.1, the equilateral triangle | chalk (an A closes in verdigris) |
+| S or 3★ | Euclid IV.15, the regular hexagon | lapis |
+| SS or 4★ | Euclid IV.11, the regular pentagon, by Ptolemy's steps | amethyst |
+| 5★ | the regular 17-gon, by Richmond's steps (1893); Gauss proved it constructible in 1796 | gilt |
+
+The figure then closes (Q.E.D.), collapses and bursts, dealing the cards face down. Ordinary cards turn over by themselves; SS, 4★, 5★ and any holder pulled for the first time wait, glowing, for a full-screen splash of their own, lowest first so the best comes last. Clicking anywhere moves to the next beat, Skip or Escape goes straight to the summary, and Pull again starts the next summon from inside the reveal. Reduced-motion users see results immediately, as before.
+
+`construction.ts` holds the geometry and timing and `revealPlan.ts` the grades, stages and splash order (both pure); `revealCanvas.ts` draws the strokes, the compass, the dust and the burst; `SummonReveal.tsx` and `reveal.css` are the overlay, cards and splashes. `node scripts/check-reveal.mjs` checks that every figure is exact, that the stage reached always matches the best reward (4,000 seeded batches), and that the canvas fast-forwards, skips and stops cleanly.
+
+Artwork is optional. SVGs saved in `src/gacha/art/` under the names in its README replace the compass, the card back and the glyph emblems of holders and totems; `docs/gacha-art-prompts.md` has a ChatGPT prompt for each file. Without them, everything is drawn in code.
 
 Display ranks for totems are **B / A / S / SS** (formerly common / strong / elite / epic); internal save IDs are retained for compatibility. Base outcome rates are 5★ 0.6%, 4★ 0.65%, SS 1.5%, 3★ 4.25%, S 4.5%, A 18.5%, B 70%. The shared rare guarantee includes every holder plus S and SS.

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useRef, useState, type CSSProperties } from 'react';
 import type { Article } from '../api';
 import { emblems } from '../emblems';
 import type { Language } from '../i18n';
@@ -7,6 +7,10 @@ import { SAVE_KEY, readCurrentSave, emptySave, applyDraw, type GachaSave } from 
 import '../game/games.css';
 import './gacha.css';
 import { TotemWorkshop } from './TotemWorkshop';
+import { SummonReveal } from './SummonReveal';
+import { Sigil } from './Sigil';
+import { holderArt, totemArt } from './art';
+import { figurePaths } from './construction';
 import effectiveRates from './effective-rates.json';
 
 type HolderResult = { rating: HolderRating; copies: number };
@@ -32,12 +36,12 @@ export function Gacha({ language, articles, open }: { language: Language; articl
   const [banner, setBanner] = useState<'banner' | 'laws' | 'workshop'>('banner');
   const [results, setResults] = useState<({ kind: 'totem'; totem: Totem } | ({ kind: 'holder' } & HolderResult))[]>([]);
   const [revealing, setRevealing] = useState(false);
+  // Each pull gets a fresh reveal, including Pull again from inside the reveal.
+  const [pullId, setPullId] = useState(0);
+  // The pull buttons are disabled while the reveal is open, so remember which one opened it.
+  const opener = useRef<HTMLElement | null>(null), revealOpen = useRef(false);
+  revealOpen.current = revealing;
   const drawing = useRef(false);
-  useEffect(() => {
-    if (!revealing) return;
-    const timer = window.setTimeout(() => { setRevealing(false); drawing.current = false; }, 1600);
-    return () => window.clearTimeout(timer);
-  }, [revealing]);
   const [initial] = useState(() => {
     try { return { save: readCurrentSave(localStorage), failed: false }; }
     catch { return { save: emptySave(), failed: true }; }
@@ -45,6 +49,7 @@ export function Gacha({ language, articles, open }: { language: Language; articl
   const [game, setGame] = useState<GachaSave>(initial.save);
   const saved = game.totems, holderLog = game.holders;
   const [storageFailed, setStorageFailed] = useState(false);
+  const [resetDone, setResetDone] = useState(false);
   const save = (next: GachaSave) => {
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(next)); setStorageFailed(false); }
     catch { setStorageFailed(true); return false; }
@@ -63,17 +68,29 @@ export function Gacha({ language, articles, open }: { language: Language; articl
   const pull = (count: number) => {
     if (drawing.current || blocked) return;
     drawing.current = true;
+    if (document.activeElement instanceof HTMLButtonElement && document.activeElement.closest('.gc-actions')) opener.current = document.activeElement;
     try {
       const draw = pullMixed(count, Math.random, pool, game.pity);
       const next = applyDraw(game, draw.rewards, draw.state);
       if (!save(next)) { drawing.current = false; return; }
       const copies = { ...holderLog.copies };
       setResults(draw.rewards.map(r => r.kind === 'totem' ? r : { ...r, copies: copies[r.rating.slug] = (copies[r.rating.slug] || 0) + 1 }));
+      setPullId(id => id + 1);
+      setResetDone(false);
       const animate = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       setRevealing(animate); drawing.current = animate;
     } catch { drawing.current = false; setStorageFailed(true); }
   };
-  const finishReveal = () => { setRevealing(false); drawing.current = false; };
+  const finishReveal = () => {
+    setRevealing(false); drawing.current = false;
+    requestAnimationFrame(() => { if (!revealOpen.current) opener.current?.focus({ preventScroll: true }); });
+  };
+  const pullAgain = (count: 1 | 10) => { finishReveal(); pull(count); };
+  // Master reset: every holder, totem, display slot and pity counter, back to a fresh start.
+  const resetAll = () => {
+    if (!window.confirm(text('Reset everything? This erases all law holders, totems, totem displays and pity counters on this browser, and cannot be undone.', '全部重置？这将清空本浏览器中的全部执律者、图腾、图腾展示与保底计数，且无法撤销。'))) return;
+    if (save(emptySave())) { setResults([]); setResetDone(true); }
+  };
   const holderOwned = pool.filter(h => holderLog.copies[h.slug]).length;
   const badge = (copies: number) => copies === 1 ? text('New', '新') : copies - 1 > MAX_UPGRADE ? text('Max', '已满') : `+${upgradeLevel(copies)}`;
   const history = (label: string, reset: () => void, total: number) =>
@@ -87,7 +104,7 @@ export function Gacha({ language, articles, open }: { language: Language; articl
     </header>
 
     <div className="gc-tabs" role="tablist" aria-label={text('Banners', '卡池')}>
-      {(['banner', 'laws', 'workshop'] as const).map(id => <button key={id} role="tab" aria-selected={banner === id} onClick={() => setBanner(id)}>
+      {(['banner', 'laws', 'workshop'] as const).map(id => <button key={id} role="tab" aria-selected={banner === id} onClick={() => { if (revealing) finishReveal(); setBanner(id); }}>
         {id === 'banner' ? text('Summon', '召唤') : id === 'workshop' ? text('Totem display', '图腾展示') : text('Law holders', '执律者')}
       </button>)}
     </div>
@@ -96,13 +113,15 @@ export function Gacha({ language, articles, open }: { language: Language; articl
     {!rosterReady && <p className="gc-warning" role="alert">{text('The banner roster is incomplete. Please wait for the character pages to load.', '卡池名单尚未完整加载，请等待人物页面加载。')}</p>}
     {storageFailed && <p className="gc-warning" role="alert">{text('Could not save this action. Your previous collection and pity are unchanged.', '此次操作未能保存，原收藏与保底计数未变。')}</p>}
     {banner === 'banner' ? <section className="gc-banner gc-summon" role="tabpanel">
-      <div className={`gc-reveal-stage${revealing ? ' revealing' : ''}`} aria-busy={revealing}>
-        <div className="gc-summon-orbit" aria-hidden="true"><span>✧</span></div>
+      <div className="gc-reveal-stage">
+        <svg className="gc-summon-figure" viewBox="0 0 1000 1000" aria-hidden="true">{figurePaths(0).map((d, i) => <path key={i} d={d} />)}</svg>
         <small>{text('FEATURED 5★ · ONE SHARED BANNER', '当期 5★ · 混合卡池')}</small>
-        <h2>{revealing ? text('Something is taking shape…', '某种力量正在成形……') : nameOf(CURRENT_BANNER.featured)}</h2>
-        <p role="status">{revealing ? text('Your rewards are already in your collection.', '奖励已存入你的收藏。') : text('Law holders and totems share every draw.', '每次抽取都可能获得执律者或图腾。')}</p>
-        {revealing && <button className="games-btn quiet" onClick={finishReveal}>{text('Skip animation', '跳过动画')}</button>}
+        <h2>{nameOf(CURRENT_BANNER.featured)}</h2>
+        <p>{text('Every pull is drawn with ruler and compass. The further the figure goes, the rarer the reward.', '每次抽取都以尺规作图。图形画得越远，奖励越稀有。')}</p>
       </div>
+      {revealing && <SummonReveal key={pullId} language={language} items={results} featured={CURRENT_BANNER.featured}
+        nameOf={nameOf} lawOf={lawOf} emblemOf={slug => emblems[slug] || '✧'} canPullAgain={!blocked}
+        onAgain={pullAgain} onDone={finishReveal} />}
       <div className="gc-actions">
         <button className="games-btn" disabled={revealing || blocked} onClick={() => pull(1)}>{text('Pull ×1', '抽取 ×1')}</button>
         <button className="games-btn quiet" disabled={revealing || blocked} onClick={() => pull(10)}>{text('Pull ×10', '抽取 ×10')}</button>
@@ -137,7 +156,7 @@ export function Gacha({ language, articles, open }: { language: Language; articl
             const h = r.rating;
             return <li key={`${saved.total + holderLog.total}-${i}`} className={`gc-card gc-holder stars-${h.stars}`} style={{ '--i': i } as CSSProperties}>
               <span className={`gc-badge${r.copies === 1 ? ' new' : ''}`}>{badge(r.copies)}</span>
-              <span className="gc-glyph" aria-hidden="true">{emblems[h.slug] || '✧'}</span>
+              <Sigil className="gc-glyph" art={holderArt(h.slug)} glyph={emblems[h.slug] || '✧'} />
               <small>{text('Law holder', '执律者')}</small>{stars(h.stars)}<strong>{nameOf(h.slug)}</strong><span className="gc-creature">{lawOf(h.slug)}</span>
               <dl className="gc-ratings"><dt>{text('Range', '范围')}</dt><dd>{h.range}/5</dd><dt>{text('Impact', '影响因子')}</dt><dd>{h.impact}/5</dd></dl>
               <Pips level={upgradeLevel(r.copies)} label={text(`Upgrade ${upgradeLevel(r.copies)}`, `升级 ${upgradeLevel(r.copies)}`)} />
@@ -145,7 +164,7 @@ export function Gacha({ language, articles, open }: { language: Language; articl
           }
           const t = r.totem, f = familyById(t.family);
           return <li key={`${saved.total + holderLog.total}-${i}`} className={`gc-card tier-${t.tier}`} style={{ '--c': f.colour, '--i': i } as CSSProperties}>
-            <span className="gc-glyph" aria-hidden="true">{f.glyph}</span><small>{text('Totem', '图腾')} · {tx(tierById(t.tier).name)}</small><strong>{tx(f.power)}</strong><span className="gc-creature">{tx(f.creature)}</span>
+            <Sigil className="gc-glyph" art={totemArt(t.family)} glyph={f.glyph} /><small>{text('Totem', '图腾')} · {tx(tierById(t.tier).name)}</small><strong>{tx(f.power)}</strong><span className="gc-creature">{tx(f.creature)}</span>
             <span className="gc-pool-gain">{text(`${t.depth} power · Added to inventory`, `力量 ${t.depth} · 已加入收藏`)}</span>
             <DepthBar depth={t.depth} tx={tx} label={text(`Depth ${t.depth} of 100`, `深度 ${t.depth}/100`)} />
           </li>;
@@ -157,7 +176,7 @@ export function Gacha({ language, articles, open }: { language: Language; articl
         const copies = holderLog.copies[h.slug] || 0, level = upgradeLevel(copies);
         return <li key={h.slug} className={`stars-${h.stars}${copies ? '' : ' missing'}`}>
           {copies ? <button onClick={() => open(h.slug)} title={text('Read their page', '阅读人物页面')}>
-            <span className="gc-glyph" aria-hidden="true">{emblems[h.slug] || '✧'}</span>
+            <Sigil className="gc-glyph" art={holderArt(h.slug)} glyph={emblems[h.slug] || '✧'} />
             <strong>{nameOf(h.slug)}</strong>
             {stars(h.stars)}
             <Pips level={level} label={text(`Upgrade ${level} of ${MAX_UPGRADE}`, `升级 ${level}/${MAX_UPGRADE}`)} />
@@ -171,6 +190,10 @@ export function Gacha({ language, articles, open }: { language: Language; articl
       <p className="gc-history">{history(text(`Holder pulls: ${holderLog.total}`, `执律者抽取次数：${holderLog.total}`), () => { if (window.confirm(text('Erase holder inventory? Pity is kept.', '清空执律者收藏？保底保留。'))) { setResults([]); save({ ...game, holders: { total: 0, copies: {} } }); } }, holderLog.total)}</p>
     </section>}
 
+    <div className="gc-master-reset">
+      <button className="games-link" disabled={revealing || initial.failed} onClick={resetAll}>{text('Reset everything', '全部重置')}</button>
+      <span role="status">{resetDone ? text('Everything was reset. Your next pull starts from zero pity.', '已全部重置。下次抽取从零保底开始。') : ''}</span>
+    </div>
     <p className="gc-fine">{text('Star ratings, odds, depth bands, upgrades and totem displays are the site’s official game rules (October 2026), kept separate from the world’s lore. Your collection is saved on this browser and device only; clearing browser data erases it.', '星级、概率、深度区间、升级与图腾展示是本站的正式游戏规则（2026 年 10 月），与世界观设定相互独立。收藏仅保存在当前浏览器与设备中；清除浏览器数据会删除收藏。')}</p>
   </div>;
 }
