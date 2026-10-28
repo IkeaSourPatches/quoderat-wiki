@@ -20,7 +20,7 @@ Shared rules for every AI agent working in this repo (Codex reads this file; Cla
 
 ## Checks before pushing
 
-`make check` runs the commands below. `make format` (Prettier + Ruff) rewrites files to the project style; `make lint` checks without writing. Install the Python dev tools with `pip install -r backend/requirements-dev.txt`. The repo hasn't had its one-time full reformat yet, so until then run Prettier/Ruff only on files you touch rather than `make format` across the repo.
+`make check` runs the commands below. `make format` (Prettier + Ruff) rewrites files to the project style; `make lint` checks without writing. Install the Python dev tools with `pip install -r backend/requirements-dev.txt`. Run `make format` and `make lint` before committing.
 
 ```sh
 npm run build

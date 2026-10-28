@@ -1,0 +1,5 @@
+# Mechanical reformats; `git blame` skips these. Enable locally with:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# Apply make format across the repo
+fad90e4a1bc1d8ba0e8d08f49801c7a688963cf5
