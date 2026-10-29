@@ -32,8 +32,10 @@ The war between Number and Sets, in four acts:
 2. The paradox. Ilar Hesabu, a descendant of the murdered holder, wins Number's test with answers leaked by his family. He finds a paradox in the original Sets and kills its arrogant first holder with one stroke after another. Number expands back into its lost status; Ilar assumes Sets is finished and flees to the earth dragons. Ever since, every holder keeps their law clean.
 3. The long vacancy. Sets sits empty for generations, a zero-zero tie no one can break.
 4. The restoration. Ensa wins Sets' test, the first to score in generations, and revises the law so the paradox can no longer be stated. Sets rises above Number again, quietly undoing Ilar's revenge.
-Floor VI: The Present
-Mortals live on both Llama and Origo. The Law of All Laws is vacant and the Axiom sits on every wrist; no one has ever scored a point. The kitsune sell cloaks to anyone who can pay. Most dragons seek coexistence, while the earth tribe quietly shelters Ilar Hesabu.
+Floor VI: The Concord
+Llama’s kings, made vulnerable by the totem elite, pool their armies and courts into one federation, the Llama Concord, with a charter written by Ensa. The kings who refuse cross the Limitrest Range and found the first kingdoms of Origo.
+Floor VII: The Present
+Mortals live on both Llama and Origo. The Law of All Laws is vacant and the Axiom sits on every wrist; no one has ever scored a point. The kitsune sell cloaks to anyone who can pay. Most dragons seek coexistence, while the earth tribe quietly shelters Ilar Hesabu. Llama is one federation, while Origo is split among kingdoms such as Hadrek, Velmarion, Nessaline and Kaldrun.
 中文
 证毕：时间线
 2026年10月19日
@@ -68,5 +70,7 @@ Mortals live on both Llama and Origo. The Law of All Laws is vacant and the Axio
 2. 悖论。被害执律者的后裔伊拉尔·赫萨布凭借家族泄露的答案赢得了数的试炼。他在最初的集合中找到一个悖论，接连两击，击败并杀死了那位傲慢的集合第一位执律者。数重新扩张，夺回失去的地位；伊拉尔以为集合已经终结，逃往土龙族。从此以后，每位执律者都谨守自己法则的严密无瑕。
 3. 漫长的空缺。集合空置了数代人之久，陷入无人能打破的零比零僵局。
 4. 复原。恩莎赢得集合的试炼，成为数代以来第一个得分之人，并修订法则，使悖论再也无法被表述。集合再次凌驾于数之上，悄然抹去了伊拉尔的复仇。
-第六层：当下
-凡人如今同时生活在羊驼与原点两片大陆。万法之法依然空缺，公理戴在每个人的手腕上；从未有人得过一分。狐仙向任何付得起钱的人出售隐匿之力。多数龙族寻求共存，而土龙族则悄悄庇护着伊拉尔·赫萨布。
+第六层：协约
+受到图腾精英威胁的羊驼君王们，把军队与宫廷合并为一个联邦，即羊驼协约联邦，由恩莎起草宪章。拒绝签约的君王翻越极限山脉，建立了原点最早的王国。
+第七层：当下
+凡人如今同时生活在羊驼与原点两片大陆。万法之法依然空缺，公理戴在每个人的手腕上；从未有人得过一分。狐仙向任何付得起钱的人出售隐匿之力。多数龙族寻求共存，而土龙族则悄悄庇护着伊拉尔·赫萨布。羊驼是一个联邦，而原点分裂为哈德雷克、维尔玛里昂、内萨琳与卡尔德伦等王国。
