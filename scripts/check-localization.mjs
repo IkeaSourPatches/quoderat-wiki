@@ -13,8 +13,13 @@ for (const article of articles) {
   assert.ok(!en.body.includes('中文\n证毕'), 'Chinese tab leaked into English');
 }
 const timeline = articles.find((a) => a.slug === 'timeline');
-assert.equal((timeline.body.match(/^### Floor /gm) || []).length, 7);
-assert.equal((timeline.translations.zh.body.match(/^### 第.+层：/gm) || []).length, 7);
+assert.equal((timeline.body.match(/^### Floor /gm) || []).length, 8);
+const kingdoms = articles.find((a) => a.slug === 'kingdoms');
+assert.ok(
+  kingdoms?.body.includes('Kaldrun') && kingdoms.translations.zh.body.includes('卡尔德伦'),
+  'Kingdoms article in both languages',
+);
+assert.equal((timeline.translations.zh.body.match(/^### 第.+层：/gm) || []).length, 8);
 assert.ok(timeline.body.includes('Limitrest Range'));
 assert.ok(timeline.translations.zh.body.includes('极限山脉'));
 assert.equal(translate('zh', 'Creatures'), '神兽');
@@ -27,7 +32,7 @@ const custom = {
   source: '',
 };
 assert.equal(localizeArticle(custom, 'zh').body, 'New article');
-console.log(`Verified ${articles.length} bilingual entries, stable identities, seven timeline floors, and fallback.`);
+console.log(`Verified ${articles.length} bilingual entries, stable identities, eight timeline floors, and fallback.`);
 // The rewound timeline reads its text out of the article, so check that it still can.
 const world = await import('../src/timeline/world.ts');
 for (const [lang, body] of [
@@ -35,7 +40,7 @@ for (const [lang, body] of [
   ['zh', timeline.translations.zh.body],
 ]) {
   const { floors } = world.parseTimeline(body);
-  assert.equal(floors.length, 7, `${lang}: seven floors`);
+  assert.equal(floors.length, 8, `${lang}: eight floors`);
   assert.equal(world.splitActs(floors[world.FEUD].body).acts.length, 4, `${lang}: the Feud has four acts`);
   for (const kind of ['dragon', 'unicorn', 'phoenix', 'kitsune', 'troll']) {
     const name = world.KIND_NAMES[kind][lang];
@@ -48,4 +53,4 @@ for (const [lang, body] of [
 for (const text of [world.T, world.TIP, world.LAW, world.REGION, world.KIND_NAMES].flatMap(Object.values))
   assert.ok(text.en?.trim() && text.zh?.trim(), JSON.stringify(text));
 assert.equal(world.STOPS.length, world.CAMERA.length, 'one camera per stop');
-console.log('Verified the rewound timeline: seven floors, four Feud acts, every creature in both languages.');
+console.log('Verified the rewound timeline: eight floors, four Feud acts, every creature in both languages.');

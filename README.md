@@ -1,6 +1,6 @@
 # Quoderat — The Living Archive
 
-A portable learning project: **React + TypeScript (TSX) + MUI + Vite** in the browser, **Django + SQLite** on your server. The 45 entries — 20 characters, 8 pantheon, 9 creatures, 7 world and laws, 1 timeline — are taken from the author's four bilingual Quoderat source documents and the Chinese terminology sheet. Pantheon and Creatures were verified against Google Drive on 22 October 2026 and the other snapshots on 20 October 2026; original source files are not modified.
+A portable learning project: **React + TypeScript (TSX) + MUI + Vite** in the browser, **Django + SQLite** on your server. The 46 entries — 20 characters, 8 pantheon, 9 creatures, 8 world and laws, 1 timeline — are taken from the author's five bilingual Quoderat source documents and the Chinese terminology sheet. Creatures, Timeline and Kingdoms were verified against Google Drive on 29 October 2026, Pantheon on 22 October and the Worldbuilding Notes on 20 October 2026; original source files are not modified.
 
 ## Run the frontend
 
@@ -112,7 +112,7 @@ The archive reproduces fictional worldbuilding notes, not a mathematics textbook
 
 ## Refresh lore
 
-Google Drive is the canon source; see `data/sources/README.md` for links. Refresh the four text snapshots, then run `python3 scripts/import-lore.py` and `npm run build`. The importer restores Markdown structure, keeps existing article URLs, and separates source discrepancies from lore. It does not fetch Drive automatically. Local Django edits are independent; compare them before using `seed_wiki --replace`, which overwrites bundled entries.
+Google Drive is the canon source; see `data/sources/README.md` for links. Refresh the five text snapshots, then run `python3 scripts/import-lore.py` and `npm run build`. The importer restores Markdown structure, keeps existing article URLs, and separates source discrepancies from lore. It does not fetch Drive automatically. Local Django edits are independent; compare them before using `seed_wiki --replace`, which overwrites bundled entries.
 
 ## English / 中文
 
@@ -153,7 +153,7 @@ In development (`DJANGO_DEBUG=true`) the counters live in process memory and res
 
 ## The timeline
 
-`#timeline` shows the timeline article as one scene: laws hang in the sky, Llama and Origo sit either side of the Limitrest Range, and a slider has one stop for each floor of the doc and one for each act of the Feud. Stepping forward plays each moment in order; stepping back rewinds it. A named moment picker makes all ten stops accessible without dragging. Select a scene object or use the keyboard-accessible inspector below it to read its details. Play begins at the current moment; at the end it restarts from Creation. `src/timeline/world.ts` reads the floors, acts, myths and fates out of the article and holds the scene's layout, `fx.ts` moves the camera, the laws and the canvas particles, and `WorldRewound.tsx` draws the scene and the text of one moment beside it. The doc's own wording, including "How to Read the Tower" and its floors, is unchanged.
+`#timeline` shows the timeline article as one scene: laws hang in the sky, Llama and Origo sit either side of the Limitrest Range, and a slider has one stop for each floor of the doc and one for each act of the Feud. Stepping forward plays each moment in order; stepping back rewinds it. A named moment picker makes all eleven stops accessible without dragging. Select a scene object or use the keyboard-accessible inspector below it to read its details. Play begins at the current moment; at the end it restarts from Creation. `src/timeline/world.ts` reads the floors, acts, myths and fates out of the article and holds the scene's layout, `fx.ts` moves the camera, the laws and the canvas particles, and `WorldRewound.tsx` draws the scene and the text of one moment beside it. The doc's own wording, including "How to Read the Tower" and its floors, is unchanged.
 
 ## The games shelf
 

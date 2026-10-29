@@ -4,7 +4,7 @@ Shared rules for every AI agent working in this repo (Codex reads this file; Cla
 
 ## Canon
 
-- Lore canon lives in the author's private Google Drive "Quoderat" folder (Worldbuilding Notes, The Pantheon, Creatures, Timeline). Drive is the upstream source of truth.
+- Lore canon lives in the author's private Google Drive "Quoderat" folder (Worldbuilding Notes, The Pantheon, Creatures, Timeline, Kingdoms). Drive is the upstream source of truth.
 - `data/sources/` holds local snapshots of those documents; see `data/sources/README.md` for the document titles and the snapshot date. Read the relevant snapshot before answering or editing project content.
 - Snapshots are not synchronized automatically. When asked for the newest information, refresh from Drive with a connector if one is available; otherwise use the snapshots and state their retrieval date. Preserve source wording when refreshing; keep commentary and proposals separate.
 - `data/articles.json` and the Django database are generated or edited wiki content, not an independent canon authority.

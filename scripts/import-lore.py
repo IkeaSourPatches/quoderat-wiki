@@ -51,6 +51,12 @@ subheads = [
     'Trolls: The Body',
     'How to Read the Tower',
     'The Floors',
+    'Two Ways to Rule',
+    'The Llama Concord',
+    'The Kingdoms of Origo',
+    'Four Powers of Origo',
+    'Elites',
+    'To Settle',
 ]
 # Section headings that only bound other articles. Minor Laws duplicated the five
 # character pages it contains, so it no longer gets its own article.
@@ -143,6 +149,11 @@ zh_subheads = [
     '巨魔：躯体',
     '如何阅读这座塔',
     '楼层',
+    '两种统治',
+    '羊驼协约联邦',
+    '原点诸王国',
+    '原点四强',
+    '精英',
 ]
 subheads += [
     'The Pigeonhole Principle: Kalyan, the Quiet Heir',
@@ -527,6 +538,11 @@ for name, zname, title, ztitle, element, zelement in elders:
             'stats': {'Title': ztitle, 'Elemental power': zelement, 'Role': '龙族长老'},
         }
     }
+# The Kingdoms doc is one article: how mortals rule, on Llama and on Origo.
+add('Kingdoms', 'World & laws', load('Quoderat Kingdoms.md')[2:], 'Quoderat Kingdoms.md', 'kingdoms')
+articles[-1]['translations'] = {
+    'zh': {'title': '王国', 'body': markdown(load('Quoderat Kingdoms.md', 'zh')[2:]), 'stats': {}}
+}
 add('The Tower of History', 'Timeline', load('Quoderat Timeline.md')[2:], 'Quoderat Timeline.md', 'timeline')
 articles[-1]['translations'] = {
     'zh': {'title': '历史之塔', 'body': markdown(load('Quoderat Timeline.md', 'zh')[2:]), 'stats': {}}
@@ -544,4 +560,4 @@ assert all(a.get('translations', {}).get('zh', {}).get('body') for a in articles
 assert len({a['slug'] for a in articles}) == len(articles)
 assert set(old) - RETIRED <= {a['slug'] for a in articles}, 'An existing article URL would be lost'
 (ROOT / 'data/articles.json').write_text(json.dumps(articles, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-print(f'Imported {len(articles)} bilingual articles from four verified snapshots; existing URLs preserved.')
+print(f'Imported {len(articles)} bilingual articles from five verified snapshots; existing URLs preserved.')

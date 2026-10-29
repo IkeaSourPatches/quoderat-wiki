@@ -6,6 +6,8 @@ Each family of physical power once belonged to one kind of mythical creature. La
 * Survivors keep innate power. It doesn't come from totems and is far deeper than anything a mortal holds.
 * But it is exclusive. A creature can't wield any other family's powers, and can never hold a law.
 * Depth scale (rough): a typical totem 20–30 (stronger ones exist but are rarer), a hybrid's half-blood 40–60, a full creature 90–100.
+* Grades: the Axiom reads a totem’s depth and grades it: B 20–25, A 26–30, S 31–35, SS 36–39. Holders of S and above are the elites (see Quoderat: Kingdoms).
+* Practice: the deeper a totem, the more practice it takes to wield, so elites must stay free to practise and never become kings.
 * The balance: creatures go deep (one family, very strong), mortals go wide (several weaker totems), and law holders go up (no physical power, only their law).
 Dragons
 The former owners of the elements, each rooted in one state of matter but extending to its substance in any state (ice and steam stay water's, lava stays earth's), giving dragons a monopoly on all matter: earth (solids, from dirt to metals), water (liquids), air (gases, everything in the atmosphere) and plasma (fire and lightning).
@@ -66,6 +68,8 @@ Half-creatures, half-elves among them. Possible but rare, much as a mortal holdi
 * 幸存者保有天生的力量。它并非来自图腾，远比任何凡人所拥有的更深厚。
 * 但它是排他的。神兽无法驾驭其他族群的力量，也永远无法执掌法则。
 * 深度刻度（粗略）：普通图腾为20至30（更强的图腾存在，但更稀有），混血种的半血为40至60，完整神兽为90至100。
+* 等级：公理读取图腾的深度并为其评级：B为20至25，A为26至30，S为31至35，SS为36至39。S级及以上的持有者即为精英（见《证毕：王国》）。
+* 修炼：图腾越深，驾驭它所需的修炼就越多，因此精英必须保持自由以便修炼，从不称王。
 * 平衡：神兽走向深（一族力量，极其强大），凡人走向广（多个较弱的图腾），而执律者走向高（没有物理之力，只有自己的法则）。
 龙族
 龙族是元素曾经的主人。每种元素植根于一种物质状态，但延伸至其物质的任何状态（冰与蒸汽仍属于水，熔岩仍属于土），这让龙族垄断了一切物质：土（固体，从泥土到金属）、水（液体）、气（气体，大气中的一切）与等离子（火与闪电）。
