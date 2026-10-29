@@ -40,6 +40,7 @@ const FX_AT: (FxKind | null)[] = [
   null,
   'restoration',
   'present',
+  null,
 ];
 const SECONDS: Record<FxKind, number> = {
   condense: 3.4,
@@ -424,7 +425,7 @@ export function createEngine(canvas: HTMLCanvasElement, refs: Refs) {
       if (u > 0 && u < 1) comet(ENSA_FROM, sets, u, 60, '#f4f8ff', 2.4);
       burst(f.data, sets, clamp((p - 0.3) / 0.25), '#e9f1ff');
     } else if (f.kind === 'present') {
-      // Mortals settle Origo too.
+      // The kings who refuse the Concord cross the range and found Origo's kingdoms.
       for (const d of f.data) {
         const q = clamp((p - d.delay) / 0.55);
         if (q <= 0 || q >= 1) continue;
