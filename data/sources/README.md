@@ -1,6 +1,6 @@
 # Quoderat source snapshots
 
-Creatures, Timeline and Kingdoms refreshed from Google Drive on 29 October 2026 (Singapore date). Pantheon was refreshed on 22 October 2026 and the Worldbuilding Notes retrieved on 20 October 2026. These are readable text snapshots of the complete text returned by the connector, not original Google Docs formatting or live-synced files.
+Creatures and Kingdoms refreshed from Google Drive on 1 November 2026 and Timeline on 29 October 2026 (Singapore dates). Pantheon was refreshed on 22 October 2026 and the Worldbuilding Notes retrieved on 20 October 2026. These are readable text snapshots of the complete text returned by the connector, not original Google Docs formatting or live-synced files.
 
 The originals are private Google Docs in the author's "Quoderat" Drive folder. Their links are deliberately kept out of this public repository; with the Google Drive connector, search Drive for the folder or the document titles below.
 

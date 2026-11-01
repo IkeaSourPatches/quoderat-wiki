@@ -18,6 +18,16 @@ Four Powers of Origo
 * Velmarion (backed by a law holder): an old empire obsessed with succession and bloodlines. Zaid is its kingmaker, and his testimony is worth more there than an army.
 * Nessaline (backed by creatures): a trading coast built around the kitsune markets. It buys and sells cloaks, so its spies are the best on Origo and its borders the hardest to read.
 * Kaldrun (backed by no one): a small kingdom that fights for itself. Creatures go deep and mortals go wide: almost every citizen trains several weak totems, so the whole country is a citizen army, too costly to conquer and not rich enough to be worth it. It can refuse conquest but never conquer. Its crown goes to its best citizen-soldier, and it looks down on kingdoms that rent their strength.
+Kaldrun and the Fubing
+Kaldrun runs on the Fubing (府兵), a system of citizen-soldiers that works from the crown down.
+* Motto: “We fight not to be conquerors. We fight to not be conquered.” It is carved over the door of every Zhechong-fu.
+* Zhechong-fu: every district has a muster house that keeps the register of its households. Citizens farm and work in peacetime and serve their turn at the front.
+* Fanshang: service rotates in short terms close to home, because Kaldrun only defends and its war is on its own border.
+* Self-equipped: a soldier’s arms are their own totems, which the world hands out and no landlord can hoard, so no one is too poor to serve.
+* Training wide: every citizen trains several weak totems, and units drill to combine their elements.
+* The crown: the citizen-soldiers elect the king from their own ranks, and the king serves the same rotation as everyone else. Velmarion finds this horrifying.
+* The goblin front: Kaldrun’s border faces the goblin warrens, which makes it the wall for all of Origo. That, more than its poverty, is why no kingdom conquers it: whoever took Kaldrun would inherit the goblin war.
+* Those who leave: a citizen whose totem grades S or above leaves to practise. Everyone knows, and no one stops them. Battle-tested, they are among the most prized hires in Hadrek.
 Elites
 * Grades: the Axiom reads a totem’s depth and grades it. B is 20–25, A is 26–30, S is 31–35 and SS is 36–39. Elites are S and above. A hybrid’s half-blood (40–60) and a full creature (90–100) lie beyond the grades.
 * The depth reader: the Axiom was built before totems existed. Once they appeared, Llama’s engineers added a depth reader to its open instructions, and the update spread to every wrist. Scholars still argue whether the Axiom simply accepted it, or whether the first holder built it ready for totems that did not exist yet.
@@ -46,6 +56,16 @@ To Settle
 * 维尔玛里昂（以执律者为靠山）：一个执着于继承与血统的古老帝国。扎伊德是它的造王者，他的证词在那里比一支军队更有分量。
 * 内萨琳（以神兽为靠山）：一个围绕狐仙集市建立的贸易海岸。它买卖隐匿之力，所以它的间谍是原点最出色的，它的边界也最难看清。
 * 卡尔德伦（没有靠山）：一个为自己而战的小王国。神兽走向深，凡人走向广：几乎每个公民都修炼多个弱小的图腾，于是整个国家就是一支公民军队，征服它代价太高，又不够富裕，不值得征服。它能拒绝被征服，却永远无法征服别人。它的王冠归于最出色的公民战士，它也看不起那些租用力量的王国。
+卡尔德伦与府兵制
+卡尔德伦依靠府兵制运转，这是一套从王冠到底层真正行之有效的公民兵制度。
+* 信条：“我们不为成为征服者而战，我们为不被征服而战。”这句话刻在每一座折冲府的门上。
+* 折冲府：每个地区都有一座折冲府，掌管辖内各户的名籍。公民平时耕作劳动，轮到时便上前线服役。
+* 番上：兵役以短期轮番的方式进行，且离家不远，因为卡尔德伦只守不攻，它的战争就在自己的边境上。
+* 自备：士兵的武器就是自己的图腾。图腾由世界发放，没有地主能够囤积，所以没有人穷到无法服役。
+* 广修：每个公民都修炼多个弱小的图腾，各部队则操练元素之间的配合。
+* 王冠：公民战士从自己的行伍中选举君王，君王与所有人一样轮番服役。维尔玛里昂对此深感骇然。
+* 哥布林前线：卡尔德伦的边境正对哥布林的巢穴，使它成为整个原点的城墙。正因如此，而不仅是因为贫穷，没有王国去征服它：谁夺下卡尔德伦，谁就要接手与哥布林的战争。
+* 离开的人：图腾被评为S级及以上的公民会离开去修炼。人人都知道，却没人阻止。这些身经百战的人是哈德雷克最抢手的雇员之一。
 精英
 * 等级：公理读取图腾的深度并为其评级。B为20至25，A为26至30，S为31至35，SS为36至39。S级及以上即为精英。混血种的半血（40至60）与完整神兽（90至100）都在等级之外。
 * 深度读取器：公理建成于图腾出现之前。图腾出现后，羊驼的工程师在公理公开的制作方法中加入了深度读取器，这一更新随即传遍每一只手腕。学者们至今仍在争论：公理只是接受了这次更新，还是第一位执律者早已为尚不存在的图腾做好了准备。

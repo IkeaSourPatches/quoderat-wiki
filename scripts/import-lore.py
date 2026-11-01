@@ -30,7 +30,7 @@ pantheon = [
     'Social Laws',
     'Minor Laws',
 ]
-creatures = ['How Creatures Work', 'Dragons', 'Other Creature Families', 'Hybrids']
+creatures = ['How Creatures Work', 'Dragons', 'Other Creature Families', 'Creatures the Hunt Passed By', 'Hybrids']
 subheads = [
     'The Holder',
     'The Feud',
@@ -57,6 +57,8 @@ subheads = [
     'Four Powers of Origo',
     'Elites',
     'To Settle',
+    'Kaldrun and the Fubing',
+    'Goblins',
 ]
 # Section headings that only bound other articles. Minor Laws duplicated the five
 # character pages it contains, so it no longer gets its own article.
@@ -128,7 +130,7 @@ zh_pantheon = [
     '社会法则',
     '小法则',
 ]
-zh_creatures = ['神兽如何运作', '龙族', '其他神兽族群', '混血种']
+zh_creatures = ['神兽如何运作', '龙族', '其他神兽族群', '狩猎绕过的神兽', '混血种']
 zh_subheads = [
     '执律者',
     '宿怨',
@@ -154,6 +156,8 @@ zh_subheads = [
     '原点诸王国',
     '原点四强',
     '精英',
+    '卡尔德伦与府兵制',
+    '哥布林',
 ]
 subheads += [
     'The Pigeonhole Principle: Kalyan, the Quiet Heir',
@@ -497,12 +501,12 @@ for lang, heading, partner in [
 lines = load('Quoderat Creatures.md')
 families = ['Unicorns: Life and Healing', 'Phoenixes: Renewal', 'Kitsune: Illusion and Concealment', 'Trolls: The Body']
 for i, heading in enumerate(families):
-    end = families[i + 1] if i + 1 < len(families) else 'Hybrids'
+    end = families[i + 1] if i + 1 < len(families) else 'Creatures the Hunt Passed By'
     add(heading, 'Creatures', lines[find(lines, heading) + 1 : find(lines, end)], 'Quoderat Creatures.md')
     zfamilies = ['独角兽：生命与治愈', '不死鸟：重生', '狐仙：幻术与隐匿', '巨魔：躯体']
     zlines = load('Quoderat Creatures.md', 'zh')
     zhead = zfamilies[i]
-    zend = zfamilies[i + 1] if i + 1 < len(zfamilies) else '混血种'
+    zend = zfamilies[i + 1] if i + 1 < len(zfamilies) else '狩猎绕过的神兽'
     articles[-1]['translations'] = {
         'zh': {'title': zhead, 'body': markdown(zlines[find(zlines, zhead) + 1 : find(zlines, zend)]), 'stats': {}}
     }

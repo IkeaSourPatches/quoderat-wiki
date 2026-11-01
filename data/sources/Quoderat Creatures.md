@@ -52,6 +52,14 @@ Trolls: The Body
 * Still in stone: trolls petrified during the hunt aren't dead. Their power is locked inside rather than released, which is why body totems are rarer than others. Waking them would be a catastrophe or a liberation, depending on who you ask.
 * Society: blunt, transactional clans under the mountains, keeping grudges literally carved in stone.
 * Toward totem users: settled the troll way, with challenges of strength.
+Creatures the Hunt Passed By
+Not every creature carries a family of physical power. Some have innate powers that are real but modest, and that die with them: killing one releases nothing into the world, so they give no totems. The law holders had nothing to gain from hunting them, and the Hunt passed them by. They survive untouched, and many are at war with mortals.
+Goblins
+* Power: innate and modest, roughly an even match for a soldier with ordinary totems. Nothing in them is extraordinary, and nothing passes on when they die.
+* Survival: numbers and tunnels. They breed fast and live in warrens underground, so any single fight can be won, but the war is never over.
+* Why elites cannot end it: a handful of elites can win a battle, not a war against a swarm. Only a whole army in rotation can hold the line.
+* At war with mortals: their warrens border Kaldrun, which holds the line for all of Origo.
+* ☐ Other creatures in this group; elves may belong here. The half-elves under Hybrids would then need a rule, since hybrids are born with half-blood depth.
 Hybrids
 Half-creatures, half-elves among them. Possible but rare, much as a mortal holding several totem families is possible but rare.
 * Why rare: hybrids are usually sterile (as a mule, the offspring of a horse and a donkey, almost always is), and creatures' hatred of mortals keeps unions scarce.
@@ -114,6 +122,14 @@ Half-creatures, half-elves among them. Possible but rare, much as a mortal holdi
 * 仍在石中：在狩猎中被石化的巨魔并没有死。它们的力量被封锁在体内，而非被释放，这就是躯体图腾比其他图腾更稀有的原因。唤醒它们究竟是灾难还是解放，取决于你问的是谁。
 * 社会：住在山下、直率而讲究交易的氏族，仇恨真的被刻在石头上。
 * 对待图腾使用者：用巨魔的方式解决，即力量的较量。
+狩猎绕过的神兽
+并非每种神兽都承载着一族物理之力。有些神兽拥有真实却有限的天生力量，而这种力量会随它们一同死去：杀死它们不会向世界释放任何东西，所以它们不会化为图腾。执律者猎杀它们毫无所得，于是大狩猎绕过了它们。它们完好无损地存续至今，其中许多正与凡人交战。
+哥布林
+* 力量：天生而有限，大致与持有普通图腾的士兵势均力敌。它们身上没有任何非凡之处，死后也不会留下任何力量。
+* 存续：靠数量与地道。它们繁殖迅速，栖居于地下巢穴，所以任何一场战斗都能打赢，战争却永无尽头。
+* 精英为何无法终结战争：少数精英能赢下一场战斗，却赢不了对一整群敌人的战争。只有一整支轮番服役的军队才能守住防线。
+* 与凡人为敌：它们的巢穴与卡尔德伦接壤，卡尔德伦为整个原点守住了这条防线。
+* ☐ 这一族群中的其他神兽，精灵可能也属于此类。届时混血种一节中的半精灵需要一条规则，因为混血种生来便拥有半血深度。
 混血种
 半神兽，半精灵也在其中。有可能出现但很罕见，正如一个凡人拥有多个族群的图腾虽有可能但很罕见。
 * 为何罕见：混血种通常无法生育（就像马与驴的后代骡子几乎总是不育一样），而神兽对凡人的仇恨也让结合极为稀少。

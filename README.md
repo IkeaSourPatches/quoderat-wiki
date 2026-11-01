@@ -1,6 +1,6 @@
 # Quoderat — The Living Archive
 
-A portable learning project: **React + TypeScript (TSX) + MUI + Vite** in the browser, **Django + SQLite** on your server. The 46 entries — 20 characters, 8 pantheon, 9 creatures, 8 world and laws, 1 timeline — are taken from the author's five bilingual Quoderat source documents and the Chinese terminology sheet. Creatures, Timeline and Kingdoms were verified against Google Drive on 29 October 2026, Pantheon on 22 October and the Worldbuilding Notes on 20 October 2026; original source files are not modified.
+A portable learning project: **React + TypeScript (TSX) + MUI + Vite** in the browser, **Django + SQLite** on your server. The 47 entries — 20 characters, 8 pantheon, 10 creatures, 8 world and laws, 1 timeline — are taken from the author's five bilingual Quoderat source documents and the Chinese terminology sheet. Creatures and Kingdoms were verified against Google Drive on 1 November 2026, Timeline on 29 October, Pantheon on 22 October and the Worldbuilding Notes on 20 October 2026; original source files are not modified.
 
 ## Run the frontend
 
