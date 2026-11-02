@@ -6,6 +6,8 @@ Each family of physical power once belonged to one kind of mythical creature. La
 * Survivors keep innate power. It doesn't come from totems and is far deeper than anything a mortal holds.
 * But it is exclusive. A creature can't wield any other family's powers, and can never hold a law.
 * Depth scale (rough): a typical totem 20–30 (stronger ones exist but are rarer), a hybrid's half-blood 40–60, a full creature 90–100.
+* Grades: the Axiom reads a totem’s depth and grades it: B 20–25, A 26–30, S 31–35, SS 36–39. Holders of S and above are the elites (see Quoderat: Kingdoms).
+* Practice: the deeper a totem, the more practice it takes to wield, so elites must stay free to practise and never become kings.
 * The balance: creatures go deep (one family, very strong), mortals go wide (several weaker totems), and law holders go up (no physical power, only their law).
 Dragons
 The former owners of the elements, each rooted in one state of matter but extending to its substance in any state (ice and steam stay water's, lava stays earth's), giving dragons a monopoly on all matter: earth (solids, from dirt to metals), water (liquids), air (gases, everything in the atmosphere) and plasma (fire and lightning).
@@ -50,6 +52,14 @@ Trolls: The Body
 * Still in stone: trolls petrified during the hunt aren't dead. Their power is locked inside rather than released, which is why body totems are rarer than others. Waking them would be a catastrophe or a liberation, depending on who you ask.
 * Society: blunt, transactional clans under the mountains, keeping grudges literally carved in stone.
 * Toward totem users: settled the troll way, with challenges of strength.
+Creatures the Hunt Passed By
+Not every creature carries a family of physical power. Some have innate powers that are real but modest, and that die with them: killing one releases nothing into the world, so they give no totems. The law holders had nothing to gain from hunting them, and the Hunt passed them by. They survive untouched, and many are at war with mortals.
+Goblins
+* Power: innate and modest, roughly an even match for a soldier with ordinary totems. Nothing in them is extraordinary, and nothing passes on when they die.
+* Survival: numbers and tunnels. They breed fast and live in warrens underground, so any single fight can be won, but the war is never over.
+* Why elites cannot end it: a handful of elites can win a battle, not a war against a swarm. Only a whole army in rotation can hold the line.
+* At war with mortals: their warrens border Kaldrun, which holds the line for all of Origo.
+* ☐ Other creatures in this group; elves may belong here. The half-elves under Hybrids would then need a rule, since hybrids are born with half-blood depth.
 Hybrids
 Half-creatures, half-elves among them. Possible but rare, much as a mortal holding several totem families is possible but rare.
 * Why rare: hybrids are usually sterile (as a mule, the offspring of a horse and a donkey, almost always is), and creatures' hatred of mortals keeps unions scarce.
@@ -66,6 +76,8 @@ Half-creatures, half-elves among them. Possible but rare, much as a mortal holdi
 * 幸存者保有天生的力量。它并非来自图腾，远比任何凡人所拥有的更深厚。
 * 但它是排他的。神兽无法驾驭其他族群的力量，也永远无法执掌法则。
 * 深度刻度（粗略）：普通图腾为20至30（更强的图腾存在，但更稀有），混血种的半血为40至60，完整神兽为90至100。
+* 等级：公理读取图腾的深度并为其评级：B为20至25，A为26至30，S为31至35，SS为36至39。S级及以上的持有者即为精英（见《证毕：王国》）。
+* 修炼：图腾越深，驾驭它所需的修炼就越多，因此精英必须保持自由以便修炼，从不称王。
 * 平衡：神兽走向深（一族力量，极其强大），凡人走向广（多个较弱的图腾），而执律者走向高（没有物理之力，只有自己的法则）。
 龙族
 龙族是元素曾经的主人。每种元素植根于一种物质状态，但延伸至其物质的任何状态（冰与蒸汽仍属于水，熔岩仍属于土），这让龙族垄断了一切物质：土（固体，从泥土到金属）、水（液体）、气（气体，大气中的一切）与等离子（火与闪电）。
@@ -110,6 +122,14 @@ Half-creatures, half-elves among them. Possible but rare, much as a mortal holdi
 * 仍在石中：在狩猎中被石化的巨魔并没有死。它们的力量被封锁在体内，而非被释放，这就是躯体图腾比其他图腾更稀有的原因。唤醒它们究竟是灾难还是解放，取决于你问的是谁。
 * 社会：住在山下、直率而讲究交易的氏族，仇恨真的被刻在石头上。
 * 对待图腾使用者：用巨魔的方式解决，即力量的较量。
+狩猎绕过的神兽
+并非每种神兽都承载着一族物理之力。有些神兽拥有真实却有限的天生力量，而这种力量会随它们一同死去：杀死它们不会向世界释放任何东西，所以它们不会化为图腾。执律者猎杀它们毫无所得，于是大狩猎绕过了它们。它们完好无损地存续至今，其中许多正与凡人交战。
+哥布林
+* 力量：天生而有限，大致与持有普通图腾的士兵势均力敌。它们身上没有任何非凡之处，死后也不会留下任何力量。
+* 存续：靠数量与地道。它们繁殖迅速，栖居于地下巢穴，所以任何一场战斗都能打赢，战争却永无尽头。
+* 精英为何无法终结战争：少数精英能赢下一场战斗，却赢不了对一整群敌人的战争。只有一整支轮番服役的军队才能守住防线。
+* 与凡人为敌：它们的巢穴与卡尔德伦接壤，卡尔德伦为整个原点守住了这条防线。
+* ☐ 这一族群中的其他神兽，精灵可能也属于此类。届时混血种一节中的半精灵需要一条规则，因为混血种生来便拥有半血深度。
 混血种
 半神兽，半精灵也在其中。有可能出现但很罕见，正如一个凡人拥有多个族群的图腾虽有可能但很罕见。
 * 为何罕见：混血种通常无法生育（就像马与驴的后代骡子几乎总是不育一样），而神兽对凡人的仇恨也让结合极为稀少。

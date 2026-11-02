@@ -23,6 +23,7 @@ export const STOPS: Stop[] = [
   { floor: 5, act: 2 },
   { floor: 5, act: 3 },
   { floor: 6 },
+  { floor: 7 },
 ];
 // Named stops, so the scene rules below read as history rather than numbers.
 export const S = {
@@ -35,7 +36,8 @@ export const S = {
   paradox: 6,
   vacancy: 7,
   restoration: 8,
-  present: 9,
+  concord: 9,
+  present: 10,
 } as const;
 
 // ---------- Reading the article ----------
@@ -105,7 +107,7 @@ export function fate(floors: Floor[], name: string) {
 }
 // The Present's sentence about a family, if it has one.
 export function present(floors: Floor[], name: string) {
-  const text = floors[6]?.body ?? '';
+  const text = floors[floors.length - 1]?.body ?? '';
   const sentences = text.match(/[^.。]+[.。]/g) ?? [];
   return sentences.find((s) => s.toLowerCase().includes(name.toLowerCase()))?.trim() ?? '';
 }
@@ -202,6 +204,14 @@ export const TIP: Record<string, L> = {
   empire: {
     en: 'Kingdoms and empires rise around the totem holders, ruling beneath the gods and creatures.',
     zh: '王国与帝国围绕图腾持有者兴起，统治于神与神兽之下。',
+  },
+  concord: {
+    en: 'The Llama Concord: Llama’s kings pooled their armies and courts into one federation, with a charter written by Ensa.',
+    zh: '羊驼协约联邦：羊驼的君王们把军队与宫廷合并为一个联邦，由恩莎起草宪章。',
+  },
+  origoKingdoms: {
+    en: 'The kingdoms of Origo, founded by the kings who refused the Concord.',
+    zh: '原点诸王国，由拒签协约的君王所建立。',
   },
   mortalsPlain: { en: 'A scientific civilization with no power of any kind.', zh: '一个科学文明，不具任何力量。' },
   mortalsAxiom: {
@@ -349,6 +359,7 @@ export const CAMERA: { at: P; zoom: number }[] = [
   { at: [450, 330], zoom: 1.1 },
   { at: [300, 320], zoom: 1.2 },
   { at: [220, 260], zoom: 1.45 },
+  { at: [500, 420], zoom: 1.06 },
   { at: [500, 320], zoom: 1 },
 ];
 
@@ -385,6 +396,8 @@ export function relatedSlugs(key: string): string[] {
     dynasty: ['tertia', 'ordinary-people-and-the-climb'],
     kingdom: ['ordinary-people-and-the-climb'],
     empire: ['ordinary-people-and-the-climb'],
+    concord: ['kingdoms'],
+    'origo-town': ['kingdoms'],
     elite: ['how-creatures-work', 'ordinary-people-and-the-climb'],
     ilar: ['ilar-hesabu', 'ersetu'],
     town: ['ordinary-people-and-the-climb', 'how-creatures-work'],

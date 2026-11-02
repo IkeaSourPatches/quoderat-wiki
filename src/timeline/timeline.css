@@ -682,6 +682,19 @@ html[lang='zh-CN'] .wr {
   opacity: 0.85;
   pointer-events: auto;
 }
+.wr-realms .federation {
+  opacity: 0;
+  pointer-events: none;
+  fill: #c9b48210;
+  stroke: #e9cf86;
+  stroke-width: 1.3;
+  stroke-dasharray: 8 4;
+  transition: opacity 1.4s;
+}
+.wr-realms.concord .federation {
+  opacity: 0.9;
+  pointer-events: auto;
+}
 
 /* Mortals */
 .wr-mortal rect {
@@ -905,8 +918,8 @@ html[lang='zh-CN'] .wr {
 .wr-fwd[data-stop='9'] .wr-town.origo {
   transition-delay: 1.6s;
 }
-.wr-fwd[data-stop='9'] .k-kitsune,
-.wr-fwd[data-stop='9'] .k-dragon {
+.wr-fwd[data-stop='10'] .k-kitsune,
+.wr-fwd[data-stop='10'] .k-dragon {
   transition-delay: 0.8s;
 }
 

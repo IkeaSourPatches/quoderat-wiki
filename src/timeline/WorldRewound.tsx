@@ -61,7 +61,7 @@ import './timeline.css';
 const ERA = ['#2f7a6e', '#a8853a', '#4f68a3', '#9a3a30', '#4f9a5c', '#7a4f9e', '#b8a167'];
 const LAST = STOPS.length - 1;
 // Slider positions: floors evenly spaced, with the Feud's acts dividing its segment.
-const pct = (i: number) => ((STOPS[i].floor + (STOPS[i].act ?? 0) / 4) / 6) * 100;
+const pct = (i: number) => ((STOPS[i].floor + (STOPS[i].act ?? 0) / 4) / STOPS[LAST].floor) * 100;
 const nearest = (x: number) =>
   STOPS.reduce((best, _, i) => (Math.abs(pct(i) - x) < Math.abs(pct(best) - x) ? i : best), 0);
 const cls = (...names: (string | false | null | undefined)[]) => names.filter(Boolean).join(' ');
@@ -184,6 +184,8 @@ function tipFor(key: string, s: number, floors: Floor[], lang: Language): Tip | 
   if (kind === 'dynasty') return law({ en: 'A dynasty', zh: '一个王朝' }, TIP.dynasty);
   if (kind === 'kingdom') return law({ en: 'A kingdom', zh: '王国' }, TIP.kingdom);
   if (kind === 'empire') return law({ en: 'Kingdoms and empires', zh: '王国与帝国' }, TIP.empire);
+  if (kind === 'concord') return law({ en: 'The Llama Concord', zh: '羊驼协约联邦' }, TIP.concord);
+  if (kind === 'origo-town') return law({ en: 'A kingdom of Origo', zh: '原点的王国' }, TIP.origoKingdoms);
   if (kind === 'elite') return law({ en: 'Totem holder', zh: '图腾持有者' }, TIP.elite);
   if (kind === 'ilar')
     return law({ en: 'Ilar Hesabu', zh: '伊拉尔·赫萨布' }, s === S.present ? TIP.ilarNow : TIP.ilarFled);
@@ -381,7 +383,20 @@ function Scene({ stop, language, refs }: { stop: number; language: Language; ref
           <circle className="hit" cx="505" cy="294" r="18" data-tip="peak" />
         </g>
 
-        <g className={cls('wr-realms', early && 'kingdoms', stop >= S.totems && 'empires')}>
+        <g
+          className={cls(
+            'wr-realms',
+            early && 'kingdoms',
+            stop >= S.totems && stop < S.concord && 'empires',
+            stop >= S.concord && 'concord',
+          )}
+        >
+          {/* The Concord: Llama's realms pooled into one federation. */}
+          <path
+            className="federation"
+            data-tip="concord"
+            d="M30 456C44 424 150 420 220 430C300 426 360 452 374 500C384 560 360 622 300 632C220 644 90 642 46 610C22 580 22 500 30 456Z"
+          />
           <path
             className="empire west"
             data-tip="empire"
@@ -437,7 +452,7 @@ function Scene({ stop, language, refs }: { stop: number; language: Language; ref
             stop >= S.axiom && 'axiom',
             stop >= S.totems && 'totems',
             stop === S.vacancy && 'generations',
-            stop === S.present && 'present',
+            stop >= S.concord && 'present',
           )}
         >
           {TOWNS.map((p, i) => (
@@ -466,7 +481,7 @@ function Scene({ stop, language, refs }: { stop: number; language: Language; ref
             </g>
           ))}
           {ORIGO_TOWNS.map((p, i) => (
-            <g key={`o${i}`} className="wr-town origo" data-tip="town">
+            <g key={`o${i}`} className="wr-town origo" data-tip="origo-town">
               <circle className="hit" cx={p[0]} cy={p[1]} r="20" />
               {ORIGO_DOTS[i].map((d, j) => (
                 <g
@@ -669,6 +684,7 @@ export function WorldRewound({
     setSelected((key) =>
       (['kingdom', 'dynasty'].includes(key) && next < S.gods) ||
       (['elite', 'empire'].includes(key) && next < S.totems) ||
+      (['concord', 'origo-town'].includes(key) && next < S.concord) ||
       (key === 'ilar' && next < S.paradox)
         ? 'town'
         : key,
@@ -778,6 +794,7 @@ export function WorldRewound({
       ...(stop >= S.gods ? ['kingdom', 'dynasty'] : []),
       ...(stop >= S.totems ? ['elite', 'empire'] : []),
       ...(stop >= S.paradox ? ['ilar'] : []),
+      ...(stop >= S.concord ? ['concord', 'origo-town'] : []),
       selected,
     ]),
   ];
