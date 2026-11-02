@@ -39,6 +39,8 @@ export function SaiGame({ language, open }: { language: Language; open: (slug: s
   const completed = puzzles.filter((p) => solved(p, restoreColours(progress[p.id], p.regions.length))).length;
   // Offline play never depends on the server; the daily puzzle is an optional enhancement.
   useEffect(() => {
+    // A static build has no server, so skip the request instead of logging a 404 on every visit.
+    if (!apiBase) return;
     const controller = new AbortController();
     fetch(`${api}/game/daily/`, { signal: controller.signal })
       .then((r) => (r.ok ? r.json() : null))
@@ -71,7 +73,8 @@ export function SaiGame({ language, open }: { language: Language; open: (slug: s
   }, [progress]);
   useEffect(() => {
     setVerification('');
-    if (!won) return;
+    // Server verification is optional; a static build has no server to ask.
+    if (!won || !apiBase) return;
     const controller = new AbortController();
     fetch(`${api}/game/validate/`, { signal: controller.signal })
       .then((r) => {
