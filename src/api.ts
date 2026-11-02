@@ -16,3 +16,6 @@ export async function getArticles(): Promise<Article[]> {
   return response.json();
 }
 export const sourceMode = api ? 'Connected archive' : 'Archive edition';
+// Letters need Django to store them. A static build (no VITE_API_BASE) has nowhere to send them,
+// so the letterbox is hidden and its page explains why instead of failing on submit.
+export const lettersOpen = Boolean(api);

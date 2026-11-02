@@ -1,4 +1,4 @@
-import type { Article } from './api';
+import { lettersOpen, type Article } from './api';
 import { translate, type Language } from './i18n';
 
 // The world introduction is editorial presentation of the existing canon.
@@ -175,12 +175,14 @@ export function WorldHome({
         </div>
       </section>
 
-      <aside className="qd-letter">
-        <p>{text('Have a question or an idea for this world?', '对这个世界有疑问或想法？')}</p>
-        <button className="qd-link" onClick={() => open('suggestions')}>
-          {text('Write to the author', '给作者写信')}
-        </button>
-      </aside>
+      {lettersOpen && (
+        <aside className="qd-letter">
+          <p>{text('Have a question or an idea for this world?', '对这个世界有疑问或想法？')}</p>
+          <button className="qd-link" onClick={() => open('suggestions')}>
+            {text('Write to the author', '给作者写信')}
+          </button>
+        </aside>
+      )}
     </div>
   );
 }

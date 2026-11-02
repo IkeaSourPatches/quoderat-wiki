@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react';
+import { lettersOpen } from './api';
 import type { Language } from './i18n';
 
 // Decorative suggestions only: these are never submitted as the visitor's name.
@@ -8,6 +9,29 @@ const visitorRoles = {
 };
 
 export function SuggestionBox({ language }: { language: Language }) {
+  return lettersOpen ? <LetterForm language={language} /> : <LettersClosed language={language} />;
+}
+
+// Static edition: no server to keep letters, so say so plainly rather than show a form that cannot send.
+function LettersClosed({ language }: { language: Language }) {
+  const zh = language === 'zh';
+  return (
+    <section className="correspondence-page">
+      <header className="letter-heading">
+        <p className="eyebrow">EPISTULAE · QUODERAT</p>
+        <h1>{zh ? '致世界的作者' : 'A letter to the author'}</h1>
+        <p className="letter-subtitle">{zh ? '信箱尚未开放。' : 'The letterbox is not open yet.'}</p>
+        <p>
+          {zh
+            ? '这一版档案没有可以妥善保管信件的服务器，所以暂时无法寄信。等服务器上线，信箱就会开放。在此之前，这个世界只供阅读。'
+            : 'This edition of the archive has no server to keep letters safe, so none can be sent yet. The letterbox opens once one is online. Until then, this world is read-only.'}
+        </p>
+      </header>
+    </section>
+  );
+}
+
+function LetterForm({ language }: { language: Language }) {
   const zh = language === 'zh';
   const [name, setName] = useState('');
   const [nameFocused, setNameFocused] = useState(false);

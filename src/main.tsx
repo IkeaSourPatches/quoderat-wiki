@@ -64,7 +64,7 @@ import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 // Import the API helpers and the shared Article type from our local module.
-import { getArticles, sourceMode, type Article } from './api';
+import { getArticles, lettersOpen, sourceMode, type Article } from './api';
 
 // Import the global stylesheet that defines the wiki layout.
 import './styles.css';
@@ -493,13 +493,15 @@ function App() {
           {/* Number of bookmarked articles. */}
         </button>
 
-        <button
-          className={`nav-item ${slug === 'suggestions' ? 'active' : ''}`}
-          onClick={() => navigate('suggestions')}
-        >
-          <Feather size={18} />
-          {language === 'zh' ? '提问与建议' : 'Questions & suggestions'}
-        </button>
+        {lettersOpen && (
+          <button
+            className={`nav-item ${slug === 'suggestions' ? 'active' : ''}`}
+            onClick={() => navigate('suggestions')}
+          >
+            <Feather size={18} />
+            {language === 'zh' ? '提问与建议' : 'Questions & suggestions'}
+          </button>
+        )}
 
         {/* Decorative footer block at the bottom of the sidebar. */}
         <div className="nav-bottom">

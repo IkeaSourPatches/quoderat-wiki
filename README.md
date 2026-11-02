@@ -128,6 +128,8 @@ The Characters category contains 20 named or titled figures (16 Pantheon figures
 
 ## Suggestion box limits
 
+A static build (no `VITE_API_BASE`, for example on Cloudflare Pages) has no server to store letters. It hides the sidebar entry and the homepage invitation, and `#suggestions` explains that the letterbox is not open yet. Build with `VITE_API_BASE=/api` behind Django to open it.
+
 `POST /api/suggestions/` is rate-limited so a public deployment cannot be flooded. Every attempt counts, including invalid ones. Over the limit, Django answers `429` with a `Retry-After` header, and the letter form tells the visitor to try later without losing their text.
 
 | Setting | Default | Meaning |
