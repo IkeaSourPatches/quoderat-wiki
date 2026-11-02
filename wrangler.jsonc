@@ -1,0 +1,11 @@
+// Cloudflare Workers static-assets deployment for quoderat.org.
+// The build (npm run build) writes the static site to dist/; Cloudflare serves those files.
+// No VITE_API_BASE is set in Cloudflare, so this is the static edition (letterbox closed).
+// "name" must match the Worker's name in the Cloudflare dashboard.
+{
+  "name": "quoderat-wiki",
+  "compatibility_date": "2026-11-02",
+  "assets": {
+    "directory": "./dist",
+  },
+}
